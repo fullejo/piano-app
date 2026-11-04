@@ -119,6 +119,8 @@
   .range .pill { background: var(--sel); border: 1px solid var(--star); border-radius: 999px; padding: 4px 12px; font-weight: 800; }
 
   /* sheet music */
+  .tips { display: grid; gap: 6px; margin-bottom: 12px; font-size: 15px; }
+  .tips b { font-family: var(--display); font-weight: 600; }
   .sheet { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 12px; }
   .score { display: block; width: 100%; height: auto; }
   .staffline { stroke: var(--staff); stroke-width: 1.1; }
@@ -133,6 +135,11 @@
   .direction { fill: var(--quiet); font-size: 13px; font-style: italic; font-family: var(--body); }
   .ledger, .stem { stroke: var(--staff); stroke-width: 1.3; }
   .tie, .mark { stroke: var(--staff); fill: none; stroke-width: 1.3; }
+  .slur { stroke: var(--staff); fill: none; stroke-width: 1.4; }
+  .cluster { fill: var(--staff); }
+  .octline { stroke: var(--quiet); stroke-width: 1.2; stroke-dasharray: 6 5; }
+  .octtext { fill: var(--ink); font-size: 12px; font-weight: 800; font-style: italic; font-family: var(--body); }
+  .pos { fill: var(--ink); font-size: 12px; font-family: var(--body); font-style: italic; }
   .rest { stroke: var(--staff); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
   .restblock { fill: var(--staff); }
   .head, .dotm { fill: var(--staff); }
@@ -309,6 +316,7 @@
       <span class="muted" style="font-size:14px" id="sRangeHint">Tap a bar to start a section, then tap another to end it.</span>
     </div>
   </div>
+  <div class="panel tips" id="sTips" hidden></div>
   <div class="sheet">
     <svg class="score" id="score" role="img" aria-label="Sheet music"></svg>
     <div class="legend">
@@ -767,11 +775,18 @@ function buildTimeline(song) {
   const per = song.timeSignature[0], notes = [];
   song.measures.forEach((m, mi) => ['treble', 'bass'].forEach(staff => {
     let t = mi * per;
+    const shift = 12 * ((m.octave || 0) + ((song.shift || {})[staff] || 0));
     (m[staff] || []).forEach(item => {
-      if (item.r) { t += item.r; return; }
-      const pp = parsePitch(item.p);
-      notes.push({ id: notes.length, staff, item, measure: mi, beat: t, dur: item.d, midi: pp.midi, step: pp.step,
-        accept: (item.accept || [item.p]).map(a => parsePitch(a).midi), loose: !!m.loose, tiedFrom: null, tieTo: null, state: '' });
+      if (item.r || item.cluster) { t += item.r || item.d; return; }
+      const pitches = Array.isArray(item.p) ? item.p : [item.p];
+      pitches.forEach((pitch, ci) => {
+        const pp = parsePitch(pitch);
+        let accept;
+        if (item.acceptRange) { accept = []; for (let k = item.acceptRange[0]; k <= item.acceptRange[1]; k++) accept.push(k); }
+        else accept = (item.accept && pitches.length === 1 ? item.accept : [pitch]).map(a => parsePitch(a).midi + shift);
+        notes.push({ id: notes.length, staff, item, chordIdx: ci, measure: mi, beat: t, dur: item.d, midi: pp.midi + shift, written: pp.midi, step: pp.step,
+          accept, loose: !!m.loose, tiedFrom: null, tieTo: null, state: '' });
+      });
       t += item.d;
     });
   }));
@@ -786,7 +801,7 @@ function buildTimeline(song) {
 /* =========================================================
    SONG SCREEN: render, practice, listen, sections
    ========================================================= */
-let W = 1000; const SYS_H = 250, WINDOW = 450, ONTIME = 140;
+let W = 1000; const SYS_H = 266, WINDOW = 450, ONTIME = 140;
 const SV = { song: null, notes: [], expected: [], events: [], range: [0, 0], pick: null, loop: false, mode: 'practice', bpm: 80, clicks: true,
   running: false, listening: false, evIdx: 0, startPerf: 0, rangeBeat: 0, raf: 0, wrong: 0, t0: 0, lastSys: -1, geom: null, pass: 0 };
 
@@ -803,6 +818,9 @@ function renderSongView() {
   const s = SV.song;
   $('sTitle').textContent = s.title;
   $('sSrc').textContent = [s._book?.title || s.source, s.page ? 'page ' + s.page : ''].filter(Boolean).join(' · ');
+  const tips = $('sTips'); tips.textContent = '';
+  (s.tips || []).forEach(t => tips.append(h('div', null, h('b', null, t.label + ' '), t.text)));
+  tips.hidden = !(s.tips || []).length;
   $('sTempo').value = SV.bpm; $('sTempoVal').textContent = SV.bpm;
   $('sLoop').checked = SV.loop; $('sClicks').checked = SV.clicks;
   setMode(SV.mode);
@@ -834,13 +852,15 @@ function renderScore() {
   const per = song.timeSignature[0];
   const nSys = Math.ceil(song.measures.length / mps);
   svg.setAttribute('viewBox', `0 0 ${W} ${nSys * SYS_H + 10}`);
-  const geom = SV.geom = { systems: [], noteEls: {}, noteX: {}, mGroups: [], mps };
+  const geom = SV.geom = { systems: [], noteEls: {}, noteX: {}, mGroups: [], items: new Map(), mps };
   const under = el('g', {}, svg);
   el('rect', { id: 'band', class: 'band', x: -100, y: 0, width: 34, height: 0, rx: 8 }, svg);
   const clefs = [];
   for (let si = 0; si < nSys; si++) {
-    const sy = si * SYS_H, tTop = sy + 44, bTop = sy + 150, first = si === 0;
-    const lead = first ? 112 : 74, x0 = 8, x1 = W - 8;
+    const sy = si * SYS_H, tTop = sy + 60, bTop = sy + 166, first = si === 0;
+    const lead = first ? 112 : 74, x0 = 8;
+    const inSys = Math.min(mps, song.measures.length - si * mps);
+    const x1 = inSys < mps ? x0 + lead + inSys * ((W - 16 - lead) / mps) : W - 8;
     const g = el('g', {}, svg);
     for (let i = 0; i < 5; i++) {
       el('line', { class: 'staffline', x1: x0, x2: x1, y1: tTop + i * 10, y2: tTop + i * 10 }, g);
@@ -853,8 +873,8 @@ function renderScore() {
       const [a, b] = song.timeSignature;
       [[tTop + 18, a], [tTop + 38, b], [bTop + 18, a], [bTop + 38, b]].forEach(([y, v]) => txt({ class: 'timesig', x: 70, y, 'text-anchor': 'middle' }, String(v), g));
     }
-    const mw = (x1 - x0 - lead) / mps;
-    geom.systems.push({ top: tTop - 30, bottom: bTop + 70 });
+    const mw = (W - 16 - lead) / mps;
+    geom.systems.push({ top: tTop - 30, bottom: bTop + 70, left: x0 + lead });
     for (let k = 0; k < mps; k++) {
       const mi = si * mps + k, m = song.measures[mi];
       if (!m) break;
@@ -869,42 +889,71 @@ function renderScore() {
       } else el('line', { class: 'barline', x1: endX, x2: endX, y1: tTop, y2: bTop + 40 }, g);
       if (k === 0) txt({ class: 'mnum', x: x0 + 2, y: tTop - 20 }, String(m.number ?? mi + 1), mg);
       const bx = beat => mx + 22 + beat * ((mw - 34) / per);
-      if (m.text) txt({ class: 'direction', x: mx + 6, y: tTop - 32 }, m.text, mg);
+      // octave-shift line: dashed over every shifted bar, with the instruction where a run begins
+      const prevOct = mi > 0 ? (song.measures[mi - 1].octave || 0) : 0;
+      if (m.octave) {
+        el('line', { class: 'octline', x1: mx + (prevOct === m.octave && k > 0 ? 0 : 4), x2: endX, y1: tTop - 40, y2: tTop - 40 }, mg);
+        if (prevOct !== m.octave || k === 0) txt({ class: 'octtext', x: mx + 6, y: tTop - 45 }, `Both hands ${m.octave} octave${m.octave > 1 ? 's' : ''} higher`, mg);
+      }
+      if (m.text) txt({ class: 'direction', x: mx + 6, y: m.octave ? tTop - 28 : tTop - 48 }, m.text, mg);
+      if (m.below) txt({ class: 'direction', x: mx + 6, y: bTop + 82 }, m.below, mg);
       ['treble', 'bass'].forEach(staff => {
         const top = staff === 'treble' ? tTop : bTop;
         const yOf = s => staff === 'treble' ? top + 40 - (s - 30) * 5 : top + 40 - (s - 18) * 5;
         const mid = staff === 'treble' ? 34 : 22;
+        const lo = staff === 'treble' ? 30 : 18, hi = staff === 'treble' ? 38 : 26;
         let t = 0;
         (m[staff] || []).forEach(item => {
           const x = bx(t);
           if (item.r) { if (!item.hide) drawRest(mg, x, top + 20, item.r); t += item.r; return; }
-          const n = SV.notes.find(o => o.measure === mi && o.staff === staff && o.item === item);
-          const y = yOf(n.step), ng = el('g', { class: 'n' }, mg);
-          const lo = staff === 'treble' ? 30 : 18, hi = staff === 'treble' ? 38 : 26;
-          for (let s = lo - 2; s >= n.step; s -= 2) el('line', { class: 'ledger', x1: x - 10, x2: x + 10, y1: yOf(s), y2: yOf(s) }, ng);
-          for (let s = hi + 2; s <= n.step; s += 2) el('line', { class: 'ledger', x1: x - 10, x2: x + 10, y1: yOf(s), y2: yOf(s) }, ng);
-          el('ellipse', { class: 'head', cx: x, cy: y, rx: 6.6, ry: 4.7, transform: `rotate(-20 ${x} ${y})` }, ng);
-          if (item.d >= 2) el('ellipse', { class: 'hole', cx: x, cy: y, rx: item.d >= 4 ? 3.2 : 4.2, ry: item.d >= 4 ? 2.6 : 2.1, transform: `rotate(${item.d >= 4 ? -55 : -25} ${x} ${y})` }, ng);
-          if (item.d === 3 || item.d === 1.5) el('circle', { class: 'dotm', cx: x + 11, cy: n.step % 2 === 0 ? y - 3 : y, r: 1.9 }, ng);
-          const up = n.step < mid;
-          if (item.d < 4) {
-            if (up) el('line', { class: 'stem', x1: x + 6, x2: x + 6, y1: y - 1, y2: y - 34 }, ng);
-            else el('line', { class: 'stem', x1: x - 6, x2: x - 6, y1: y + 1, y2: y + 34 }, ng);
+          if (item.cluster) {
+            // palm cluster: a solid block the hand plays, not scored
+            const cy = item.p ? yOf(parsePitch(item.p).step) : top + 20;
+            el('rect', { class: 'cluster', x: x - 6, y: cy - 14, width: 12, height: 28 }, mg);
+            el('line', { class: 'stem', x1: x + (staff === 'treble' ? 6 : -6), x2: x + (staff === 'treble' ? 6 : -6), y1: cy + (staff === 'treble' ? -14 : 14), y2: cy + (staff === 'treble' ? -34 : 34) }, mg);
+            if (item.staccato) el('circle', { class: 'dotm', cx: x, cy: cy + (staff === 'treble' ? 20 : -20), r: 1.8 }, mg);
+            if (item.label) txt({ class: 'finger', x: x - 10, y: staff === 'treble' ? cy + 34 : cy - 34, 'text-anchor': 'middle' }, item.label, mg);
+            t += item.d; return;
           }
-          if (item.d === 0.5) el('path', { class: 'tie', d: up ? `M${x + 6} ${y - 34} q8 10 6 22` : `M${x - 6} ${y + 34} q8 -10 6 -22` }, ng);
-          if (item.staccato) el('circle', { class: 'dotm', cx: x, cy: up ? y + 9 : y - 9, r: 1.8 }, ng);
+          const ns = SV.notes.filter(o => o.measure === mi && o.staff === staff && o.item === item);
+          const steps = ns.map(o => o.step);
+          const minS = Math.min(...steps), maxS = Math.max(...steps);
+          const up = (minS + maxS) / 2 < mid;
+          const ng = el('g', { class: 'n' }, mg);
+          for (let s2 = lo - 2; s2 >= minS; s2 -= 2) el('line', { class: 'ledger', x1: x - 10, x2: x + 10, y1: yOf(s2), y2: yOf(s2) }, ng);
+          for (let s2 = hi + 2; s2 <= maxS; s2 += 2) el('line', { class: 'ledger', x1: x - 10, x2: x + 10, y1: yOf(s2), y2: yOf(s2) }, ng);
+          ns.forEach(n => {
+            const y = yOf(n.step);
+            const hg = ns.length > 1 ? el('g', { class: 'n' }, ng) : ng;
+            el('ellipse', { class: 'head', cx: x, cy: y, rx: 6.6, ry: 4.7, transform: `rotate(-20 ${x} ${y})` }, hg);
+            if (item.d >= 2) el('ellipse', { class: 'hole', cx: x, cy: y, rx: item.d >= 4 ? 3.2 : 4.2, ry: item.d >= 4 ? 2.6 : 2.1, transform: `rotate(${item.d >= 4 ? -55 : -25} ${x} ${y})` }, hg);
+            if (item.d === 3 || item.d === 1.5) el('circle', { class: 'dotm', cx: x + 11, cy: n.step % 2 === 0 ? y - 3 : y, r: 1.9 }, hg);
+            geom.noteEls[n.id] = hg; geom.noteX[n.id] = { x, sys: si, y };
+          });
+          const yHi = yOf(maxS), yLo = yOf(minS);
+          if (item.d < 4) {
+            if (up) el('line', { class: 'stem', x1: x + 6, x2: x + 6, y1: yLo - 1, y2: yHi - 34 }, ng);
+            else el('line', { class: 'stem', x1: x - 6, x2: x - 6, y1: yHi + 1, y2: yLo + 34 }, ng);
+          }
+          if (item.d === 0.5) el('path', { class: 'tie', d: up ? `M${x + 6} ${yHi - 34} q8 10 6 22` : `M${x - 6} ${yLo + 34} q8 -10 6 -22` }, ng);
+          if (item.staccato) el('circle', { class: 'dotm', cx: x, cy: up ? yLo + 9 : yHi - 9, r: 1.8 }, ng);
           if (item.accent) el('path', { class: 'mark', d: `M${x - 6} ${tTop - 12} L${x + 6} ${tTop - 8} L${x - 6} ${tTop - 4}` }, mg);
+          if (item.pos) txt({ class: 'pos', x: x - 8, y: staff === 'treble' ? Math.min(tTop - 16, (up ? yHi - 40 : yHi - 10) - 12) : bTop + 64 }, item.pos, mg);
           if (item.finger != null) {
-            const fy = staff === 'treble' ? (item.accent ? tTop - 18 : Math.min(tTop - 4, up ? y - 40 : y - 10)) : bTop + 56;
+            const fy = staff === 'treble' ? (item.accent ? tTop - 18 : Math.min(tTop - 4, up ? yHi - 40 : yHi - 10)) : Math.max(bTop + 54, (up ? yLo + 16 : yLo + 46));
             txt({ class: 'finger', x, y: fy, 'text-anchor': 'middle' }, String(item.finger), mg);
           }
           if (item.lyric) txt({ class: 'lyric', x, y: tTop + 84, 'text-anchor': 'middle' }, item.lyric, mg);
-          if (item.note) txt({ class: 'direction', x: x + 14, y: Math.max(y + 4, bTop + 72) }, item.note, mg);
-          geom.noteEls[n.id] = ng; geom.noteX[n.id] = { x, sys: si, y };
+          if (item.note) txt({ class: 'direction', x: x + 14, y: Math.max(yLo + 4, bTop + 72) }, item.note, mg);
+          geom.items.set(item, { x, sys: si, yHi, yLo, up, staff, lyricY: tTop + 84 });
           t += item.d;
         });
       });
-      if (m.dynamic) txt({ class: 'dyn', x: bx(0) - 26, y: tTop + 85 }, m.dynamic, mg);
+      if (m.dynamic) {
+        const firstLyric = ['treble', 'bass'].map(st => (m[st] || [])[0]).find(it => it && it.lyric && !it.r);
+        const half = firstLyric ? firstLyric.lyric.length * 3.6 : 0;
+        txt({ class: 'dyn', x: bx(0) - half - 5, y: tTop + 85, 'text-anchor': 'end' }, m.dynamic, mg);
+      }
     }
   }
   SV.notes.forEach(n => {
@@ -915,7 +964,37 @@ function renderScore() {
     const dy = down ? -7 : 7, c = down ? -16 : 16;
     el('path', { class: 'tie', d: `M${a.x + 7} ${a.y + dy} Q${(a.x + b.x) / 2} ${a.y + c} ${b.x - 7} ${b.y + dy}` }, svg);
   });
+  // slurs: item.slur 'start' ... 'end' in reading order (across staves too)
+  let open = null;
+  song.measures.forEach(m => ['treble', 'bass'].forEach(() => {}));
+  const order = [];
+  song.measures.forEach((m, mi) => { const its = []; ['treble', 'bass'].forEach(st => { let t = 0; (m[st] || []).forEach(it => { its.push({ it, t }); t += it.r || it.d || 0; }); }); its.sort((a, b) => a.t - b.t); its.forEach(o => order.push(o.it)); });
+  const opens = [];
+  order.forEach(it => {
+    if (it.slur === 'start' || it.slur === 'both') opens.push(it);
+    if ((it.slur === 'end' || it.slur === 'both') && opens.length) {
+      const a = geom.items.get(opens.shift()), b = geom.items.get(it);
+      if (a && b) drawSlur(svg, a, b, geom);
+    }
+  });
   SV.clefEls = clefs; fitClefs(clefs);
+}
+function drawSlur(svg, a, b, geom) {
+  const below = a.staff === 'bass' ? false : a.up;  // treble: under up-stems; bass: always over, away from fingerings
+  const ya = below ? a.yLo + 10 : a.yHi - 10, yb = below ? b.yLo + 10 : b.yHi - 10;
+  const seg = (x1, y1, x2, y2, lyricY, staff) => {
+    const bend = Math.min(22, 8 + (x2 - x1) * 0.04) * (below ? 1 : -1);
+    let yc = (below ? Math.max(y1, y2) : Math.min(y1, y2)) + bend;
+    if (!below && staff === 'bass') yc = Math.max(yc, lyricY + 6);
+    if (below && staff === 'treble') yc = Math.min(yc, lyricY - 14);
+    el('path', { class: 'slur', d: `M${x1} ${y1} C${x1 + (x2 - x1) * 0.25} ${yc} ${x1 + (x2 - x1) * 0.75} ${yc} ${x2} ${y2}` }, svg);
+  };
+  if (a.sys === b.sys) seg(a.x + 2, ya, b.x - 2, yb, a.lyricY, a.staff);
+  else {
+    seg(a.x + 2, ya, W - 12, ya, a.lyricY, a.staff);
+    const off = b.lyricY - a.lyricY; // same staff position on the next line
+    seg(geom.systems[b.sys].left - 6, ya + off, b.x - 2, yb, b.lyricY, a.staff);
+  }
 }
 function drawRest(g, x, cy, beats) {
   if (beats === 1) el('path', { class: 'rest', d: `M${x - 3} ${cy - 13} l6 7 l-5 6 l6 7 c-5 -3 -9 0 -5 6` }, g);
@@ -1056,7 +1135,12 @@ function songKey(midi, t) {
     const ev = SV.events[SV.evIdx]; if (!ev) return;
     const n = ev.notes.find(o => !o.matched && o.accept.includes(midi));
     if (n) { n.matched = true; setState(n, n.tries === 0 ? 'good' : 'late'); if (ev.notes.every(o => o.matched)) { SV.evIdx++; markCurrent(); } }
-    else { ev.notes.forEach(o => { if (!o.matched) o.tries++; }); SV.wrong++; toast(`That was ${NAMES[midi % 12]}. Try again!`, 'try'); }
+    else {
+      ev.notes.forEach(o => { if (!o.matched) o.tries++; }); SV.wrong++;
+      const oct = ev.notes.find(o => !o.matched && (o.midi - midi) % 12 === 0);
+      if (oct) { const d = (oct.midi - midi) / 12; toast(`Right note! Now play it ${Math.abs(d)} octave${Math.abs(d) > 1 ? 's' : ''} ${d > 0 ? 'higher' : 'lower'}.`, 'try', 2000); }
+      else toast(`That was ${NAMES[midi % 12]}. Try again!`, 'try');
+    }
     return;
   }
   let best = null, bestDt = Infinity;
