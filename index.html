@@ -184,6 +184,46 @@
   .stat { display: flex; justify-content: space-between; font-size: 15px; color: var(--quiet); font-variant-numeric: tabular-nums; }
   .stat b { color: var(--ink); }
 
+  /* today checklist */
+  .today { display: grid; gap: 10px; }
+  .todayhead { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .todayhead h3 { font-size: 22px; flex: 1 1 auto; }
+  .goal { height: 12px; border-radius: 6px; background: var(--paper); border: 1px solid var(--line); overflow: hidden; }
+  .goal > div { height: 100%; background: var(--good); width: 0; }
+  .item { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: var(--paper); border: 1.5px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+  .item:hover { border-color: var(--accent); }
+  .tick { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; flex: none; color: #fff; font-weight: 800; }
+  .item.done .tick { background: var(--good); border-color: var(--good); }
+  .item .what { flex: 1 1 auto; min-width: 0; font-weight: 700; }
+  .item .sub { display: block; font-weight: 400; font-size: 14px; color: var(--quiet); }
+  .teachnote { font-size: 15px; background: var(--sel); border-radius: 12px; padding: 10px 12px; }
+  /* games */
+  .gbar { position: static; }
+  .gstat { display: grid; justify-items: center; min-width: 64px; }
+  .gstat b { font-family: var(--display); font-weight: 600; font-size: 26px; font-variant-numeric: tabular-nums; }
+  .gstage { min-height: 320px; }
+  #gArea svg { display: block; width: 100%; height: auto; max-height: 58vh; }
+  .tile.challenge { border-style: dashed; }
+  .seg.wrap { display: flex; flex-wrap: wrap; }
+  .pick { border: 1.5px solid var(--line); background: var(--panel); border-radius: 999px; padding: 8px 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+  .pick[aria-checked="true"] { border-color: var(--accent); background: var(--band); }
+  .tap { display: block; margin: 12px auto 0; width: min(320px, 100%); height: 96px; border-radius: 20px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: var(--display); font-size: 32px; font-weight: 600; touch-action: manipulation; }
+  .tap.hit { transform: scale(0.97); filter: brightness(1.15); }
+  .wkey { fill: #fff; stroke: #9a958a; }
+  .bkey { fill: #222; }
+  .wkey.lit { fill: #8fb6ff; } .bkey.lit { fill: var(--accent); }
+  .wkey.ok { fill: #86d3a8; } .wkey.bad { fill: #f2a68a; }
+  .laser { stroke: var(--try); stroke-width: 2.5; stroke-dasharray: 6 5; }
+  .zap { fill: var(--star); }
+  .frog { fill: var(--good); }
+  .gtext { fill: var(--ink); font-family: var(--display); font-weight: 600; }
+  .gq { fill: var(--quiet); font-family: var(--body); font-size: 14px; }
+  .rline { stroke: var(--staff); stroke-width: 1.4; }
+  .n.ok .head, .n.ok .dotm { fill: var(--good); } .n.ok .stem { stroke: var(--good); }
+  .n.meh .head { fill: var(--warn); } .n.meh .stem { stroke: var(--warn); }
+  .n.no .head { fill: var(--try); } .n.no .stem { stroke: var(--try); }
+  .n.now .head { fill: var(--accent); } .n.now .stem { stroke: var(--accent); }
+
   /* progress */
   .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
   .kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
@@ -274,8 +314,14 @@
     </div>
   </div>
   <div class="chips" id="meChips"></div>
+  <div class="panel today" id="meToday"></div>
   <div class="panel trouble" id="meTrouble" hidden></div>
   <div class="grid2">
+    <button class="tile" id="tileGames">
+      <div class="label">Play and learn</div>
+      <h3>Games</h3>
+      <div class="meta" id="gamesMeta">Note Invaders, Echo, Interval Hop, Rhythm Drum, Family Challenge</div>
+    </button>
     <button class="tile" id="tileReader">
       <div class="label">Reading drill</div>
       <h3>Note Reader</h3>
@@ -402,6 +448,70 @@
   </div>
 </section>
 
+<!-- GAMES HUB -->
+<section data-view="games" class="stack" hidden>
+  <div class="grid2" id="gameTiles"></div>
+  <button class="tile challenge" id="tileChallenge">
+    <div class="label">Take turns</div>
+    <h3>Family Challenge</h3>
+    <div class="meta">Pick a game and two or more players. Everyone gets one turn, and the highest score wins.</div>
+  </button>
+</section>
+
+<!-- ONE GAME -->
+<section data-view="game" hidden>
+  <div class="bar gbar">
+    <div class="grow"><div class="songname" id="gTitle">Game</div><div class="muted" style="font-size:13px" id="gWho"></div></div>
+    <div class="gstat"><span class="label">Score</span><b id="gScore">0</b></div>
+    <div class="gstat"><span class="label" id="gInfoLabel">Level</span><b id="gInfo">1</b></div>
+    <button class="secondary" id="gStop">Stop</button>
+  </div>
+  <div class="panel stage gstage">
+    <div id="gArea"></div>
+    <div class="message" id="gMsg"></div>
+    <div class="overlay" id="gOverlay">
+      <h2 id="gOvTitle">Ready?</h2>
+      <p id="gOvText"></p>
+      <div><button class="primary" id="gStart">Start</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGE SETUP -->
+<section data-view="challenge" class="stack" hidden>
+  <div class="panel stack">
+    <h2 style="font-size:22px">1. Pick a game</h2>
+    <div class="seg wrap" role="radiogroup" id="chGames"></div>
+  </div>
+  <div class="panel stack">
+    <h2 style="font-size:22px">2. Who's playing?</h2>
+    <div id="chPlayers" class="chips"></div>
+    <p class="muted" style="margin:0">Players take turns at the piano. Each turn is one round of the game.</p>
+  </div>
+  <div><button class="primary" id="chGo" disabled>Start the challenge</button></div>
+</section>
+
+<!-- ASSIGNMENT EDITOR -->
+<section data-view="assign" class="stack" hidden>
+  <p class="muted" style="margin:0" id="asIntro">Choose what to practice each day this week. The checklist on the home screen ticks off each item as it's played.</p>
+  <div class="panel stack">
+    <h2 style="font-size:22px">Songs</h2>
+    <p class="muted" style="margin:0">Leave the bars empty to practice the whole song.</p>
+    <div id="asSongs"></div>
+  </div>
+  <div class="panel stack">
+    <h2 style="font-size:22px">Drills and games</h2>
+    <div id="asGames" class="chips"></div>
+  </div>
+  <div class="panel stack">
+    <h2 style="font-size:22px">Daily goal</h2>
+    <label class="check"><input type="number" id="asMinutes" min="5" max="90" step="5" value="15" style="width:80px;padding:8px;border:1.5px solid var(--line);border-radius:10px;background:var(--paper)"> minutes a day</label>
+    <div class="field"><label class="label" for="asNote">Note from the teacher</label><textarea id="asNote" rows="3" style="border:1.5px solid var(--line);border-radius:12px;padding:10px;background:var(--paper)"></textarea></div>
+    <div><span class="label">Also give this to</span><div id="asCopy" class="chips" style="margin-top:6px"></div></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="primary" id="asSave">Save this week's practice</button><button class="secondary" id="asClear">Clear</button></div>
+</section>
+
 <!-- SETTINGS -->
 <section data-view="settings" class="stack" hidden>
   <div class="panel stack">
@@ -457,6 +567,15 @@
       <button class="secondary" id="resTrouble" hidden>Practice the tricky bars</button>
       <button class="secondary" id="resClose">Look at my notes</button>
     </div>
+  </div>
+</div>
+
+<div class="modal" id="gModal" hidden>
+  <div class="card center" role="dialog" aria-labelledby="gmTitle">
+    <h2 id="gmTitle">Nice!</h2>
+    <div class="bigstars" id="gmStars"></div>
+    <div class="rows" id="gmRows"></div>
+    <div class="actions" id="gmActions"></div>
   </div>
 </div>
 
@@ -639,7 +758,7 @@ function songBest(pid, songId) {
 /* =========================================================
    ROUTER
    ========================================================= */
-const TITLES = { home: 'Family Piano', me: '', song: '', reader: 'Note Reader', progress: 'Progress', report: 'Weekly report', settings: 'Settings' };
+const TITLES = { home: 'Family Piano', me: '', song: '', reader: 'Note Reader', progress: 'Progress', report: 'Weekly report', settings: 'Settings', games: 'Games', game: 'Games', challenge: 'Family Challenge', assign: "This week's practice" };
 let view = 'home';
 function go(v, replace) {
   const hash = '#' + v;
@@ -650,7 +769,8 @@ function go(v, replace) {
 window.addEventListener('popstate', () => show((location.hash || '#home').slice(1)));
 function show(v) {
   if (!document.querySelector(`[data-view="${v}"]`)) v = 'home';
-  if (['me', 'song', 'reader', 'progress', 'report'].includes(v) && !me()) v = 'home';
+  if (v !== 'game' && GR.challenge) { App.current = GR.challenge.home; GR.challenge = null; }
+  if (['me', 'song', 'reader', 'progress', 'report', 'games', 'game', 'challenge', 'assign'].includes(v) && !me()) v = 'home';
   if (v === 'song' && !SV.song) v = 'me';
   leaveView(view);
   view = v;
@@ -660,17 +780,18 @@ function show(v) {
   $('setBtn').hidden = v !== 'home' && v !== 'settings' ? false : v === 'settings';
   const p = me();
   $('topTitle').textContent = v === 'me' && p ? 'Family Piano' : v === 'song' ? 'Play Along' : TITLES[v];
-  ({ home: renderHome, me: renderMe, song: renderSongView, reader: enterReader, progress: renderProgress, report: renderReport, settings: renderSettings })[v]();
+  ({ home: renderHome, me: renderMe, song: renderSongView, reader: enterReader, progress: renderProgress, report: renderReport, settings: renderSettings, games: renderGames, game: enterGame, challenge: renderChallenge, assign: renderAssign })[v]();
   window.scrollTo({ top: 0 });
 }
 function leaveView(v) {
   if (v === 'song') { stopSong(true); stopListen(); }
   if (v === 'reader') { R.playing = false; }
+  if (v === 'game') { stopGame(); $('gModal').hidden = true; }
   if (v === 'report') saveReportNote();
   keyHandler = null;
 }
 $('backBtn').addEventListener('click', () => {
-  const parent = { me: 'home', song: 'me', reader: 'me', progress: 'me', report: 'progress', settings: me() ? 'me' : 'home' }[view] || 'home';
+  const parent = { me: 'home', song: 'me', reader: 'me', progress: 'me', report: 'progress', games: 'me', game: 'games', challenge: 'games', assign: 'me', settings: me() ? 'me' : 'home' }[view] || 'home';
   go(parent);
 });
 $('homeBtn').addEventListener('click', () => go('me'));
@@ -736,6 +857,7 @@ function renderMe() {
   $('readerMeta').textContent = rd.length ? `Best round: ${Math.max(...rd.map(s => s.score))} of 10 · ${rd.length} round${rd.length === 1 ? '' : 's'} played` : 'Ten notes on the grand staff';
   // trouble spot from latest song run
   const lastTrouble = [...mySessions(p.id)].reverse().find(s => s.kind === 'song' && s.trouble && findSong(s.songId));
+  renderToday();
   const tb = $('meTrouble'); tb.textContent = '';
   if (lastTrouble) {
     const s = findSong(lastTrouble.songId);
@@ -1355,10 +1477,12 @@ function renderProgress() {
 }
 function describe(s) {
   if (s.kind === 'reader') return `Note Reader (${s.clef === 'both' ? 'both clefs' : s.clef})`;
+  if (s.kind === 'game') return s.title;
   return `${s.title}${s.whole ? '' : `, bars ${s.range[0]}–${s.range[1]}`} · ${s.mode === 'practice' ? 'practice' : 'with beat at ' + s.bpm}`;
 }
 function result(s) {
   if (s.kind === 'reader') return `${s.score}/10 first try`;
+  if (s.kind === 'game') return `${s.score}${s.game === 'rhythm' ? '% timing' : s.game === 'echo' ? '-note tune' : s.game === 'hop' ? '/10 first try' : ' notes zapped'}`;
   return s.mode === 'practice' ? `${s.notesPct}% first try` : `${s.notesPct}% notes, ${s.timePct}% on the beat`;
 }
 function drawChart(pid) {
@@ -1417,6 +1541,15 @@ function renderReport() {
   });
   body.append(h('div', { class: 'label' }, 'Songs'), h('div', { class: 'tablewrap' }, t));
   const rd = ss.filter(s => s.kind === 'reader');
+  const as = asg(p.id);
+  if (as && as.items.length) {
+    const days = [...Array(7)].map((_, i) => new Date(start.getTime() + i * 864e5));
+    const at = h('table'); at.append(h('tr', null, h('th', null, 'Assigned'), h('th', null, 'Days practiced')));
+    as.items.forEach(it => { const n = days.filter(d => itemDoneOn(it, ss.filter(s => dayKey(s.when) === dayKey(d)))).length; const [t, sub] = itemLabel(it); at.append(h('tr', null, h('td', null, `${t} (${sub})`), h('td', null, `${n} of 7`))); });
+    body.append(h('div', { class: 'label' }, "This week's assignment"), h('div', { class: 'tablewrap' }, at));
+  }
+  const gm = ss.filter(s => s.kind === 'game');
+  if (gm.length) body.append(h('div', { class: 'label' }, 'Games'), h('div', null, [...new Set(gm.map(s => s.game))].map(g => { const r = gm.filter(s => s.game === g); return `${r[0].title}: ${r.length} round${r.length === 1 ? '' : 's'}, best ${Math.max(...r.map(s => s.score))}`; }).join(' · ')));
   body.append(h('div', { class: 'label' }, 'Note reading'), h('div', null, rd.length ? `${rd.length} round${rd.length === 1 ? '' : 's'} of ten notes. Best: ${Math.max(...rd.map(s => s.score))} of 10 on the first try. Average: ${(rd.reduce((a, s) => a + s.score, 0) / rd.length).toFixed(1)}.` : 'No note-reading rounds this week.'));
   $('rpNote').value = ((App.settings.notes || {})[p.id] || {})[dayKey(start)] || '';
   $('rpNext').disabled = RP.offset === 0;
@@ -1506,7 +1639,532 @@ $('bkFile').addEventListener('change', ev => {
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 })();
 
-window.familyPiano = { App, SV, R, press: (m, t) => keyHandler && keyHandler(m, t || performance.now()), importLibraryJson, openSong, go };
+/* =========================================================
+   WEEKLY ASSIGNMENT (milestone 6)
+   ========================================================= */
+const GAME_INFO = {
+  reader:   { title: 'Note Reader',  blurb: 'Ten notes on the grand staff' },
+  invaders: { title: 'Note Invaders', blurb: 'Zap each note before it reaches the line' },
+  echo:     { title: 'Echo',          blurb: 'Listen, then play it back' },
+  hop:      { title: 'Interval Hop',  blurb: 'Help the frog hop up and down by 2nds, 3rds, 4ths and 5ths' },
+  rhythm:   { title: 'Rhythm Drum',   blurb: 'Tap the rhythm right on the beat' },
+};
+const asg = pid => ((App.settings.assign || {})[pid || App.current]) || null;
+const isToday = s => dayKey(s.when) === dayKey(Date.now());
+function itemDoneOn(item, ss) {
+  return ss.some(s => {
+    if (item.kind === 'song') {
+      if (s.kind !== 'song' || s.songId !== item.songId) return false;
+      if (!item.from) return true;
+      return s.range && s.range[0] <= (item.to || item.from) && s.range[1] >= item.from;
+    }
+    return item.game === 'reader' ? s.kind === 'reader' : (s.kind === 'game' && s.game === item.game);
+  });
+}
+function itemLabel(item) {
+  if (item.kind === 'song') {
+    const s = findSong(item.songId);
+    return [s ? s.title : 'Missing song', item.from ? `Bars ${item.from}–${item.to || item.from}` : 'Whole song'];
+  }
+  return [GAME_INFO[item.game].title, GAME_INFO[item.game].blurb];
+}
+function startItem(item) {
+  if (item.kind === 'song') {
+    const s = findSong(item.songId); if (!s) return;
+    const last = s.measures.length;
+    if (item.from) openSong(s.id, [Math.max(0, item.from - 1), Math.min(last, item.to || item.from) - 1], true);
+    else openSong(s.id);
+  } else if (item.game === 'reader') go('reader');
+  else openGame(item.game);
+}
+function renderToday() {
+  const box = $('meToday'); box.textContent = '';
+  const a = asg();
+  const ss = mySessions().filter(isToday);
+  const mins = Math.round(ss.reduce((t, s) => t + (s.seconds || 0), 0) / 60);
+  if (!a || !a.items.length) {
+    box.append(h('div', { class: 'todayhead' }, h('h3', null, "Today's practice"), h('button', { class: 'ghost', onclick: () => go('assign') }, 'Set it up')),
+      h('p', { class: 'muted', style: 'margin:0' }, "No practice list yet. A grown-up can add this week's assignment from the teacher."));
+    return;
+  }
+  const goal = a.minutes || 15, pct = Math.min(100, Math.round(mins / goal * 100));
+  const doneN = a.items.filter(it => itemDoneOn(it, ss)).length;
+  const bar = h('div', { class: 'goal' }, h('div')); bar.firstChild.style.width = pct + '%';
+  box.append(h('div', { class: 'todayhead' }, h('h3', null, "Today's practice"),
+    h('span', { class: 'muted' }, `${doneN} of ${a.items.length} done · ${mins} of ${goal} min`), h('button', { class: 'ghost', onclick: () => go('assign') }, 'Edit')), bar);
+  if (a.note) box.append(h('div', { class: 'teachnote' }, h('b', null, 'From the teacher: '), a.note));
+  a.items.forEach(it => {
+    const done = itemDoneOn(it, ss), [t, sub] = itemLabel(it);
+    box.append(h('button', { class: 'item' + (done ? ' done' : ''), onclick: () => startItem(it) },
+      h('span', { class: 'tick' }, done ? '✓' : ''), h('span', { class: 'what' }, t, h('span', { class: 'sub' }, sub)), h('span', { class: 'ghost' }, done ? 'Again' : 'Start')));
+  });
+  if (doneN === a.items.length && mins >= goal) box.append(h('div', { class: 'teachnote' }, h('b', null, 'All done for today! '), 'Great practicing.'));
+}
+
+let AS = null;
+function renderAssign() {
+  const p = me(), a = asg() || { items: [], minutes: 15, note: '' };
+  $('topTitle').textContent = `${p.name}'s week`;
+  AS = { songs: {}, games: new Set(a.items.filter(i => i.kind === 'game').map(i => i.game)), copy: new Set() };
+  a.items.filter(i => i.kind === 'song').forEach(i => { AS.songs[i.songId] = { from: i.from || '', to: i.to || '' }; });
+  const sb = $('asSongs'); sb.textContent = '';
+  const songs = allSongs();
+  if (!songs.length) sb.append(h('p', { class: 'muted', style: 'margin:0' }, 'Add a song file in Settings first.'));
+  songs.forEach(s => {
+    const on = !!AS.songs[s.id];
+    const cb = h('input', { type: 'checkbox', id: 'as-' + s.id }); cb.checked = on;
+    const from = h('input', { type: 'number', min: 1, max: s.measures.length, placeholder: 'from', 'aria-label': 'First bar', style: 'width:72px;padding:6px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper)' });
+    const to = h('input', { type: 'number', min: 1, max: s.measures.length, placeholder: 'to', 'aria-label': 'Last bar', style: 'width:72px;padding:6px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper)' });
+    if (on) { from.value = AS.songs[s.id].from; to.value = AS.songs[s.id].to; }
+    const sync = () => { if (cb.checked) AS.songs[s.id] = { from: from.value, to: to.value }; else delete AS.songs[s.id]; };
+    [cb, from, to].forEach(x => x.addEventListener('input', () => { if (x !== cb && (from.value || to.value)) cb.checked = true; sync(); }));
+    sb.append(h('div', { class: 'listrow' }, h('label', { class: 'check grow', for: 'as-' + s.id, style: 'color:var(--ink)' }, cb, `${s.title}`, h('span', { class: 'muted', style: 'font-weight:400' }, s.page ? ` · p.${s.page}` : '')),
+      h('span', { class: 'muted', style: 'font-size:14px' }, 'bars'), from, to));
+  });
+  const gb = $('asGames'); gb.textContent = '';
+  Object.keys(GAME_INFO).forEach(g => {
+    const b = h('button', { class: 'pick', role: 'checkbox', 'aria-checked': AS.games.has(g) }, GAME_INFO[g].title);
+    b.addEventListener('click', () => { if (AS.games.has(g)) AS.games.delete(g); else AS.games.add(g); b.setAttribute('aria-checked', AS.games.has(g)); });
+    gb.append(b);
+  });
+  $('asMinutes').value = a.minutes || 15; $('asNote').value = a.note || '';
+  const cp = $('asCopy'); cp.textContent = '';
+  App.profiles.filter(x => x.id !== p.id).forEach(x => {
+    const b = h('button', { class: 'pick', role: 'checkbox', 'aria-checked': 'false' }, avatar(x, 'sm'), x.name);
+    b.querySelector('.avatar').style.cssText += ';width:26px;height:26px;font-size:14px';
+    b.addEventListener('click', () => { if (AS.copy.has(x.id)) AS.copy.delete(x.id); else AS.copy.add(x.id); b.setAttribute('aria-checked', AS.copy.has(x.id)); });
+    cp.append(b);
+  });
+  if (!cp.childNodes.length) cp.append(h('span', { class: 'muted' }, 'No one else yet.'));
+}
+$('asSave').addEventListener('click', () => {
+  const items = [];
+  Object.entries(AS.songs).forEach(([id, r]) => {
+    const f = parseInt(r.from, 10) || null, t = parseInt(r.to, 10) || null;
+    items.push({ kind: 'song', songId: id, from: f || (t ? t : null), to: f && t ? Math.max(f, t) : (f || t || null) });
+  });
+  AS.games.forEach(g => items.push({ kind: 'game', game: g }));
+  const a = { items, minutes: Math.max(5, parseInt($('asMinutes').value, 10) || 15), note: $('asNote').value.trim(), set: new Date().toISOString() };
+  App.settings.assign = App.settings.assign || {};
+  [App.current, ...AS.copy].forEach(pid => { App.settings.assign[pid] = JSON.parse(JSON.stringify(a)); });
+  save('settings'); toast('Saved', 'good'); go('me');
+});
+$('asClear').addEventListener('click', () => { if (App.settings.assign) delete App.settings.assign[App.current]; save('settings'); toast('Cleared'); go('me'); });
+
+/* =========================================================
+   GAMES: shared helpers
+   ========================================================= */
+const LET = 'CDEFGAB', NAT = [0, 2, 4, 5, 7, 9, 11];
+const isNat = m => NAT.includes(((m % 12) + 12) % 12);
+const stepOfM = m => { const o = Math.floor(m / 12) - 1, i = NAT.indexOf(m % 12); return o * 7 + i; };
+const midiOfStep = s => { const o = Math.floor(s / 7), i = ((s % 7) + 7) % 7; return (o + 1) * 12 + NAT[i]; };
+const nameOf = m => LET[NAT.indexOf(m % 12)] || NAMES[m % 12];
+const nats = (lo, hi) => { const r = []; for (let m = lo; m <= hi; m++) if (isNat(m)) r.push(m); return r; };
+const pickOne = a => a[Math.floor(Math.random() * a.length)];
+const bestScore = (game, pid) => { const r = mySessions(pid).filter(s => s.kind === 'game' && s.game === game); return r.length ? Math.max(...r.map(s => s.score)) : null; };
+
+// a grand staff in an svg; returns helpers to place natural notes
+function grand(svg, x0, x1, only) {
+  const TY = 70, BY = 194, G = 12;
+  const g = el('g', {}, svg);
+  for (let i = 0; i < 5; i++) { el('line', { class: 'staffline', x1: x0, x2: x1, y1: TY + i * G, y2: TY + i * G }, g); if (!only) el('line', { class: 'staffline', x1: x0, x2: x1, y1: BY + i * G, y2: BY + i * G }, g); }
+  el('line', { class: 'barline', x1: x0, x2: x0, y1: TY, y2: only ? TY + 48 : BY + 48 }, g);
+  const t = txt({ class: 'clef', x: x0 + 8, y: TY + 40, 'font-size': 76 }, '\u{1D11E}', g), b = txt({ class: 'clef', x: x0 + 8, y: BY + 14, 'font-size': 76 }, '\u{1D122}', g);
+  if (only) b.remove();
+  fitClefs(only ? [[t, 'treble', 0, x0 + 12, TY - 20, TY + 68]] : [[t, 'treble', 0, x0 + 12, TY - 20, TY + 68], [b, 'bass', 0, x0 + 12, BY - 1, BY + 40]]);
+  const yOf = (m, clef) => clef === 'treble' ? TY + 48 - (stepOfM(m) - 30) * 6 : BY + 48 - (stepOfM(m) - 18) * 6;
+  const note = (parent, m, clef, x, whole) => {
+    const ng = el('g', { class: 'n' }, parent), y = yOf(m, clef), s = stepOfM(m);
+    const [lo, hi] = clef === 'treble' ? [30, 38] : [18, 26];
+    for (let k = lo - 2; k >= s; k -= 2) el('line', { class: 'ledger', x1: x - 16, x2: x + 16, y1: yOf(midiOfStep(k), clef), y2: yOf(midiOfStep(k), clef) }, ng);
+    for (let k = hi + 2; k <= s; k += 2) el('line', { class: 'ledger', x1: x - 16, x2: x + 16, y1: yOf(midiOfStep(k), clef), y2: yOf(midiOfStep(k), clef) }, ng);
+    el('ellipse', { class: 'head', cx: x, cy: y, rx: 10, ry: 7 }, ng);
+    if (whole) el('ellipse', { class: 'hole', cx: x, cy: y, rx: 4.8, ry: 3.2, transform: `rotate(-55 ${x} ${y})` }, ng);
+    return ng;
+  };
+  return { yOf, note, TY, BY };
+}
+function keyboardSvg(svg, lo, hi, y0, height) {
+  const whites = nats(lo, hi), ww = 560 / whites.length, keys = {};
+  whites.forEach((m, i) => { keys[m] = el('rect', { class: 'wkey', x: 20 + i * ww, y: y0, width: ww, height, rx: 4 }, svg); });
+  whites.forEach((m, i) => { if (m + 1 <= hi && !isNat(m + 1)) keys[m + 1] = el('rect', { class: 'bkey', x: 20 + (i + 1) * ww - ww * 0.3, y: y0, width: ww * 0.6, height: height * 0.6, rx: 3 }, svg); });
+  whites.forEach((m, i) => { if (m % 12 === 0) txt({ class: 'gq', x: 20 + i * ww + ww / 2, y: y0 + height - 8, 'text-anchor': 'middle' }, 'C', svg); });
+  return keys;
+}
+const flash = (k, cls, ms) => { if (!k) return; k.classList.add(cls); setTimeout(() => k.classList.remove(cls), ms || 300); };
+
+/* =========================================================
+   GAME RUNNER
+   ========================================================= */
+const GR = { id: null, game: null, score: 0, t0: 0, running: false, timers: [], raf: 0, challenge: null };
+function gTimer(fn, ms) { const t = setTimeout(() => { if (GR.running) fn(); }, ms); GR.timers.push(t); return t; }
+function setScore(n) { GR.score = n; $('gScore').textContent = n; }
+function setInfo(label, v) { $('gInfoLabel').textContent = label; $('gInfo').textContent = v; }
+function gMsg(text, kind) { const m = $('gMsg'); m.textContent = text || ''; m.className = 'message' + (kind ? ' ' + kind : ''); }
+function openGame(id) { GR.id = id; go('game'); }
+function enterGame() {
+  if (!GR.id || !GAMES[GR.id]) { go('games', true); return; }
+  const G = GAMES[GR.id], p = me();
+  $('topTitle').textContent = 'Games';
+  $('gTitle').textContent = G.title;
+  $('gWho').textContent = GR.challenge ? `Family Challenge · ${p.name}'s turn` : `${p.name} · best ${bestScore(GR.id) ?? '–'}`;
+  $('gArea').textContent = ''; gMsg(''); setScore(0); setInfo(G.infoLabel, '–');
+  $('gOvTitle').textContent = GR.challenge ? `${p.name}'s turn!` : G.title;
+  $('gOvText').textContent = G.howto;
+  $('gStart').textContent = 'Start';
+  $('gOverlay').hidden = false;
+  keyHandler = (m, t) => { if (GR.running && GR.game && GR.game.key) GR.game.key(m, t); };
+}
+function startGame() {
+  ensureAudio(); if (!midiReady) connect();
+  stopGame();
+  $('gOverlay').hidden = true; $('gArea').textContent = ''; gMsg('');
+  GR.running = true; GR.t0 = performance.now(); setScore(0);
+  GR.game = GAMES[GR.id].make($('gArea'));
+}
+function stopGame() {
+  GR.running = false; GR.timers.forEach(clearTimeout); GR.timers = []; cancelAnimationFrame(GR.raf); stopNodes();
+  if (GR.game && GR.game.stop) GR.game.stop();
+  GR.game = null;
+}
+function endGame(detail) {
+  if (!GR.running) return;
+  const G = GAMES[GR.id], score = GR.score, prev = bestScore(GR.id);
+  stopGame();
+  logSession({ kind: 'game', game: GR.id, title: G.title, score, detail: detail || '', seconds: Math.min(1800, Math.round((performance.now() - GR.t0) / 1000)) });
+  if (GR.challenge) return challengeTurnDone(score);
+  const stars = G.stars(score);
+  $('gmTitle').textContent = prev != null && score > prev ? 'New best!' : stars === 3 ? 'Wonderful!' : stars === 2 ? 'Nice playing!' : 'Good try!';
+  $('gmStars').innerHTML = [1, 2, 3].map(i => starSvg(i <= stars)).join('');
+  $('gmRows').innerHTML = '';
+  [[G.scoreLabel, String(score)], ...(detail ? [['', detail]] : []), ['Your best', String(Math.max(score, prev ?? 0))]]
+    .forEach(([k, v]) => $('gmRows').append(h('div', { class: 'row' }, h('span', null, k), h('b', null, v))));
+  const acts = $('gmActions'); acts.textContent = '';
+  acts.append(h('button', { class: 'primary', onclick: () => { $('gModal').hidden = true; startGame(); } }, 'Play again'),
+    h('button', { class: 'secondary', onclick: () => { $('gModal').hidden = true; go('games'); } }, 'More games'));
+  $('gModal').hidden = false;
+}
+$('gStart').addEventListener('click', startGame);
+$('gStop').addEventListener('click', () => { if (GR.running) endGame('Stopped early'); });
+
+/* =========================================================
+   NOTE INVADERS
+   ========================================================= */
+const INV_POOLS = [
+  { t: nats(60, 67), b: [] },                       // 1: treble Middle C position
+  { t: nats(60, 67), b: nats(53, 59) },             // 2: both hands, Middle C position
+  { t: nats(60, 72), b: nats(48, 59) },             // 3: C position, an octave each way
+  { t: nats(60, 77), b: nats(43, 59) },             // 4: wider
+  { t: nats(60, 81), b: nats(41, 59) },             // 5: the whole grand staff
+];
+const invaders = {
+  title: 'Note Invaders', infoLabel: 'Lives', scoreLabel: 'Notes zapped',
+  howto: 'Notes fly in from the right. Play each one before it reaches the red line. You have 3 lives, and it speeds up as you go.',
+  stars: s => s >= 30 ? 3 : s >= 15 ? 2 : 1,
+  make(area) {
+    const svg = el('svg', { viewBox: '0 20 600 250', role: 'img', 'aria-label': 'Note Invaders' }); area.append(svg);
+    const gs = grand(svg, 30, 590), LX = 120;
+    el('line', { class: 'laser', x1: LX, x2: LX, y1: 30, y2: 258 }, svg);
+    const layer = el('g', {}, svg);
+    let notes = [], lives = 3, level = 1, lastSpawn = -1e9, last = performance.now(), zaps = 0;
+    setInfo('Lives', '♥♥♥');
+    const spawn = () => {
+      const pool = INV_POOLS[Math.min(level, 5) - 1];
+      const clef = pool.b.length && Math.random() < 0.5 ? 'bass' : 'treble';
+      let m = pickOne(clef === 'treble' ? pool.t : pool.b);
+      const prev = notes[notes.length - 1]; if (prev && prev.m === m) m = pickOne(clef === 'treble' ? pool.t : pool.b);
+      notes.push({ m, clef, x: 600, g: gs.note(layer, m, clef, 600, true) });
+    };
+    const frame = now => {
+      if (!GR.running) return;
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      const speed = 34 + level * 12, gap = Math.max(1.1, 3.0 - level * 0.35) * 1000;
+      if (now - lastSpawn > gap && notes.length < 6) { spawn(); lastSpawn = now; }
+      notes.forEach(n => { n.x -= speed * dt; n.g.setAttribute('transform', `translate(${n.x - 600} 0)`); });
+      const front = notes[0];
+      if (front) front.g.setAttribute('class', 'n now');
+      if (front && front.x <= LX) {
+        notes.shift(); front.g.remove(); lives--;
+        setInfo('Lives', '♥'.repeat(lives) || '–');
+        gMsg(`Missed: that was ${nameOf(front.m)}`, 'try');
+        if (lives <= 0) return endGame(`Reached level ${level}`);
+      }
+      GR.raf = requestAnimationFrame(frame);
+    };
+    GR.raf = requestAnimationFrame(frame);
+    return {
+      peek: () => notes[0] && notes[0].m,
+      key(m) {
+        const front = notes[0]; if (!front) return;
+        if (m === front.m) {
+          notes.shift(); zaps++; setScore(zaps);
+          const y = gs.yOf(front.m, front.clef);
+          front.g.remove();
+          const z = el('circle', { class: 'zap', cx: front.x, cy: y, r: 14 }, layer); setTimeout(() => z.remove(), 180);
+          gMsg(nameOf(m) + '!', 'good');
+          if (zaps % 8 === 0) { level++; gMsg(`Level ${level}! Faster now.`, 'good'); }
+        } else {
+          gMsg(`That was ${NAMES[m % 12]}. Look again!`, 'try');
+          front.x -= 20; // a wrong key nudges it closer
+        }
+      }
+    };
+  }
+};
+
+/* =========================================================
+   ECHO
+   ========================================================= */
+const echo = {
+  title: 'Echo', infoLabel: 'Tune length', scoreLabel: 'Longest tune echoed',
+  howto: 'Listen to the tune, then play it back. Each time you get it right, the tune gets one note longer. Three misses and the round is over.',
+  stars: s => s >= 7 ? 3 : s >= 4 ? 2 : 1,
+  make(area) {
+    const svg = el('svg', { viewBox: '0 0 600 200', role: 'img', 'aria-label': 'Echo keyboard' }); area.append(svg);
+    const keys = keyboardSvg(svg, 60, 72, 20, 160);
+    let len = 2, seq = [], pos = 0, strikes = 0, listening = false, best = 0;
+    const pool = () => len <= 4 ? nats(60, 67) : nats(60, 72);
+    const play = () => {
+      listening = false; pos = 0;
+      seq = []; const p = pool();
+      while (seq.length < len) { const m = pickOne(p); if (seq.length && Math.abs(m - seq[seq.length - 1]) > 7) continue; seq.push(m); }
+      setInfo('Tune length', len); gMsg('Listen…');
+      const spb = 0.6, t0 = audio ? audio.currentTime + 0.4 : 0;
+      seq.forEach((m, i) => { if (audio) tone(m, t0 + i * spb, 0.5); gTimer(() => flash(keys[m], 'lit', 420), 400 + i * spb * 1000); });
+      gTimer(() => { listening = true; gMsg('Your turn!', 'good'); }, 400 + seq.length * spb * 1000);
+    };
+    const replay = () => seq.forEach((m, i) => gTimer(() => { if (audio) tone(m, audio.currentTime, 0.4); flash(keys[m], 'ok', 400); }, i * 450));
+    play();
+    return {
+      peek: () => listening ? seq[pos] : null,
+      key(m) {
+        flash(keys[m], 'lit', 200);
+        if (!listening) return;
+        if (m === seq[pos]) {
+          flash(keys[m], 'ok', 300); pos++;
+          if (pos === seq.length) { listening = false; best = Math.max(best, len); setScore(best); chime(); gMsg('Perfect echo!', 'good'); len++; gTimer(play, 1300); }
+        } else {
+          listening = false; strikes++; flash(keys[m], 'bad', 500);
+          gMsg(strikes >= 3 ? 'Here is how it went.' : `Not quite. Here it is again. (${3 - strikes} ${3 - strikes === 1 ? 'try' : 'tries'} left)`, 'try');
+          replay();
+          if (strikes >= 3) gTimer(() => endGame(`Strikes: 3`), seq.length * 450 + 900);
+          else gTimer(() => { pos = 0; listening = true; gMsg('Your turn!', 'good'); }, seq.length * 450 + 500);
+        }
+      }
+    };
+  }
+};
+
+/* =========================================================
+   INTERVAL HOP
+   ========================================================= */
+const ORD = { 2: '2nd', 3: '3rd', 4: '4th', 5: '5th' };
+const hop = {
+  title: 'Interval Hop', infoLabel: 'Hop', scoreLabel: 'Right on the first try (of 10)',
+  howto: 'The frog sits on a note. Read where it should hop (up or down a 2nd, 3rd, 4th or 5th) and play the note it lands on.',
+  stars: s => s >= 9 ? 3 : s >= 6 ? 2 : 1,
+  make(area) {
+    const svg = el('svg', { viewBox: '0 20 600 130', role: 'img', 'aria-label': 'Interval Hop' }); area.append(svg);
+    const gs = grand(svg, 30, 590, 'treble');
+    const layer = el('g', {}, svg);
+    let round = 0, first = 0, tries = 0, cur = null;
+    const next = () => {
+      round++; tries = 0; layer.textContent = '';
+      if (round > 10) return endGame(`${first} of 10 first try`);
+      setInfo('Hop', `${round}/10`);
+      const ints = round <= 4 ? [2, 3] : round <= 7 ? [2, 3, 4] : [2, 3, 4, 5];
+      const n = pickOne(ints), up = round <= 3 ? true : Math.random() < 0.55;
+      const lo = stepOfM(60), hi = stepOfM(79);
+      let s0;
+      do { s0 = lo + Math.floor(Math.random() * (hi - lo + 1)); } while (s0 + (up ? n - 1 : -(n - 1)) < lo || s0 + (up ? n - 1 : -(n - 1)) > hi);
+      const start = midiOfStep(s0), land = midiOfStep(s0 + (up ? n - 1 : -(n - 1)));
+      cur = { start, land, n, up };
+      gs.note(layer, start, 'treble', 200, true);
+      const fy = gs.yOf(start, 'treble') - 20;
+      cur.frog = drawFrog(layer, 200, fy);
+      txt({ class: 'gtext', x: 330, y: 52, 'font-size': 22 }, `Hop ${up ? 'UP' : 'DOWN'} a ${ORD[n]}`, layer);
+      gMsg(`The frog is on ${nameOf(start)}.`);
+    };
+    next();
+    return {
+      peek: () => cur && !cur.done ? cur.land : null,
+      key(m) {
+        if (!cur || cur.done) return;
+        tries++;
+        if (m === cur.land) {
+          cur.done = true; if (tries === 1) { first++; setScore(first); }
+          gs.note(layer, cur.land, 'treble', 400, true).setAttribute('class', 'n ok');
+          cur.frog.setAttribute('transform', `translate(200 ${gs.yOf(cur.land, 'treble') - gs.yOf(cur.start, 'treble')})`);
+          chime(); gMsg(`${nameOf(cur.land)}! A ${ORD[cur.n]} ${cur.up ? 'up' : 'down'}.`, 'good');
+          gTimer(next, 1300);
+        } else {
+          gMsg(`That was ${NAMES[m % 12]}. Count the lines and spaces: a ${ORD[cur.n]} means ${cur.n} notes counting the frog's.`, 'try');
+        }
+      }
+    };
+  }
+};
+function drawFrog(parent, x, y) {
+  const g = el('g', {}, parent);
+  el('ellipse', { class: 'frog', cx: x, cy: y, rx: 15, ry: 10 }, g);
+  el('circle', { class: 'frog', cx: x - 8, cy: y - 9, r: 5 }, g); el('circle', { class: 'frog', cx: x + 8, cy: y - 9, r: 5 }, g);
+  el('circle', { cx: x - 8, cy: y - 10, r: 2, fill: '#fff' }, g); el('circle', { cx: x + 8, cy: y - 10, r: 2, fill: '#fff' }, g);
+  return g;
+}
+
+/* =========================================================
+   RHYTHM DRUM
+   ========================================================= */
+const RHY = [
+  [[1, 1, 1, 1], [2, 2], [2, 1, 1], [1, 1, 2], [4], [1, 2, 1]],
+  [[1, 1, 1, 1], [2, 1, 1], [1, 1, 2], [3, 1], [1, 3], [1, -1, 1, 1], [1, 1, -1, 1], [2, -1, 1]],
+  [[1, 0.5, 0.5, 1, 1], [0.5, 0.5, 1, 2], [1, 1, 0.5, 0.5, 1], [0.5, 0.5, 0.5, 0.5, 2], [3, 1], [1, -1, 0.5, 0.5, 1]],
+];
+const rhythm = {
+  title: 'Rhythm Drum', infoLabel: 'Bar', scoreLabel: 'Timing score (%)',
+  howto: 'Read the rhythm. After the count-in (1, 2, 3, 4), tap it: any piano key, the TAP button, or the space bar. Six bars a round.',
+  stars: s => s >= 85 ? 3 : s >= 65 ? 2 : 1,
+  make(area) {
+    const svg = el('svg', { viewBox: '0 0 600 150', role: 'img', 'aria-label': 'Rhythm to tap' }); area.append(svg);
+    const pad = h('button', { class: 'tap', type: 'button' }, 'TAP'); area.append(pad);
+    const lvl = Math.min(3, 1 + Math.floor((mySessions().filter(s => s.game === 'rhythm').slice(-3).reduce((a, s) => Math.max(a, s.score), 0)) / 80));
+    let bar = 0, pts = 0, max = 0, cur = null, bpm = 72;
+    const draw = (pat) => {
+      svg.textContent = '';
+      el('line', { class: 'rline', x1: 30, x2: 570, y1: 90, y2: 90 }, svg);
+      el('line', { class: 'barline', x1: 30, x2: 30, y1: 70, y2: 110 }, svg); el('line', { class: 'barline', x1: 570, x2: 570, y1: 70, y2: 110 }, svg);
+      txt({ class: 'timesig', x: 50, y: 86, 'text-anchor': 'middle' }, '4', svg); txt({ class: 'timesig', x: 50, y: 108, 'text-anchor': 'middle' }, '4', svg);
+      let t = 0; const evs = [];
+      pat.forEach((d, i) => {
+        const dur = Math.abs(d), x = 90 + t * 120;
+        if (d < 0) drawRest(svg, x, 90, 1);
+        else {
+          const g = el('g', { class: 'n' }, svg);
+          el('ellipse', { class: 'head', cx: x, cy: 90, rx: 9, ry: 6.5, transform: `rotate(-20 ${x} 90)` }, g);
+          if (dur >= 2) el('ellipse', { class: 'hole', cx: x, cy: 90, rx: 5, ry: 2.6, transform: `rotate(-25 ${x} 90)` }, g);
+          if (dur === 3) el('circle', { class: 'dotm', cx: x + 15, cy: 87, r: 2.2 }, g);
+          if (dur < 4) el('line', { class: 'stem', x1: x + 8, x2: x + 8, y1: 88, y2: 50 }, g);
+          if (dur === 0.5) {
+            const nx = pat[i + 1] === 0.5 && (t * 2) % 2 === 0 ? x + 60 : null;
+            if (nx) el('rect', { class: 'restblock', x: x + 7, y: 48, width: 62, height: 6 }, svg);
+            else if (!((t * 2) % 2 === 1 && pat[i - 1] === 0.5)) el('path', { class: 'tie', d: `M${x + 8} 50 q12 8 8 22` }, g);
+          }
+          evs.push({ beat: t, g });
+        }
+        t += dur;
+      });
+      return evs;
+    };
+    const nextBar = () => {
+      bar++;
+      if (bar > 6) { return endGame(`Level ${lvl} rhythms`); }
+      setInfo('Bar', `${bar}/6`);
+      const pat = pickOne(RHY[lvl - 1]);
+      const evs = draw(pat);
+      const spb = 60 / bpm;
+      gMsg('Get ready… 1, 2, 3, 4');
+      let lead = 900 + 4 * spb * 1000;
+      if (audio) {
+        const t0 = audio.currentTime + 0.9;
+        for (let b = 0; b < 8; b++) click(t0 + b * spb, b % 4 === 0);
+        lead = (t0 + 4 * spb - audio.currentTime) * 1000;
+      }
+      const start = performance.now() + lead;
+      cur = { evs, start, spb, hits: [] };
+      evs.forEach(e => { e.at = start + e.beat * spb * 1000; e.hit = null; });
+      gTimer(() => gMsg('Tap!', 'good'), lead - 150);
+      gTimer(() => {
+        let s = 0;
+        evs.forEach(e => {
+          const d = e.hit == null ? Infinity : Math.abs(e.hit - e.at);
+          const v = d <= 140 ? 2 : d <= 280 ? 1 : 0; s += v;
+          e.g.setAttribute('class', 'n ' + (v === 2 ? 'ok' : v === 1 ? 'meh' : 'no'));
+        });
+        const extra = cur.hits.filter(x => x.extra).length;
+        pts += Math.max(0, s - extra); max += evs.length * 2;
+        setScore(Math.round(pts / max * 100));
+        gMsg(s === evs.length * 2 && !extra ? 'Right on the beat!' : extra ? `${extra} extra tap${extra > 1 ? 's' : ''}` : 'Watch the colored notes.', s === evs.length * 2 ? 'good' : 'try');
+        cur = null;
+        gTimer(nextBar, 1500);
+      }, lead + 4 * spb * 1000 + 350);
+    };
+    const hit = t => {
+      pad.classList.add('hit'); setTimeout(() => pad.classList.remove('hit'), 90);
+      if (!cur) return;
+      let best = null, bd = Infinity;
+      cur.evs.forEach(e => { if (e.hit == null) { const d = Math.abs(t - e.at); if (d < bd) { bd = d; best = e; } } });
+      if (best && bd <= 280) { best.hit = t; best.g.setAttribute('class', 'n now'); cur.hits.push({ t }); }
+      else if (t > cur.start - 300) cur.hits.push({ t, extra: true });
+    };
+    pad.addEventListener('pointerdown', e => { e.preventDefault(); hit(performance.now()); });
+    const onSpace = e => { if (e.code === 'Space' && GR.running) { e.preventDefault(); hit(performance.now()); } };
+    window.addEventListener('keydown', onSpace);
+    nextBar();
+    return { peek: () => cur && cur.evs.map(e => e.at), key: (m, t) => hit(t), stop: () => window.removeEventListener('keydown', onSpace) };
+  }
+};
+
+const GAMES = { invaders, echo, hop, rhythm };
+
+/* =========================================================
+   GAMES HUB + FAMILY CHALLENGE
+   ========================================================= */
+function renderGames() {
+  const box = $('gameTiles'); box.textContent = '';
+  ['invaders', 'echo', 'hop', 'rhythm', 'reader'].forEach(id => {
+    const best = id === 'reader' ? null : bestScore(id);
+    box.append(h('button', { class: 'tile', onclick: () => id === 'reader' ? go('reader') : openGame(id) },
+      h('div', { class: 'label' }, id === 'reader' ? 'Reading drill' : best != null ? `Your best: ${best}` : 'New'),
+      h('h3', null, GAME_INFO[id].title), h('div', { class: 'meta' }, GAME_INFO[id].blurb)));
+  });
+}
+$('tileGames').addEventListener('click', () => go('games'));
+$('tileChallenge').addEventListener('click', () => go('challenge'));
+
+const CH = { game: 'invaders', players: new Set() };
+function renderChallenge() {
+  const gb = $('chGames'); gb.textContent = '';
+  Object.keys(GAMES).forEach(id => {
+    const b = h('button', { role: 'radio', 'aria-checked': CH.game === id }, GAMES[id].title);
+    b.addEventListener('click', () => { CH.game = id; gb.querySelectorAll('button').forEach(x => x.setAttribute('aria-checked', x === b)); });
+    gb.append(b);
+  });
+  const pb = $('chPlayers'); pb.textContent = '';
+  if (!CH.players.size && App.current) CH.players.add(App.current);
+  App.profiles.forEach(p => {
+    const b = h('button', { class: 'pick', role: 'checkbox', 'aria-checked': CH.players.has(p.id) }, avatar(p, 'sm'), p.name);
+    b.querySelector('.avatar').style.cssText += ';width:26px;height:26px;font-size:14px';
+    b.addEventListener('click', () => { if (CH.players.has(p.id)) CH.players.delete(p.id); else CH.players.add(p.id); b.setAttribute('aria-checked', CH.players.has(p.id)); $('chGo').disabled = CH.players.size < 2; });
+    pb.append(b);
+  });
+  $('chGo').disabled = CH.players.size < 2;
+}
+$('chGo').addEventListener('click', () => {
+  const order = App.profiles.filter(p => CH.players.has(p.id)).map(p => p.id);
+  GR.challenge = { game: CH.game, order, idx: 0, scores: {}, home: App.current };
+  App.current = order[0]; GR.id = CH.game; go('game');
+});
+function challengeTurnDone(score) {
+  const C = GR.challenge; C.scores[App.current] = score; C.idx++;
+  const nextP = App.profiles.find(p => p.id === C.order[C.idx]);
+  const acts = $('gmActions'); acts.textContent = ''; $('gmRows').innerHTML = ''; $('gmStars').innerHTML = '';
+  if (nextP) {
+    $('gmTitle').textContent = `${me().name} scored ${score}`;
+    $('gmRows').append(h('div', { class: 'row' }, h('span', null, 'Next up'), h('b', null, nextP.name)));
+    acts.append(h('button', { class: 'primary', onclick: () => { $('gModal').hidden = true; App.current = nextP.id; enterGame(); } }, `Pass to ${nextP.name}`));
+  } else {
+    const ranked = C.order.map(id => [App.profiles.find(p => p.id === id), C.scores[id]]).sort((a, b) => b[1] - a[1]);
+    const top = ranked[0][1], winners = ranked.filter(r => r[1] === top).map(r => r[0].name);
+    $('gmTitle').textContent = winners.length > 1 ? `A tie: ${winners.join(' & ')}!` : `${winners[0]} wins!`;
+    $('gmStars').innerHTML = [1, 2, 3].map(() => starSvg(true)).join('');
+    ranked.forEach(([p, s], i) => $('gmRows').append(h('div', { class: 'row' }, h('span', null, `${i + 1}. ${p.name}`), h('b', null, String(s)))));
+    acts.append(h('button', { class: 'primary', onclick: () => { $('gModal').hidden = true; C.idx = 0; C.scores = {}; App.current = C.order[0]; enterGame(); } }, 'Rematch'),
+      h('button', { class: 'secondary', onclick: () => { $('gModal').hidden = true; App.current = C.home; GR.challenge = null; go('games'); } }, 'Done'));
+  }
+  $('gModal').hidden = false;
+}
+
+window.familyPiano = { GR, GAMES, App, SV, R, press: (m, t) => keyHandler && keyHandler(m, t || performance.now()), importLibraryJson, openSong, go };
 })();
 </script>
 </body>
