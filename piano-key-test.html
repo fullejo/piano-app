@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Piano Key Test</title>
+<style>
+  :root {
+    --bg: #f6f4ef; --panel: #ffffff; --ink: #1e1d1a; --quiet: #6b675f;
+    --line: #d8d3c8; --accent: #2f6fd6; --good: #2e8b57; --bad: #c0392b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #17181b; --panel: #222327; --ink: #f1efe9; --quiet: #a39f96; --line: #3a3b40; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    padding: 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
+  h1 { font-size: 20px; margin: 0; flex: 1 1 auto; }
+  button { font: inherit; font-size: 17px; padding: 12px 22px; border-radius: 10px;
+    border: none; background: var(--accent); color: #fff; cursor: pointer; }
+  button:active { transform: scale(0.98); }
+  #status { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--quiet); }
+  #dot { width: 12px; height: 12px; border-radius: 50%; background: var(--line); }
+  #dot.on { background: var(--good); } #dot.err { background: var(--bad); }
+
+  main { padding: 16px; display: grid; gap: 16px; }
+  .readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .label { font-size: 13px; color: var(--quiet); margin-bottom: 4px; }
+  .big { font-size: 40px; font-weight: 700; line-height: 1.1; }
+  .bar { height: 12px; background: var(--line); border-radius: 6px; overflow: hidden; margin-top: 10px; }
+  .bar > div { height: 100%; width: 0; background: var(--accent); transition: width 80ms; }
+
+  .kbwrap { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px; overflow-x: auto; }
+  #keyboard { position: relative; height: 180px; min-width: 900px; user-select: none; }
+  .white { position: absolute; top: 0; height: 100%; background: #fff;
+    border: 1px solid #9a958a; border-radius: 0 0 6px 6px; transition: background 60ms; }
+  .black { position: absolute; top: 0; height: 60%; background: #222;
+    border-radius: 0 0 4px 4px; z-index: 2; transition: background 60ms; }
+  .white.lit { background: #8fb6ff; }
+  .black.lit { background: var(--accent); }
+  .cname { position: absolute; bottom: 6px; width: 100%; text-align: center;
+    font-size: 11px; color: #777; pointer-events: none; }
+
+  #log { font-family: ui-monospace, monospace; font-size: 13px; max-height: 160px;
+    overflow-y: auto; color: var(--quiet); white-space: pre-line; }
+  .help { font-size: 15px; color: var(--quiet); line-height: 1.5; }
+  .help b { color: var(--ink); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Piano Key Test</h1>
+  <div id="status"><span id="dot"></span><span id="statusText">Not connected</span></div>
+  <button id="connect">Connect piano</button>
+</header>
+
+<main>
+  <div class="readout">
+    <div class="card"><div class="label">Last note</div><div class="big" id="note">–</div></div>
+    <div class="card"><div class="label">How hard (velocity)</div><div class="big" id="vel">–</div>
+      <div class="bar"><div id="velbar"></div></div></div>
+    <div class="card"><div class="label">Keys held now</div><div class="big" id="held">0</div></div>
+    <div class="card"><div class="label">Total presses</div><div class="big" id="count">0</div></div>
+  </div>
+
+  <div class="kbwrap"><div id="keyboard"></div></div>
+
+  <div class="card">
+    <div class="label">Messages from the piano</div>
+    <div id="log">Waiting…</div>
+  </div>
+
+  <div class="card help">
+    <b>How to test:</b> close Smart Pianist, plug the piano into the tablet, tap
+    <b>Connect piano</b>, allow access if Chrome asks, then play. Each key you press should light up here.
+    Play softly and hard to watch the velocity change.
+  </div>
+</main>
+
+<script>
+(() => {
+  // Piaggero NP-15: 61 keys, C2 (MIDI 36) to C7 (MIDI 96)
+  const LOW = 36, HIGH = 96;
+  const NAMES = ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+  const isBlack = n => [1,3,6,8,10].includes(n % 12);
+  const nameOf = n => NAMES[n % 12] + (Math.floor(n / 12) - 1);
+
+  const kb = document.getElementById('keyboard');
+  const keyEls = {};
+  const whites = [];
+  for (let n = LOW; n <= HIGH; n++) if (!isBlack(n)) whites.push(n);
+  const ww = 100 / whites.length;
+
+  whites.forEach((n, i) => {
+    const el = document.createElement('div');
+    el.className = 'white';
+    el.style.left = (i * ww) + '%';
+    el.style.width = ww + '%';
+    if (n % 12 === 0) {
+      const c = document.createElement('div');
+      c.className = 'cname'; c.textContent = nameOf(n);
+      el.appendChild(c);
+    }
+    kb.appendChild(el); keyEls[n] = el;
+  });
+  for (let n = LOW; n <= HIGH; n++) {
+    if (!isBlack(n)) continue;
+    const leftWhite = whites.indexOf(n - 1);
+    const el = document.createElement('div');
+    el.className = 'black';
+    el.style.width = (ww * 0.6) + '%';
+    el.style.left = ((leftWhite + 1) * ww - ww * 0.3) + '%';
+    kb.appendChild(el); keyEls[n] = el;
+  }
+
+  const $ = id => document.getElementById(id);
+  const held = new Set();
+  let count = 0;
+  const logLines = [];
+  const log = msg => {
+    logLines.unshift(msg);
+    if (logLines.length > 40) logLines.pop();
+    $('log').textContent = logLines.join('\n');
+  };
+  const setStatus = (text, state) => {
+    $('statusText').textContent = text;
+    $('dot').className = state || '';
+  };
+
+  function noteOn(n, v) {
+    held.add(n); count++;
+    if (keyEls[n]) keyEls[n].classList.add('lit');
+    $('note').textContent = nameOf(n);
+    $('vel').textContent = v;
+    $('velbar').style.width = Math.round(v / 127 * 100) + '%';
+    $('held').textContent = held.size;
+    $('count').textContent = count;
+    log(`${nameOf(n).padEnd(4)} down  velocity ${v}  (${performance.now().toFixed(0)} ms)`);
+  }
+  function noteOff(n) {
+    held.delete(n);
+    if (keyEls[n]) keyEls[n].classList.remove('lit');
+    $('held').textContent = held.size;
+    log(`${nameOf(n).padEnd(4)} up    (${performance.now().toFixed(0)} ms)`);
+  }
+
+  function onMessage(e) {
+    const [status, d1, d2] = e.data;
+    const type = status & 0xf0;
+    if (type === 0x90 && d2 > 0) noteOn(d1, d2);
+    else if (type === 0x80 || (type === 0x90 && d2 === 0)) noteOff(d1);
+    else if (type === 0xb0 && d1 === 64) log(`Sustain pedal ${d2 >= 64 ? 'down' : 'up'} (${d2})`);
+  }
+
+  function hookInputs(access) {
+    let names = [];
+    access.inputs.forEach(input => { input.onmidimessage = onMessage; names.push(input.name); });
+    if (names.length) setStatus('Connected: ' + names.join(', '), 'on');
+    else setStatus('No piano found — check the cable and close Smart Pianist', 'err');
+  }
+
+  $('connect').addEventListener('click', async () => {
+    if (!navigator.requestMIDIAccess) {
+      setStatus('This browser has no MIDI support — open the file in Chrome', 'err');
+      log('navigator.requestMIDIAccess is missing. Page address: ' + location.protocol);
+      return;
+    }
+    try {
+      setStatus('Asking for access…');
+      const access = await navigator.requestMIDIAccess();
+      hookInputs(access);
+      access.onstatechange = ev => {
+        log(`Device ${ev.port.name}: ${ev.port.state}`);
+        hookInputs(access);
+      };
+    } catch (err) {
+      setStatus('MIDI blocked: ' + err.name, 'err');
+      log(`Error: ${err.name} — ${err.message}. Page address: ${location.protocol}`);
+    }
+  });
+})();
+</script>
+</body>
+</html>
