@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play Along</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&family=Noto+Music&display=swap">
+<style>
+  /* Layout: the sheet music fills the page like an open book; controls ride in one bar above it. */
+  :root {
+    --paper: #f7f8fb; --panel: #ffffff; --ink: #1d2a44; --quiet: #5d6680; --line: #d9dce5;
+    --staff: #1d2a44; --star: #f2b632; --good: #2f9e6b; --warn: #c98a0c; --try: #d0603a;
+    --accent: #3a6ea5; --accent-ink: #ffffff; --band: rgba(58, 110, 165, 0.14);
+    --display: "Fredoka", "Nunito", system-ui, sans-serif;
+    --body: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --music: "Noto Music", "Bravura", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #141821; --panel: #1d2230; --ink: #eef1f7; --quiet: #a3abc0; --line: #343b4d;
+      --staff: #e6e9f2; --star: #f5c04a; --good: #4cc08a; --warn: #e5b04a; --try: #ef8a62;
+      --accent: #6d9bd6; --accent-ink: #0f1420; --band: rgba(109, 155, 214, 0.18); color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { margin: 0; }
+  body {
+    background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 17px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 12px 32px;
+  }
+  button, select, input { font: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-bottom: 12px; }
+  h1 { font-family: var(--display); font-weight: 600; font-size: 26px; margin: 0; flex: 1 1 auto; }
+  .status { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--quiet); }
+  .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--line); flex: none; }
+  .dot.on { background: var(--good); } .dot.err { background: var(--try); }
+
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 14px; padding: 10px 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 12px; }
+  .songname { font-family: var(--display); font-weight: 600; font-size: 20px; min-width: 0; }
+  .songsrc { font-size: 13px; color: var(--quiet); }
+  .grow { flex: 1 1 200px; min-width: 0; }
+  .seg { display: inline-grid; grid-template-columns: 1fr 1fr; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 3px; }
+  .seg button { border: 0; background: transparent; color: var(--ink); padding: 8px 12px; border-radius: 8px; font-weight: 700; font-size: 15px; }
+  .seg button[aria-checked="true"] { background: var(--accent); color: var(--accent-ink); }
+  .tempo { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--quiet); font-variant-numeric: tabular-nums; }
+  .tempo input { width: 120px; accent-color: var(--accent); }
+  .tempo b { color: var(--ink); min-width: 3ch; display: inline-block; }
+  .primary { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 12px; padding: 11px 20px; font-weight: 700; font-size: 17px; }
+  .secondary { background: transparent; color: var(--ink); border: 1.5px solid var(--line); border-radius: 12px; padding: 9px 14px; font-weight: 600; font-size: 15px; }
+  label.secondary { display: inline-block; }
+  .check { display: flex; align-items: center; gap: 6px; font-size: 15px; color: var(--quiet); }
+
+  .sheet { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 12px; position: relative; }
+  #score { display: block; width: 100%; height: auto; }
+  .staffline { stroke: var(--staff); stroke-width: 1.1; }
+  .barline { stroke: var(--staff); stroke-width: 1.3; }
+  .thick { stroke: var(--staff); stroke-width: 4; }
+  .clef { fill: var(--staff); font-family: var(--music); }
+  .timesig { fill: var(--staff); font-family: var(--display); font-weight: 600; font-size: 22px; }
+  .mnum { fill: var(--quiet); font-size: 12px; font-family: var(--body); font-weight: 700; }
+  .lyric { fill: var(--ink); font-size: 13px; font-family: var(--body); }
+  .finger { fill: var(--ink); font-size: 12px; font-weight: 700; font-family: var(--body); }
+  .dyn { fill: var(--ink); font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 700; font-size: 18px; }
+  .direction { fill: var(--quiet); font-size: 13px; font-style: italic; font-family: var(--body); }
+  .ledger, .stem { stroke: var(--staff); stroke-width: 1.3; }
+  .tie, .mark { stroke: var(--staff); fill: none; stroke-width: 1.3; }
+  .rest { stroke: var(--staff); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .head { fill: var(--staff); }
+  .hole { fill: var(--panel); }
+  .dotm { fill: var(--staff); }
+  .n.cur .head, .n.cur .dotm { fill: var(--accent); } .n.cur .stem { stroke: var(--accent); }
+  .n.good .head, .n.good .dotm { fill: var(--good); } .n.good .stem { stroke: var(--good); }
+  .n.late .head, .n.late .dotm { fill: var(--warn); } .n.late .stem { stroke: var(--warn); }
+  .n.miss .head, .n.miss .dotm { fill: var(--try); } .n.miss .stem { stroke: var(--try); }
+  #band { fill: var(--band); transition: x 120ms linear; }
+
+  .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 10px 18px; font-family: var(--display);
+    font-weight: 500; font-size: 22px; box-shadow: 0 6px 24px rgba(0,0,0,0.15); z-index: 20; }
+  .toast.good { color: var(--good); } .toast.try { color: var(--try); }
+  .count { position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none; z-index: 15;
+    font-family: var(--display); font-weight: 600; font-size: 140px; color: var(--accent); }
+
+  .results { position: fixed; inset: 0; z-index: 30; background: rgba(10, 14, 24, 0.45); display: grid; place-items: center; padding: 16px; }
+  .card { background: var(--panel); color: var(--ink); border-radius: 20px; padding: 24px; width: min(440px, 100%); display: grid; gap: 14px; text-align: center; }
+  .card h2 { font-family: var(--display); font-weight: 600; font-size: 30px; margin: 0; text-wrap: balance; }
+  .bigstars { display: flex; justify-content: center; gap: 8px; }
+  .bigstars svg { width: 48px; height: 48px; }
+  .bigstars path { stroke: var(--star); stroke-width: 1.6; fill: none; }
+  .bigstars path.on { fill: var(--star); }
+  .rows { display: grid; gap: 6px; text-align: left; }
+  .row { display: flex; justify-content: space-between; font-size: 17px; font-variant-numeric: tabular-nums; }
+  .row span { color: var(--quiet); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+  .empty { padding: 40px 16px; text-align: center; display: grid; gap: 12px; justify-items: center; }
+  .empty h2 { font-family: var(--display); font-weight: 600; margin: 0; font-size: 26px; }
+  .empty p { margin: 0; color: var(--quiet); max-width: 46ch; line-height: 1.5; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--quiet); margin: 8px 4px 0; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Play Along</h1>
+  <div class="status"><span class="dot" id="dot"></span><span id="statusText">Piano not connected</span></div>
+  <button class="secondary" id="connect">Connect piano</button>
+</header>
+
+<div class="bar" id="bar">
+  <div class="grow">
+    <div class="songname" id="songName">No song loaded</div>
+    <div class="songsrc" id="songSrc">Choose a song file from the tablet</div>
+  </div>
+  <div class="seg" role="radiogroup" aria-label="Mode">
+    <button role="radio" aria-checked="true" data-mode="practice" id="mode-practice">Practice</button>
+    <button role="radio" aria-checked="false" data-mode="perform" id="mode-perform">With beat</button>
+  </div>
+  <div class="tempo" id="tempoBox" hidden>
+    <label for="tempo">Speed</label>
+    <input type="range" id="tempo" min="40" max="160" step="5" value="80">
+    <b id="tempoVal">80</b>
+  </div>
+  <label class="check" id="clickBox" hidden><input type="checkbox" id="clicks" checked> Clicks</label>
+  <button class="primary" id="go" disabled>Start</button>
+  <label class="secondary" for="file">Choose song</label>
+  <input type="file" id="file" accept=".json,application/json" hidden>
+</div>
+
+<main class="sheet" id="sheet">
+  <div class="empty" id="empty">
+    <h2>Load a song to begin</h2>
+    <p>Tap <b>Choose song</b> and pick a song file saved on this tablet, such as pop-goes-the-weasel.json. The tablet remembers the last song you opened.</p>
+  </div>
+  <svg id="score" hidden role="img" aria-label="Sheet music"></svg>
+  <div class="legend" id="legend" hidden>
+    <span><i style="background:var(--accent)"></i>Play this next</span>
+    <span><i style="background:var(--good)"></i>Right</span>
+    <span><i style="background:var(--warn)"></i>Right note, early or late (or after a retry)</span>
+    <span><i style="background:var(--try)"></i>Missed</span>
+  </div>
+</main>
+
+<div class="toast" id="toast" hidden></div>
+<div class="count" id="count" hidden></div>
+
+<div class="results" id="results" hidden>
+  <div class="card" role="dialog" aria-labelledby="resTitle">
+    <h2 id="resTitle">Nice playing!</h2>
+    <div class="bigstars" id="resStars"></div>
+    <div class="rows" id="resRows"></div>
+    <div class="actions">
+      <button class="primary" id="again">Play again</button>
+      <button class="secondary" id="close">Look at my notes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (name, attrs, parent) => {
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const txt = (attrs, s, parent) => { const t = el('text', attrs, parent); t.textContent = s; return t; };
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+
+  // ---------- Pitch helpers ----------
+  const SEMI = [0, 2, 4, 5, 7, 9, 11];
+  const NAMES = ['C','C sharp','D','E flat','E','F','F sharp','G','A flat','A','B flat','B'];
+  function parsePitch(p) {
+    const m = /^([A-G])([#b]?)(-?\d)$/.exec(p);
+    if (!m) throw new Error('Bad pitch ' + p);
+    const i = 'CDEFGAB'.indexOf(m[1]), oct = Number(m[3]);
+    const acc = m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0;
+    return { midi: (oct + 1) * 12 + SEMI[i] + acc, step: oct * 7 + i };
+  }
+
+  // ---------- State ----------
+  const S = {
+    song: null, notes: [], expected: [], events: [],
+    mode: 'practice', bpm: 80, clicks: true,
+    running: false, evIdx: 0, startPerf: 0, raf: 0,
+    wrong: 0, results: null, nodes: []
+  };
+
+  // ---------- Build the timeline: every note, with its beat ----------
+  function buildTimeline(song) {
+    const per = song.timeSignature[0];
+    const notes = [];
+    song.measures.forEach((m, mi) => {
+      ['treble', 'bass'].forEach(staff => {
+        let t = mi * per;
+        (m[staff] || []).forEach(item => {
+          if (item.r) { t += item.r; return; }
+          const pp = parsePitch(item.p);
+          const accept = (item.accept || [item.p]).map(a => parsePitch(a).midi);
+          notes.push({ id: notes.length, staff, item, measure: mi, beat: t, dur: item.d,
+            midi: pp.midi, step: pp.step, accept, loose: !!m.loose, tiedFrom: null, tieTo: null, state: '' });
+          t += item.d;
+        });
+      });
+    });
+    // ties: an item with tie:true carries into the next note of the same pitch on its staff
+    notes.forEach(n => {
+      if (!n.item.tie) return;
+      const next = notes.find(o => o.staff === n.staff && o.midi === n.midi && Math.abs(o.beat - (n.beat + n.dur)) < 1e-6);
+      if (next) { next.tiedFrom = n; n.tieTo = next; }
+    });
+    const expected = notes.filter(n => !n.tiedFrom);
+    const byBeat = new Map();
+    expected.forEach(n => { const k = n.beat.toFixed(3); if (!byBeat.has(k)) byBeat.set(k, []); byBeat.get(k).push(n); });
+    const events = [...byBeat.entries()].sort((a, b) => a[0] - b[0]).map(([k, ns]) => ({ beat: Number(k), notes: ns }));
+    return { notes, expected, events };
+  }
+
+  // ---------- Draw the music ----------
+  const W = 1000, SYS_H = 250;
+  let geom = null; // per-note positions and per-system boxes
+
+  function render() {
+    const song = S.song, svg = $('score');
+    svg.textContent = '';
+    const mps = window.innerWidth < 700 ? 2 : 4;
+    const per = song.timeSignature[0];
+    const nSys = Math.ceil(song.measures.length / mps);
+    svg.setAttribute('viewBox', `0 0 ${W} ${nSys * SYS_H + 10}`);
+    geom = { systems: [], noteEls: {}, noteX: {}, mps };
+    const band = el('rect', { id: 'band', x: -100, y: 0, width: 34, height: 0, rx: 8 }, svg);
+
+    const clefs = [];
+    for (let si = 0; si < nSys; si++) {
+      const sy = si * SYS_H;
+      const tTop = sy + 44, bTop = sy + 150;
+      const first = si === 0;
+      const lead = first ? 112 : 74;
+      const x0 = 8, x1 = W - 8;
+      const g = el('g', {}, svg);
+      for (let i = 0; i < 5; i++) {
+        el('line', { class: 'staffline', x1: x0, x2: x1, y1: tTop + i * 10, y2: tTop + i * 10 }, g);
+        el('line', { class: 'staffline', x1: x0, x2: x1, y1: bTop + i * 10, y2: bTop + i * 10 }, g);
+      }
+      el('line', { class: 'barline', x1: x0, x2: x0, y1: tTop, y2: bTop + 40 }, g);
+      clefs.push([txt({ class: 'clef', x: x0 + 8, y: tTop + 30, 'font-size': 60 }, '\u{1D11E}', g), 'treble', tTop, x0 + 10]);
+      clefs.push([txt({ class: 'clef', x: x0 + 8, y: bTop + 10, 'font-size': 60 }, '\u{1D122}', g), 'bass', bTop, x0 + 10]);
+      if (first) {
+        const [a, b] = song.timeSignature;
+        txt({ class: 'timesig', x: 70, y: tTop + 18, 'text-anchor': 'middle' }, String(a), g);
+        txt({ class: 'timesig', x: 70, y: tTop + 38, 'text-anchor': 'middle' }, String(b), g);
+        txt({ class: 'timesig', x: 70, y: bTop + 18, 'text-anchor': 'middle' }, String(a), g);
+        txt({ class: 'timesig', x: 70, y: bTop + 38, 'text-anchor': 'middle' }, String(b), g);
+      }
+      const mw = (x1 - x0 - lead) / mps;
+      const sysInfo = { top: tTop - 30, bottom: bTop + 70, measures: [] };
+      geom.systems.push(sysInfo);
+
+      for (let k = 0; k < mps; k++) {
+        const mi = si * mps + k;
+        const m = song.measures[mi];
+        if (!m) break;
+        const mx = x0 + lead + k * mw;
+        const endX = mx + mw;
+        const isLast = mi === song.measures.length - 1;
+        if (isLast) {
+          el('line', { class: 'barline', x1: endX - 9, x2: endX - 9, y1: tTop, y2: bTop + 40 }, g);
+          el('line', { class: 'thick', x1: endX - 2, x2: endX - 2, y1: tTop, y2: bTop + 40 }, g);
+        } else {
+          el('line', { class: 'barline', x1: endX, x2: endX, y1: tTop, y2: bTop + 40 }, g);
+        }
+        if (k === 0) txt({ class: 'mnum', x: x0 + 2, y: tTop - 20 }, String(m.number), g);
+        const bx = beat => mx + 22 + beat * ((mw - 34) / per);
+        if (m.text) txt({ class: 'direction', x: mx + 6, y: tTop - 30 }, m.text, g);
+
+        ['treble', 'bass'].forEach(staff => {
+          const top = staff === 'treble' ? tTop : bTop;
+          const yOf = s => staff === 'treble' ? top + 40 - (s - 30) * 5 : top + 40 - (s - 18) * 5;
+          const mid = staff === 'treble' ? 34 : 22;
+          let t = 0;
+          (m[staff] || []).forEach(item => {
+            const x = bx(t);
+            if (item.r) {
+              if (!item.hide) drawRest(g, x, top + 20, item.r);
+              t += item.r; return;
+            }
+            const n = S.notes.find(o => o.measure === mi && o.staff === staff && o.item === item);
+            const y = yOf(n.step);
+            const ng = el('g', { class: 'n' }, g);
+            // ledger lines
+            const lo = staff === 'treble' ? 30 : 18, hi = staff === 'treble' ? 38 : 26;
+            for (let s = lo - 2; s >= n.step; s -= 2) el('line', { class: 'ledger', x1: x - 10, x2: x + 10, y1: yOf(s), y2: yOf(s) }, ng);
+            for (let s = hi + 2; s <= n.step; s += 2) el('line', { class: 'ledger', x1: x - 10, x2: x + 10, y1: yOf(s), y2: yOf(s) }, ng);
+            // head
+            el('ellipse', { class: 'head', cx: x, cy: y, rx: 6.6, ry: 4.7, transform: `rotate(-20 ${x} ${y})` }, ng);
+            if (item.d >= 2) el('ellipse', { class: 'hole', cx: x, cy: y, rx: 4.2, ry: 2.1, transform: `rotate(-25 ${x} ${y})` }, ng);
+            if (item.d === 3 || item.d === 1.5) el('circle', { class: 'dotm', cx: x + 11, cy: n.step % 2 === 0 ? y - 3 : y, r: 1.9 }, ng);
+            // stem (no stem on whole notes)
+            const up = n.step < mid;
+            if (item.d < 4) {
+              if (up) el('line', { class: 'stem', x1: x + 6, x2: x + 6, y1: y - 1, y2: y - 34 }, ng);
+              else el('line', { class: 'stem', x1: x - 6, x2: x - 6, y1: y + 1, y2: y + 34 }, ng);
+            }
+            if (item.staccato) el('circle', { class: 'dotm', cx: x, cy: up ? y + 9 : y - 9, r: 1.8 }, ng);
+            if (item.accent) el('path', { class: 'mark', d: `M${x - 6} ${tTop - 12} L${x + 6} ${tTop - 8} L${x - 6} ${tTop - 4}` }, g);
+            if (item.finger != null) {
+              const fy = staff === 'treble' ? (item.accent ? tTop - 18 : Math.min(tTop - 4, up ? y - 40 : y - 10)) : bTop + 56;
+              txt({ class: 'finger', x, y: fy, 'text-anchor': 'middle' }, String(item.finger), g);
+            }
+            if (item.lyric) txt({ class: 'lyric', x, y: tTop + 84, 'text-anchor': 'middle' }, item.lyric, g);
+            if (item.note) txt({ class: 'direction', x: x + 14, y: Math.max(y + 4, bTop + 72) }, item.note, g);
+            geom.noteEls[n.id] = ng;
+            geom.noteX[n.id] = { x, sys: si, y };
+            t += item.d;
+          });
+        });
+        if (m.dynamic) {
+          const firstX = bx(0);
+          txt({ class: 'dyn', x: firstX - 26, y: tTop + 85 }, m.dynamic, g);
+        }
+      }
+    }
+    // ties
+    S.notes.forEach(n => {
+      if (!n.tieTo) return;
+      const a = geom.noteX[n.id], b = geom.noteX[n.tieTo.id];
+      if (!a || !b || a.sys !== b.sys) return;
+      const up = n.step >= (n.staff === 'treble' ? 34 : 22); // stem down -> tie above
+      const dy = up ? -7 : 7, ctrl = up ? -16 : 16;
+      el('path', { class: 'tie', d: `M${a.x + 7} ${a.y + dy} Q${(a.x + b.x) / 2} ${a.y + ctrl} ${b.x - 7} ${b.y + dy}` }, svg);
+    });
+    S.clefEls = clefs;
+    fitClefs();
+    svg.removeAttribute('hidden'); $('legend').hidden = false; $('empty').hidden = true;
+    S.notes.forEach(paint);
+    placeBand();
+  }
+
+  function drawRest(g, x, cy, beats) {
+    if (beats === 1) {
+      el('path', { class: 'rest', d: `M${x - 3} ${cy - 13} l6 7 l-5 6 l6 7 c-5 -3 -9 0 -5 6` }, g);
+    } else {
+      const w = 12, y = beats >= 3 ? cy - 10 : cy - 5;
+      el('rect', { x: x - w / 2, y, width: w, height: 5, fill: 'var(--staff)' }, g);
+    }
+  }
+
+  // Size each clef glyph to its staff by measuring the glyph's ink, so it sits right in any font
+  function fitClefs() {
+    if (!S.clefEls) return;
+    const ctx = document.createElement('canvas').getContext('2d');
+    S.clefEls.forEach(([t, kind, top, left]) => {
+      const fam = getComputedStyle(t).fontFamily;
+      const glyph = kind === 'treble' ? '\u{1D11E}' : '\u{1D122}';
+      const [a, b] = kind === 'treble' ? [top - 14, top + 56] : [top - 1, top + 28];
+      ctx.font = `100px ${fam}`;
+      const m = ctx.measureText(glyph);
+      const h = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+      if (!h) return;
+      const s = (b - a) / h;
+      t.setAttribute('font-size', (100 * s).toFixed(2));
+      t.setAttribute('y', (a + m.actualBoundingBoxAscent * s).toFixed(2));
+      t.setAttribute('x', (left + m.actualBoundingBoxLeft * s).toFixed(2));
+    });
+  }
+  if (document.fonts && document.fonts.load) document.fonts.load('60px "Noto Music"', '\u{1D11E}\u{1D122}').then(fitClefs, fitClefs);
+
+  function paint(n) {
+    const g = geom && geom.noteEls[n.id];
+    if (!g) return;
+    const src = n.tiedFrom || n;
+    g.setAttribute('class', 'n' + (src.state ? ' ' + src.state : ''));
+  }
+  function setState(n, state) { n.state = state; paint(n); if (n.tieTo) paint(n.tieTo); }
+
+  function placeBand() {
+    const band = $('band');
+    if (!band || !geom) return;
+    const ev = S.events[S.evIdx];
+    if (!S.running || !ev) { band.setAttribute('x', -100); return; }
+    const p = geom.noteX[ev.notes[0].id];
+    const sys = geom.systems[p.sys];
+    band.setAttribute('x', p.x - 17);
+    band.setAttribute('y', sys.top);
+    band.setAttribute('height', sys.bottom - sys.top);
+    if (S.lastSys !== p.sys) {
+      S.lastSys = p.sys;
+      const svg = $('score');
+      const r = svg.getBoundingClientRect();
+      const scale = r.width / W;
+      const target = window.scrollY + r.top + sys.top * scale - 120;
+      window.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+    }
+  }
+
+  // ---------- Song loading ----------
+  function loadSong(json, remember) {
+    let song;
+    try {
+      song = typeof json === 'string' ? JSON.parse(json) : json;
+      if (!song.measures || !song.timeSignature) throw new Error('This file is not a song file.');
+      const tl = buildTimeline(song);
+      S.song = song; S.notes = tl.notes; S.expected = tl.expected; S.events = tl.events;
+    } catch (err) {
+      toast('Could not open that file: ' + err.message, 'try', 4000);
+      return;
+    }
+    if (remember) store.set('pa-song', JSON.stringify(song));
+    $('songName').textContent = song.title;
+    $('songSrc').textContent = song.source || '';
+    S.bpm = Number(store.get('pa-bpm-' + song.id)) || Math.min(song.tempo?.bpm || 80, 80);
+    $('tempo').value = S.bpm; $('tempoVal').textContent = S.bpm;
+    $('go').disabled = false;
+    stop(true);
+    render();
+  }
+  $('file').addEventListener('change', ev => {
+    const f = ev.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => loadSong(r.result, true);
+    r.readAsText(f);
+    ev.target.value = '';
+  });
+  const saved = store.get('pa-song');
+  if (saved) loadSong(saved, false);
+
+  // ---------- Controls ----------
+  function setMode(mode) {
+    S.mode = mode;
+    document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-checked', b.dataset.mode === mode));
+    $('tempoBox').hidden = mode !== 'perform';
+    $('clickBox').hidden = mode !== 'perform';
+    if (S.running) stop(true);
+  }
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+  $('tempo').addEventListener('input', e => {
+    S.bpm = Number(e.target.value); $('tempoVal').textContent = S.bpm;
+    if (S.song) store.set('pa-bpm-' + S.song.id, S.bpm);
+  });
+  $('clicks').addEventListener('change', e => { S.clicks = e.target.checked; });
+  $('go').addEventListener('click', () => { if (S.running) stop(true); else start(); });
+  $('again').addEventListener('click', () => { $('results').hidden = true; start(); });
+  $('close').addEventListener('click', () => { $('results').hidden = true; });
+
+  let toastTimer = 0;
+  function toast(msg, kind, ms) {
+    const t = $('toast'); t.textContent = msg; t.className = 'toast ' + (kind || ''); t.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, ms || 1400);
+  }
+
+  // ---------- Audio: metronome clicks ----------
+  let audio = null;
+  function ensureAudio() {
+    try {
+      if (!audio) audio = new (window.AudioContext || window.webkitAudioContext)();
+      if (audio.state === 'suspended') audio.resume();
+    } catch (e) { audio = null; }
+  }
+  function click(at, strong) {
+    const o = audio.createOscillator(), g = audio.createGain();
+    o.frequency.value = strong ? 1600 : 1100;
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(strong ? 0.35 : 0.22, at + 0.003);
+    g.gain.exponentialRampToValueAtTime(0.0001, at + 0.06);
+    o.connect(g).connect(audio.destination);
+    o.start(at); o.stop(at + 0.08);
+    S.nodes.push(o);
+  }
+
+  // ---------- Start / stop ----------
+  function resetMarks() {
+    S.notes.forEach(n => { n.state = ''; n.matched = false; n.dt = null; n.tries = 0; });
+    S.notes.forEach(paint);
+  }
+  function start() {
+    if (!S.song) return;
+    ensureAudio();
+    if (!midiReady) connect();
+    resetMarks();
+    S.running = true; S.evIdx = 0; S.wrong = 0; S.lastSys = -1;
+    $('go').textContent = 'Stop';
+    window.scrollTo({ top: 0 });
+    if (S.mode === 'practice') {
+      markCurrent();
+    } else {
+      const per = S.song.timeSignature[0];
+      const spb = 60 / S.bpm;
+      const t0 = audio ? audio.currentTime + 0.25 : 0;
+      const songStartAudio = t0 + per * spb;
+      const lastBeat = Math.max(...S.notes.map(n => n.beat + n.dur));
+      if (audio) {
+        for (let b = 0; b < per; b++) click(t0 + b * spb, b === 0);
+        if (S.clicks) for (let b = 0; b < lastBeat; b++) click(songStartAudio + b * spb, b % per === 0);
+      }
+      const lead = audio ? (songStartAudio - audio.currentTime) * 1000 : per * spb * 1000;
+      S.startPerf = performance.now() + lead;
+      // count-in numbers
+      for (let b = 0; b < per; b++) {
+        setTimeout(() => { if (!S.running) return; const c = $('count'); c.textContent = b + 1; c.hidden = false; }, lead - (per - b) * spb * 1000);
+      }
+      setTimeout(() => { $('count').hidden = true; }, lead);
+      S.raf = requestAnimationFrame(tick);
+    }
+  }
+  function stop(silent) {
+    S.running = false;
+    cancelAnimationFrame(S.raf);
+    S.nodes.forEach(o => { try { o.stop(); } catch (e) {} });
+    S.nodes = [];
+    $('count').hidden = true;
+    $('go').textContent = 'Start';
+    S.notes.forEach(n => { if (n.state === 'cur') n.state = ''; });
+    S.notes.forEach(paint);
+    placeBand();
+    if (silent) return;
+  }
+
+  // ---------- Practice mode: wait for the right keys ----------
+  function markCurrent() {
+    const ev = S.events[S.evIdx];
+    if (!ev) return finish();
+    ev.notes.forEach(n => { if (!n.matched) setState(n, 'cur'); });
+    placeBand();
+  }
+  function practiceKey(midi) {
+    const ev = S.events[S.evIdx];
+    if (!ev) return;
+    const n = ev.notes.find(o => !o.matched && o.accept.includes(midi));
+    if (n) {
+      n.matched = true;
+      setState(n, n.tries === 0 ? 'good' : 'late');
+      if (ev.notes.every(o => o.matched)) { S.evIdx++; markCurrent(); }
+    } else {
+      ev.notes.forEach(o => { if (!o.matched) o.tries++; });
+      S.wrong++;
+      toast(`That was ${NAMES[midi % 12]}. Try again!`, 'try');
+    }
+  }
+
+  // ---------- With-beat mode: notes are scored on time ----------
+  const WINDOW = 450, ONTIME = 140;
+  function expTime(n) { return S.startPerf + n.beat * 60000 / S.bpm; }
+  function performKey(midi, t) {
+    let best = null, bestDt = Infinity;
+    S.expected.forEach(n => {
+      if (n.matched || n.loose || !n.accept.includes(midi)) return;
+      const dt = t - expTime(n);
+      if (Math.abs(dt) <= WINDOW && Math.abs(dt) < Math.abs(bestDt)) { best = n; bestDt = dt; }
+    });
+    if (!best) {
+      // slowing-down ending: take the next loose note in order, whenever it comes
+      const nextLoose = S.expected.filter(n => n.loose && !n.matched).sort((a, b) => a.beat - b.beat)[0];
+      if (nextLoose && nextLoose.accept.includes(midi) && t >= expTime(nextLoose) - WINDOW &&
+          S.expected.every(n => n.loose || n.matched || n.state === 'miss')) {
+        best = nextLoose; bestDt = 0;
+      }
+    }
+    if (best) {
+      best.matched = true; best.dt = bestDt;
+      setState(best, best.loose || Math.abs(bestDt) <= ONTIME ? 'good' : 'late');
+    } else {
+      S.wrong++;
+      toast(`Extra note: ${NAMES[midi % 12]}`, 'try', 900);
+    }
+  }
+  function tick() {
+    if (!S.running) return;
+    const now = performance.now();
+    S.expected.forEach(n => {
+      if (!n.matched && !n.loose && n.state !== 'miss' && now > expTime(n) + WINDOW) setState(n, 'miss');
+    });
+    // band follows the beat, or the next loose note during the slow ending
+    const beat = (now - S.startPerf) * S.bpm / 60000;
+    let idx = 0;
+    S.events.forEach((ev, i) => { if (ev.beat <= beat + 0.25) idx = i; });
+    const looseNext = S.events.findIndex(ev => ev.notes.some(n => n.loose && !n.matched));
+    if (looseNext >= 0 && idx >= looseNext) idx = looseNext;
+    if (beat >= -0.5 && idx !== S.evIdx) { S.evIdx = idx; placeBand(); }
+    else if (beat >= -0.5 && S.lastSys === -1) placeBand();
+    const lastExp = Math.max(...S.expected.map(expTime));
+    const allDone = S.expected.every(n => n.matched || n.state === 'miss');
+    if (allDone || now > lastExp + 8000) {
+      S.expected.forEach(n => { if (!n.matched && n.state !== 'miss') setState(n, 'miss'); });
+      return finish();
+    }
+    S.raf = requestAnimationFrame(tick);
+  }
+
+  // ---------- Results ----------
+  function starPath(on) {
+    return `<svg viewBox="0 0 24 24"><path class="${on ? 'on' : ''}" d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" stroke-linejoin="round"/></svg>`;
+  }
+  function finish() {
+    const total = S.expected.length;
+    const good = S.expected.filter(n => n.state === 'good').length;
+    const late = S.expected.filter(n => n.state === 'late').length;
+    const missed = S.expected.filter(n => n.state === 'miss').length;
+    stop(true);
+    S.expected.forEach(paint);
+    let rows, stars, notesPct, timePct = null;
+    if (S.mode === 'practice') {
+      notesPct = Math.round(good / total * 100);
+      stars = notesPct >= 90 ? 3 : notesPct >= 70 ? 2 : 1;
+      rows = [['Right on the first try', `${good} of ${total}`], ['Needed another try', String(late)], ['Wrong keys pressed', String(S.wrong)]];
+    } else {
+      const hit = good + late;
+      notesPct = Math.round(hit / total * 100);
+      const timed = S.expected.filter(n => !n.loose && n.matched);
+      timePct = timed.length ? Math.round(timed.filter(n => Math.abs(n.dt) <= ONTIME).length / timed.length * 100) : 0;
+      stars = notesPct >= 90 && timePct >= 75 ? 3 : notesPct >= 75 ? 2 : 1;
+      rows = [['Notes played', `${hit} of ${total} (${notesPct}%)`], ['On the beat', `${timePct}%`], ['Missed', String(missed)], ['Extra notes', String(S.wrong)], ['Speed', `${S.bpm} beats a minute`]];
+    }
+    $('resTitle').textContent = stars === 3 ? 'Wonderful!' : stars === 2 ? 'Nice playing!' : 'Good start!';
+    $('resStars').innerHTML = [1, 2, 3].map(i => starPath(i <= stars)).join('');
+    $('resRows').innerHTML = rows.map(([a, b]) => `<div class="row"><span>${a}</span><b>${b}</b></div>`).join('');
+    $('results').hidden = false;
+    // keep a practice log on this tablet for the weekly teacher report
+    try {
+      const log = JSON.parse(store.get('pa-log') || '[]');
+      log.push({ when: new Date().toISOString(), song: S.song.id, title: S.song.title, mode: S.mode,
+        bpm: S.mode === 'perform' ? S.bpm : null, notesPct, timePct, stars, wrong: S.wrong });
+      store.set('pa-log', JSON.stringify(log.slice(-500)));
+    } catch (e) {}
+  }
+
+  // ---------- Input ----------
+  function onKey(midi, t) {
+    if (!S.running) return;
+    if (S.mode === 'practice') practiceKey(midi);
+    else performKey(midi, t);
+  }
+
+  let midiReady = false;
+  const setStatus = (text, state) => { $('statusText').textContent = text; $('dot').className = 'dot' + (state ? ' ' + state : ''); };
+  function onMessage(e) {
+    const [status, d1, d2] = e.data;
+    if ((status & 0xf0) === 0x90 && d2 > 0) {
+      const t = e.timeStamp && e.timeStamp > 0 && Math.abs(e.timeStamp - performance.now()) < 1000 ? e.timeStamp : performance.now();
+      onKey(d1, t);
+    }
+  }
+  function hook(access) {
+    let n = 0;
+    access.inputs.forEach(input => {
+      input.onmidimessage = onMessage;
+      if (input.open) input.open().catch(() => {});
+      if (input.state === 'connected') n++;
+    });
+    midiReady = n > 0;
+    if (midiReady) setStatus('Piano connected', 'on');
+    else setStatus('No piano found. Check the cable.', 'err');
+  }
+  async function connect() {
+    if (!navigator.requestMIDIAccess) { setStatus('This browser cannot read the piano. Use Chrome.', 'err'); return; }
+    try {
+      const access = await navigator.requestMIDIAccess();
+      hook(access);
+      access.onstatechange = () => hook(access);
+    } catch (err) {
+      setStatus('Piano access blocked. Allow MIDI devices for this site in Chrome.', 'err');
+    }
+  }
+  $('connect').addEventListener('click', () => { ensureAudio(); connect(); });
+  if (navigator.permissions && navigator.permissions.query) {
+    navigator.permissions.query({ name: 'midi' }).then(p => { if (p.state === 'granted') connect(); }).catch(() => {});
+  }
+
+  // re-flow when the screen turns between portrait and landscape
+  let lastMps = window.innerWidth < 700 ? 2 : 4;
+  window.addEventListener('resize', () => {
+    const mps = window.innerWidth < 700 ? 2 : 4;
+    if (mps !== lastMps && S.song && !S.running) { lastMps = mps; render(); }
+  });
+
+  // for testing without a piano
+  window.playAlong = { press: (midi, t) => onKey(midi, t || performance.now()), loadSong, state: S };
+})();
+</script>
+</body>
+</html>
