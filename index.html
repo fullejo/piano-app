@@ -10,25 +10,37 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&family=Noto+Music&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700;800&family=Outfit:wght@500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;600;700;800&family=Noto+Music&display=swap">
 <style>
-  /* Layout: a calm navy-and-paper "practice room"; one big working surface per screen, controls in a sticky bar above it. */
+  /* Layout: "Sunlit Studio": a deep-green side menu, a bright page, photo cards. Three color schemes x light/dark, chosen in Settings. */
   :root {
-    --paper: #f5f6fa; --panel: #ffffff; --ink: #1d2a44; --quiet: #5d6680; --line: #dcdfe8;
-    --staff: #1d2a44; --star: #f2b632; --good: #2f9e6b; --warn: #c98a0c; --try: #d0603a;
-    --accent: #3a6ea5; --accent-ink: #ffffff; --band: rgba(58, 110, 165, 0.16); --sel: rgba(242, 182, 50, 0.16);
-    --display: "Fredoka", "Nunito", system-ui, sans-serif;
-    --body: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --paper: #f6f8f7; --panel: #ffffff; --ink: #16302a; --quiet: #4c6660; --line: #dbe5e1;
+    --staff: #16302a; --star: #f2b632; --good: #1f9d7a; --warn: #c98a0c; --try: #d0603a;
+    --accent: #0f5c4c; --accent-ink: #ffffff; --band: rgba(63, 193, 165, 0.18); --sel: rgba(242, 182, 50, 0.16);
+    --nav: #0f5c4c; --nav-ink: #ffffff; --nav-quiet: #b8e3d8; --hi: #3fc1a5; --photo: #cfe7df;
+    --shadow: 0 1px 3px rgba(15, 46, 39, 0.12);
+    --display: "Outfit", "Nunito Sans", system-ui, sans-serif;
+    --body: "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --music: "Noto Music", "Bravura", serif;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --paper: #121620; --panel: #1c2130; --ink: #eef1f7; --quiet: #a3abc0; --line: #333a4c;
-      --staff: #e6e9f2; --star: #f5c04a; --good: #4cc08a; --warn: #e5b04a; --try: #ef8a62;
-      --accent: #6d9bd6; --accent-ink: #0f1420; --band: rgba(109, 155, 214, 0.2); --sel: rgba(245, 192, 74, 0.14);
-      color-scheme: dark;
-    }
+  :root[data-scheme="concert"] {
+    --paper: #f4f1ea; --panel: #ffffff; --ink: #1f1c17; --quiet: #5f574a; --line: #e0d9cc; --staff: #1f1c17;
+    --accent: #8a6224; --accent-ink: #ffffff; --band: rgba(214, 168, 90, 0.2); --nav: #15161a; --nav-ink: #f2efe8; --nav-quiet: #b9b2a5; --hi: #d6a85a; --photo: #e6dccb;
+    --display: "Fraunces", Georgia, serif; --body: "Manrope", system-ui, sans-serif;
   }
+  :root[data-scheme="family"] {
+    --paper: #eef1f6; --panel: #ffffff; --ink: #1d2a44; --quiet: #4a5672; --line: #dcdfe8; --staff: #1d2a44;
+    --accent: #3a6ea5; --accent-ink: #ffffff; --band: rgba(58, 110, 165, 0.16); --nav: #1d2a44; --nav-ink: #ffffff; --nav-quiet: #b9c4dc; --hi: #f2785c; --photo: #d7e3f4;
+    --display: "Fredoka", "Nunito", system-ui, sans-serif; --body: "Nunito", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-mode="light"]) { --paper: #10161a; --panel: #1a2226; --ink: #eef3f1; --quiet: #a5b6b1; --line: #2e3a3e; --staff: #e6eeeb; --star: #f5c04a; --good: #4cc08a; --warn: #e5b04a; --try: #ef8a62; --accent: #3fc1a5; --accent-ink: #0b2620; --band: rgba(63, 193, 165, 0.2); --sel: rgba(245, 192, 74, 0.14); --nav: #0b3a30; --photo: #22342f; --shadow: none; color-scheme: dark; }
+    :root[data-scheme="concert"]:not([data-mode="light"]) { --paper: #121317; --panel: #1c1d22; --ink: #f2efe8; --quiet: #b9b2a5; --line: #2c2d33; --staff: #ece7dd; --accent: #d6a85a; --accent-ink: #15161a; --band: rgba(214, 168, 90, 0.2); --nav: #0b0c0f; --photo: #2b2620; }
+    :root[data-scheme="family"]:not([data-mode="light"]) { --paper: #121620; --panel: #1c2130; --ink: #eef1f7; --quiet: #a3abc0; --line: #333a4c; --staff: #e6e9f2; --accent: #6d9bd6; --accent-ink: #0f1420; --band: rgba(109, 155, 214, 0.2); --nav: #10172a; --photo: #24304a; }
+  }
+  :root[data-mode="dark"] { --paper: #10161a; --panel: #1a2226; --ink: #eef3f1; --quiet: #a5b6b1; --line: #2e3a3e; --staff: #e6eeeb; --star: #f5c04a; --good: #4cc08a; --warn: #e5b04a; --try: #ef8a62; --accent: #3fc1a5; --accent-ink: #0b2620; --band: rgba(63, 193, 165, 0.2); --sel: rgba(245, 192, 74, 0.14); --nav: #0b3a30; --photo: #22342f; --shadow: none; color-scheme: dark; }
+  :root[data-mode="dark"][data-scheme="concert"] { --paper: #121317; --panel: #1c1d22; --ink: #f2efe8; --quiet: #b9b2a5; --line: #2c2d33; --staff: #ece7dd; --accent: #d6a85a; --accent-ink: #15161a; --band: rgba(214, 168, 90, 0.2); --nav: #0b0c0f; --photo: #2b2620; }
+  :root[data-mode="dark"][data-scheme="family"] { --paper: #121620; --panel: #1c2130; --ink: #eef1f7; --quiet: #a3abc0; --line: #333a4c; --staff: #e6e9f2; --accent: #6d9bd6; --accent-ink: #0f1420; --band: rgba(109, 155, 214, 0.2); --nav: #10172a; --photo: #24304a; }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   html, body { margin: 0; }
@@ -42,6 +54,56 @@
   button { cursor: pointer; }
   :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; text-wrap: balance; }
+
+  /* side menu (bottom bar on phones) */
+  .sidenav { position: fixed; left: 0; top: 0; bottom: 0; width: 96px; z-index: 20; background: var(--nav); display: flex; flex-direction: column; align-items: center; gap: 18px;
+    padding: calc(20px + env(safe-area-inset-top, 0px)) 0 calc(16px + env(safe-area-inset-bottom, 0px)); padding-left: env(safe-area-inset-left, 0px); }
+  .sidenav button { background: transparent; border: 0; color: var(--nav-quiet); display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; font-weight: 800; padding: 6px 4px; border-radius: 12px; width: 76px; }
+  .sidenav button svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .sidenav button[aria-current="page"] { color: var(--nav-ink); background: rgba(255, 255, 255, 0.12); }
+  .sidenav .me { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-family: var(--display); font-weight: 700; font-size: 22px; padding: 0; }
+  .sidenav .spacer { flex: 1 1 auto; }
+  body.withnav { padding-left: calc(96px + max(24px, env(safe-area-inset-left, 0px))); }
+  @media (max-width: 700px) {
+    .sidenav { top: auto; right: 0; width: auto; height: auto; flex-direction: row; justify-content: space-around; gap: 0; padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px)); }
+    .sidenav .me, .sidenav .spacer, .sidenav .navset { display: none; }
+    .sidenav button { width: auto; flex: 1 1 0; }
+    body.withnav { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  }
+  .photo { background-color: var(--photo); background-size: cover; background-position: center; }
+  .pill2 { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--quiet); background: var(--panel); border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; }
+  .lessonstrip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 900px) { .lessonstrip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .lcardp { background: var(--panel); border: 0; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; text-align: center; padding: 0; color: var(--ink); }
+  .lcardp .photo { height: 120px; }
+  .lcardp .tx { padding: 12px 14px; display: grid; gap: 2px; }
+  .lcardp .k { font-size: 13px; color: var(--quiet); }
+  .lcardp .n { font-weight: 800; color: var(--accent); }
+  .lcardp.next { box-shadow: 0 0 0 3px var(--hi); }
+  .recent { display: flex; gap: 14px; flex-wrap: wrap; }
+  .recent button { background: none; border: 0; padding: 0; display: grid; justify-items: center; gap: 6px; width: 96px; color: var(--ink); font-size: 13px; font-weight: 700; text-align: center; }
+  .recent .photo { width: 84px; height: 84px; border-radius: 50%; }
+  .phototile { padding: 0 !important; overflow: hidden; }
+  .phototile .photo { height: 130px; }
+  .phototile .tx { padding: 14px 18px 18px; display: grid; gap: 6px; }
+  .songrow .thumb { width: 52px; height: 52px; border-radius: 12px; grid-row: 1 / span 2; }
+  .songrow.withthumb { grid-template-columns: 52px minmax(0, 1fr) auto; }
+  .songrow.withthumb .t, .songrow.withthumb .b { grid-column: 2; }
+  .songrow.withthumb .s { grid-column: 3; }
+  .banner { border-radius: 22px; min-height: 220px; display: flex; align-items: flex-end; padding: 28px; margin-top: 8px; position: relative; overflow: hidden; }
+  .banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0) 65%); }
+  .banner > * { position: relative; z-index: 1; color: #fff; }
+  .banner h2 { font-size: clamp(28px, 5vw, 44px); }
+
+  .dashhead { display: flex; align-items: flex-end; gap: 16px; }
+  .sechead { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .sechead h3 { font-family: var(--display); font-size: 21px; margin: 0; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 900px) { .grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  body.withnav .tile { border: 0; box-shadow: var(--shadow); border-radius: 14px; }
+  body.withnav .panel, body.withnav .songrow { border-color: transparent; box-shadow: var(--shadow); }
+  .coursecard.phototile { border-top: 0 !important; }
+  .coursecard .photo { height: 150px; }
 
   /* top bar */
   .top { display: flex; align-items: center; gap: 12px; padding-block: 12px; }
@@ -306,6 +368,16 @@
 </style>
 </head>
 <body>
+<nav class="sidenav" id="sidenav" aria-label="Main" hidden>
+  <button class="me" id="navMe" aria-label="Switch person"></button>
+  <button data-nav="me"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</button>
+  <button data-nav="courses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/></svg>Courses</button>
+  <button data-nav="songs"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>Songs</button>
+  <button data-nav="games"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="12" rx="4"/><path d="M7 11v4M5 13h4"/><circle cx="16" cy="12" r="1"/><circle cx="18" cy="14" r="1"/></svg>Games</button>
+  <button data-nav="progress"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progress</button>
+  <span class="spacer"></span>
+  <button class="navset" data-nav="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>Settings</button>
+</nav>
 
 <header class="top">
   <button class="iconbtn" id="backBtn" aria-label="Back" hidden><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
@@ -317,51 +389,50 @@
 
 <!-- HOME -->
 <section data-view="home" hidden>
-  <div class="who">
-    <h2>Who's practicing today?</h2>
-    <p id="homeSub">Tap your name to start.</p>
+  <div class="banner photo" id="homeBanner">
+    <div><h2>Who's practicing today?</h2>
+    <p id="homeSub" style="margin:6px 0 0;font-size:17px">Tap your name to start.</p></div>
   </div>
   <div class="people" id="people"></div>
 </section>
 
 <!-- PERSON DASHBOARD -->
 <section data-view="me" class="stack" hidden>
-  <div class="hello">
-    <div class="avatar" id="meAvatar"></div>
-    <div class="grow">
-      <h2 id="meHello">Hi!</h2>
-      <div class="muted" id="meLine"></div>
-    </div>
+  <div class="dashhead">
+    <div class="grow"><h2 id="meHello" style="font-size:clamp(28px,4.5vw,38px)">Hi!</h2><div class="muted" id="meLine" style="font-size:17px"></div></div>
+    <div class="avatar" id="meAvatar" hidden></div>
   </div>
   <div class="chips" id="meChips"></div>
-  <div class="panel today" id="meToday"></div>
+  <div class="stack" id="meCourseWrap" style="gap:12px" hidden>
+    <div class="sechead"><h3 id="meCourseTitle">Current course</h3><button class="ghost" onclick="go('courses')">All courses</button></div>
+    <div class="lessonstrip" id="meCourse"></div>
+  </div>
   <div class="panel trouble" id="meTrouble" hidden></div>
-  <div class="grid2">
-    <button class="tile" id="tileCourses">
-      <div class="label">Learn step by step</div>
-      <h3>Courses</h3>
-      <div class="meta" id="coursesMeta">Foundations, Bach &amp; Mozart, Hymns, Folk</div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel today" id="meToday"></div>
+    <div class="stack" style="gap:12px" id="meRecentWrap"><div class="sechead"><h3>Recently played</h3><button class="ghost" onclick="go('songs')">All songs</button></div><div class="recent" id="meRecent"></div></div>
+  </div>
+  <div class="sechead"><h3>Explore</h3></div>
+  <div class="grid4">
+    <button class="tile phototile" id="tileCourses"><div class="photo" data-ph="6"></div><div class="tx">
+      <div class="label">Learn step by step</div><h3>Courses</h3><div class="meta" id="coursesMeta">Foundations, Bach &amp; Mozart, Hymns, Folk</div></div>
     </button>
-    <button class="tile" id="tileGames">
-      <div class="label">Play and learn</div>
-      <h3>Games</h3>
-      <div class="meta" id="gamesMeta">Note Invaders, Echo, Interval Hop, Rhythm Drum, Family Challenge</div>
+    <button class="tile phototile" id="tileGames"><div class="photo" data-ph="13"></div><div class="tx">
+      <div class="label">Play and learn</div><h3>Games</h3><div class="meta" id="gamesMeta">Note Invaders, Echo, Interval Hop, Rhythm Drum</div></div>
     </button>
-    <button class="tile" id="tileReader">
-      <div class="label">Reading drill</div>
-      <h3>Note Reader</h3>
-      <div class="meta" id="readerMeta">Ten notes on the grand staff</div>
+    <button class="tile phototile" id="tileReader"><div class="photo" data-ph="8"></div><div class="tx">
+      <div class="label">Reading drill</div><h3>Note Reader</h3><div class="meta" id="readerMeta">Ten notes on the grand staff</div></div>
     </button>
-    <button class="tile" id="tileProgress">
-      <div class="label">How it's going</div>
-      <h3>My progress</h3>
-      <div class="meta" id="progressMeta">Practice days, minutes and best scores</div>
+    <button class="tile phototile" id="tileProgress"><div class="photo" data-ph="1"></div><div class="tx">
+      <div class="label">How it's going</div><h3>My progress</h3><div class="meta" id="progressMeta">Practice days, minutes and best scores</div></div>
     </button>
   </div>
-  <div class="stack" style="gap:10px">
-    <div class="label">Songs</div>
-    <div class="songlist" id="songList"></div>
-  </div>
+</section>
+
+<!-- SONGS -->
+<section data-view="songs" class="stack" hidden>
+  <div class="seg" role="radiogroup" id="songFilter" style="align-self:flex-start"></div>
+  <div class="songlist" id="songList"></div>
 </section>
 
 <!-- SONG -->
@@ -391,6 +462,7 @@
       <span class="pill" id="sRangeText">Whole song</span>
       <button class="ghost" id="sWhole" hidden>Whole song</button>
       <label class="check"><input type="checkbox" id="sLoop"> Loop</label>
+      <label class="check"><input type="checkbox" id="sKbd"> Keyboard helper</label>
       <span class="muted" style="font-size:14px" id="sRangeHint">Tap a bar to start a section, then tap another to end it.</span>
     </div>
   </div>
@@ -405,7 +477,7 @@
       <span><i style="background:var(--try)"></i>Missed</span>
     </div>
   </div>
-  <div class="kbdwrap"><svg id="kbd" viewBox="0 0 1000 110" role="img" aria-label="Keyboard showing the next keys"></svg></div>
+  <div class="kbdwrap" id="kbdWrap"><svg id="kbd" viewBox="0 0 1000 110" role="img" aria-label="Keyboard showing the next keys"></svg></div>
 </section>
 
 <!-- NOTE READER -->
@@ -501,10 +573,10 @@
 <!-- GAMES HUB -->
 <section data-view="games" class="stack" hidden>
   <div class="grid2" id="gameTiles"></div>
-  <button class="tile challenge" id="tileChallenge">
+  <button class="tile challenge phototile" id="tileChallenge"><div class="photo" data-ph="12"></div><div class="tx">
     <div class="label">Take turns</div>
     <h3>Family Challenge</h3>
-    <div class="meta">Pick a game and two or more players. Everyone gets one turn, and the highest score wins.</div>
+    <div class="meta">Pick a game and two or more players. Everyone gets one turn, and the highest score wins.</div></div>
   </button>
 </section>
 
@@ -565,6 +637,12 @@
 
 <!-- SETTINGS -->
 <section data-view="settings" class="stack" hidden>
+  <div class="panel stack">
+    <h2 style="font-size:22px">Appearance</h2>
+    <div class="field"><span class="label">Color scheme</span><div class="seg" role="radiogroup" id="thScheme"></div></div>
+    <div class="field"><span class="label">Light or dark</span><div class="seg" role="radiogroup" id="thMode"></div></div>
+    <div class="field"><span class="label">Button color</span><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><input type="color" id="thAccent" aria-label="Button color" style="width:56px;height:40px;border:0;background:none;padding:0"><button class="ghost" id="thAccentReset">Use the scheme's color</button></div></div>
+  </div>
   <div class="panel stack">
     <h2 style="font-size:22px">Piano</h2>
     <p class="muted" style="margin:0">Plug the piano into the tablet. If Smart Pianist is open, force-stop it first: it can hold onto the piano.</p>
@@ -811,7 +889,7 @@ function songBest(pid, songId) {
 /* =========================================================
    ROUTER
    ========================================================= */
-const TITLES = { home: 'Family Piano', me: '', song: '', reader: 'Note Reader', progress: 'Progress', report: 'Weekly report', settings: 'Settings', games: 'Games', game: 'Games', challenge: 'Family Challenge', courses: 'Courses', course: 'Course', lesson: 'Lesson', assign: "This week's practice" };
+const TITLES = { home: 'Family Piano', me: '', song: '', reader: 'Note Reader', progress: 'Progress', report: 'Weekly report', settings: 'Settings', games: 'Games', game: 'Games', challenge: 'Family Challenge', courses: 'Courses', course: 'Course', lesson: 'Lesson', assign: "This week's practice", songs: 'Songs' };
 let view = 'home';
 function go(v, replace) {
   const hash = '#' + v;
@@ -823,17 +901,20 @@ window.addEventListener('popstate', () => show((location.hash || '#home').slice(
 function show(v) {
   if (!document.querySelector(`[data-view="${v}"]`)) v = 'home';
   if (v !== 'game' && GR.challenge) { App.current = GR.challenge.home; GR.challenge = null; }
-  if (['me', 'song', 'reader', 'progress', 'report', 'games', 'game', 'challenge', 'assign', 'courses', 'course', 'lesson'].includes(v) && !me()) v = 'home';
+  if (['me', 'songs', 'song', 'reader', 'progress', 'report', 'games', 'game', 'challenge', 'assign', 'courses', 'course', 'lesson'].includes(v) && !me()) v = 'home';
   if (v === 'song' && !SV.song) v = 'me';
   leaveView(view);
   view = v;
   document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== v; });
+  const withNav = !!me() && ['me', 'songs', 'courses', 'course', 'lesson', 'games', 'challenge', 'progress', 'assign', 'settings'].includes(v);
+  document.body.classList.toggle('withnav', withNav); $('sidenav').hidden = !withNav;
+  if (withNav) { const sec = { course: 'courses', lesson: 'courses', challenge: 'games', assign: 'me' }[v] || v; document.querySelectorAll('#sidenav [data-nav]').forEach(b => { if (b.dataset.nav === sec) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); const p0 = me(); $('navMe').textContent = p0.name.charAt(0).toUpperCase(); $('navMe').style.background = p0.color; }
   $('backBtn').hidden = v === 'home';
-  $('homeBtn').hidden = v === 'home' || v === 'me';
-  $('setBtn').hidden = v !== 'home' && v !== 'settings' ? false : v === 'settings';
+  $('homeBtn').hidden = v === 'home' || withNav;
+  $('setBtn').hidden = v === 'settings' || withNav;
   const p = me();
   $('topTitle').textContent = v === 'me' && p ? 'Family Piano' : v === 'song' ? 'Play Along' : TITLES[v];
-  ({ home: renderHome, me: renderMe, song: renderSongView, reader: enterReader, progress: renderProgress, report: renderReport, settings: renderSettings, games: renderGames, game: enterGame, challenge: renderChallenge, assign: renderAssign, courses: renderCourses, course: renderCourse, lesson: renderLesson })[v]();
+  ({ home: renderHome, me: renderMe, songs: renderSongs, song: renderSongView, reader: enterReader, progress: renderProgress, report: renderReport, settings: renderSettings, games: renderGames, game: enterGame, challenge: renderChallenge, assign: renderAssign, courses: renderCourses, course: renderCourse, lesson: renderLesson })[v]();
   window.scrollTo({ top: 0 });
 }
 function leaveView(v) {
@@ -844,17 +925,43 @@ function leaveView(v) {
   keyHandler = null;
 }
 $('backBtn').addEventListener('click', () => {
-  const parent = { courses: 'me', course: 'courses', lesson: 'course', me: 'home', song: SV.from || 'me', reader: 'me', progress: 'me', report: 'progress', games: 'me', game: 'games', challenge: 'games', assign: 'me', settings: me() ? 'me' : 'home' }[view] || 'home';
+  const parent = { songs: 'me', courses: 'me', course: 'courses', lesson: 'course', me: 'home', song: SV.from || 'me', reader: 'me', progress: 'me', report: 'progress', games: 'me', game: 'games', challenge: 'games', assign: 'me', settings: me() ? 'me' : 'home' }[view] || 'home';
   go(parent);
 });
 $('homeBtn').addEventListener('click', () => go('me'));
 $('setBtn').addEventListener('click', () => go('settings'));
+document.querySelectorAll('#sidenav [data-nav]').forEach(b => b.addEventListener('click', () => go(b.dataset.nav)));
+$('navMe').addEventListener('click', () => go('home'));
+
+/* photos (img/01-15.jpg) and color schemes */
+const IMG = n => `img/${String(n).padStart(2, '0')}.jpg`;
+const DAY = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 6e4) / 864e5);
+const POOL = [2, 3, 4, 5, 7, 8, 1, 6, 11, 13];
+const dayPhoto = i => POOL[(DAY() + i) % POOL.length];
+const hashStr = t => [...String(t)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+function songPhoto(s) { const id = s.id || ''; if (/hymn/.test(id)) return hashStr(id) % 2 ? 9 : 15; if (/bach|mozart/.test(id)) return 10; if (/folk|blue/.test(id)) return 14; return POOL[hashStr(id) % POOL.length]; }
+const COURSE_PH = { 'c-foundations-1': 5, 'c-bach-mozart-1': 10, 'c-hymns-1': 15, 'c-folk-1': 14 };
+const GAME_PH = { invaders: 13, echo: 4, hop: 3, rhythm: 2, reader: 7, challenge: 12 };
+function photo(n, cls) { const d = h('div', { class: 'photo ' + (cls || '') }); d.style.backgroundImage = `url(${IMG(n)})`; return d; }
+function fillPhotos() { document.querySelectorAll('[data-ph]').forEach(d => { d.style.backgroundImage = `url(${IMG(d.dataset.ph)})`; }); }
+const SCHEMES = { studio: 'Sunlit Studio', concert: 'Concert Hall', family: 'Family Room' };
+function applyTheme(t) {
+  t = t || App.settings.theme || {};
+  const r = document.documentElement;
+  if (t.scheme && t.scheme !== 'studio') r.dataset.scheme = t.scheme; else delete r.dataset.scheme;
+  if (t.mode === 'light' || t.mode === 'dark') r.dataset.mode = t.mode; else delete r.dataset.mode;
+  if (t.accent) r.style.setProperty('--accent', t.accent); else r.style.removeProperty('--accent');
+  try { localStorage.setItem('fp-theme', JSON.stringify(t)); } catch (e) {}
+}
+try { applyTheme(JSON.parse(localStorage.getItem('fp-theme') || '{}')); } catch (e) {}
+fillPhotos();
 
 /* =========================================================
    HOME + PEOPLE
    ========================================================= */
 function avatar(p, cls) { const a = h('div', { class: 'avatar ' + (cls || '') }, (p.name || '?').trim().charAt(0).toUpperCase()); a.style.background = p.color; return a; }
 function renderHome() {
+  $('homeBanner').style.backgroundImage = `url(${IMG([11, 12, 1, 4][DAY() % 4])})`;
   const box = $('people'); box.textContent = '';
   App.profiles.forEach(p => {
     const st = streak(p.id);
@@ -896,9 +1003,8 @@ $('personForm').addEventListener('submit', ev => {
    ========================================================= */
 function renderMe() {
   const p = me();
-  const a = $('meAvatar'); a.textContent = p.name.charAt(0).toUpperCase(); a.style.background = p.color;
   const hour = new Date().getHours();
-  $('meHello').textContent = `${hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'}, ${p.name}!`;
+  $('meHello').textContent = `${hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'}, ${p.name}`;
   const today = minutesBetween(p.id, startOfDay(Date.now()), new Date(Date.now() + 864e5));
   $('meLine').textContent = today ? `${today} minute${today === 1 ? '' : 's'} of practice so far today.` : 'Ready when you are.';
   const st = streak(p.id), wk = minutesBetween(p.id, startOfDay(Date.now() - 6 * 864e5), new Date(Date.now() + 864e5));
@@ -920,16 +1026,39 @@ function renderMe() {
       h('button', { class: 'primary', onclick: () => openSong(s.id, [lastTrouble.trouble[0] - 1, lastTrouble.trouble[1] - 1], true) }, 'Practice it'));
     tb.hidden = false;
   } else tb.hidden = true;
-  // songs
-  const list = $('songList'); list.textContent = '';
-  const songs = allSongs();
+  // current course strip
+  const cs = started ? started[0] : courses()[0], cw = $('meCourseWrap'), strip = $('meCourse'); strip.textContent = '';
+  cw.hidden = !cs || p.kind !== 'adult' && !started;
+  if (cs) {
+    const nx = nextLesson(cs), from = Math.max(0, Math.min((nx < 0 ? cs.lessons.length : nx) - 1, cs.lessons.length - 4));
+    $('meCourseTitle').textContent = cs.title;
+    cs.lessons.slice(from, from + 4).forEach((L, k) => {
+      const i = from + k, st = lessonState(L);
+      strip.append(h('button', { class: 'lcardp' + (i === nx ? ' next' : ''), onclick: () => { CS.course = cs.id; CS.lesson = i; go('lesson'); } },
+        photo(dayPhoto(i)), h('div', { class: 'tx' }, h('span', { class: 'k' }, `Lesson ${i + 1}${i === nx ? ' · up next' : st.done ? ' · done ✓' : ''}`), h('span', { class: 'n' }, L.title))));
+    });
+  }
+  // recently played
+  const rec = $('meRecent'); rec.textContent = ''; const seen = new Set();
+  [...mySessions(p.id)].reverse().forEach(x => { if (x.kind === 'song' && !seen.has(x.songId) && seen.size < 5 && findSong(x.songId)) seen.add(x.songId); });
+  seen.forEach(id => { const sg = findSong(id); rec.append(h('button', { onclick: () => openSong(id) }, photo(songPhoto(sg)), sg.title)); });
+  if (!seen.size) rec.append(h('p', { class: 'muted', style: 'margin:0' }, 'Songs you play show up here.'));
+}
+let songFilter = 'all';
+function renderSongs() {
+  const p = me(), list = $('songList'); list.textContent = '';
+  const books = App.library.books.filter(b => b.songs.length);
+  const seg = $('songFilter'); seg.textContent = ''; seg.hidden = books.length < 2;
+  if (!['all', ...books.map(b => b.title)].includes(songFilter)) songFilter = 'all';
+  ['all', ...books.map(b => b.title)].forEach(t => { const b = h('button', { type: 'button', role: 'radio', 'aria-checked': songFilter === t }, t === 'all' ? 'All' : t); b.addEventListener('click', () => { songFilter = t; renderSongs(); }); seg.append(b); });
+  const songs = allSongs().filter(s => songFilter === 'all' || s._book.title === songFilter);
   if (!songs.length) {
     list.append(h('div', { class: 'panel empty' }, h('h3', null, 'No songs yet'), h('p', null, 'A grown-up can add a song file in Settings. Song files stay on this tablet.'), h('button', { class: 'secondary', onclick: () => go('settings') }, 'Open Settings')));
   }
   songs.forEach(s => {
     const best = songBest(p.id, s.id);
     const starsEl = h('span', { class: 's' }); starsEl.innerHTML = [1, 2, 3].map(i => starSvg(best && i <= best.stars, 'mini')).join('');
-    list.append(h('button', { class: 'songrow', onclick: () => openSong(s.id) },
+    list.append(h('button', { class: 'songrow withthumb', onclick: () => openSong(s.id, null, false, { from: 'songs' }) }, photo(songPhoto(s), 'thumb'),
       h('span', { class: 't' }, s.title), starsEl,
       h('span', { class: 'b' }, [s._book.title, s.page ? `page ${s.page}` : '', best ? `played ${best.runs} time${best.runs === 1 ? '' : 's'}` : 'not played yet'].filter(Boolean).join(' · '))));
   });
@@ -1019,10 +1148,15 @@ function setMode(m) {
   $('sClickBox').hidden = m === 'practice';
   $('sBandBox').hidden = m === 'practice' || !SV.song || !SV.song.measures.some(x => x.ch);
   $('fallWrap').hidden = m !== 'falling';
+  applyKbd();
   $('sheetWrap').hidden = m === 'falling';
   if (m === 'falling') drawFall(performance.now());
 }
 $('sBand').addEventListener('change', e => { SV.band = e.target.checked; });
+// keyboard helper on/off, remembered per person (falling notes always shows the keyboard)
+const kbdOn = () => { const v = (App.settings.kbdHelper || {})[App.current]; return v == null ? true : v; };
+function applyKbd() { const on = kbdOn() || SV.mode === 'falling'; $('kbdWrap').hidden = !on; $('sKbd').checked = kbdOn(); $('sKbd').disabled = SV.mode === 'falling'; }
+$('sKbd').addEventListener('change', e => { App.settings.kbdHelper = App.settings.kbdHelper || {}; App.settings.kbdHelper[App.current] = e.target.checked; save('settings'); applyKbd(); });
 $('sHands').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
   if (SV.running) return; stopListen();
   SV.hands = b.dataset.hands; $('sHands').querySelectorAll('button').forEach(x => x.setAttribute('aria-checked', x === b)); prepareRange();
@@ -1752,6 +1886,12 @@ $('rpNext').addEventListener('click', () => { saveReportNote(); RP.offset = Math
    SETTINGS
    ========================================================= */
 function renderSettings() {
+  const th = App.settings.theme || {};
+  const segs = (id, opts, key, def) => { const box = $(id); box.textContent = ''; Object.entries(opts).forEach(([k, t]) => { const b = h('button', { type: 'button', role: 'radio', 'aria-checked': (th[key] || def) === k }, t); b.addEventListener('click', () => { App.settings.theme = { ...(App.settings.theme || {}), [key]: k }; save('settings'); applyTheme(); renderSettings(); }); box.append(b); }); };
+  segs('thScheme', SCHEMES, 'scheme', 'studio');
+  segs('thMode', { auto: 'Match the tablet', light: 'Light', dark: 'Dark' }, 'mode', 'auto');
+  $('thAccent').value = th.accent || getComputedStyle(document.documentElement).getPropertyValue('--accent').trim().slice(0, 7) || '#0f5c4c';
+  $('thAccentReset').hidden = !th.accent;
   const lib = $('libList'); lib.textContent = '';
   if (!App.library.books.length) lib.append(h('p', { class: 'muted', style: 'margin:0' }, 'No songs yet.'));
   App.library.books.forEach(b => {
@@ -1771,6 +1911,8 @@ function confirmBtn(label, act) {
   return b;
 }
 $('famAdd').addEventListener('click', () => openPerson());
+$('thAccent').addEventListener('change', e => { App.settings.theme = { ...(App.settings.theme || {}), accent: e.target.value }; save('settings'); applyTheme(); renderSettings(); });
+$('thAccentReset').addEventListener('click', () => { const t = { ...(App.settings.theme || {}) }; delete t.accent; App.settings.theme = t; save('settings'); applyTheme(); renderSettings(); });
 $('libFile').addEventListener('change', ev => {
   const f = ev.target.files[0]; if (!f) return;
   const r = new FileReader();
@@ -1810,6 +1952,7 @@ $('bkFile').addEventListener('change', ev => {
   App.library = (await DB.get('library')) || { books: [] };
   App.sessions = (await DB.get('sessions')) || [];
   App.settings = (await DB.get('settings')) || {};
+  applyTheme();
   // bring over the song loaded in the earlier Play Along page, if any
   try { const old = localStorage.getItem('pa-song'); if (old && !allSongs().length) importLibraryJson(old); } catch (e) {}
   try {
@@ -1957,9 +2100,8 @@ function lessonState(L, pid) {
 function nextLesson(c) { return c.lessons.findIndex(L => !lessonState(L).done); }
 function courseCard(c) {
   const done = c.lessons.filter(L => lessonState(L).done).length;
-  const b = h('button', { class: 'tile coursecard', onclick: () => { CS.course = c.id; go('course'); } },
-    h('div', { class: 'label' }, `${done} of ${c.lessons.length} lessons`), h('h3', null, c.title), h('div', { class: 'meta' }, c.blurb));
-  b.style.borderTopColor = c.color || 'var(--accent)';
+  const b = h('button', { class: 'tile coursecard phototile', onclick: () => { CS.course = c.id; go('course'); } }, photo(COURSE_PH[c.id] || 7),
+    h('div', { class: 'tx' }, h('div', { class: 'label' }, `${done} of ${c.lessons.length} lessons`), h('h3', null, c.title), h('div', { class: 'meta' }, c.blurb)));
   return b;
 }
 function renderCourses() {
@@ -2381,9 +2523,9 @@ function renderGames() {
   const box = $('gameTiles'); box.textContent = '';
   ['invaders', 'echo', 'hop', 'rhythm', 'reader'].forEach(id => {
     const best = id === 'reader' ? null : bestScore(id);
-    box.append(h('button', { class: 'tile', onclick: () => id === 'reader' ? go('reader') : openGame(id) },
-      h('div', { class: 'label' }, id === 'reader' ? 'Reading drill' : best != null ? `Your best: ${best}` : 'New'),
-      h('h3', null, GAME_INFO[id].title), h('div', { class: 'meta' }, GAME_INFO[id].blurb)));
+    box.append(h('button', { class: 'tile phototile', onclick: () => id === 'reader' ? go('reader') : openGame(id) }, photo(GAME_PH[id]),
+      h('div', { class: 'tx' }, h('div', { class: 'label' }, id === 'reader' ? 'Reading drill' : best != null ? `Your best: ${best}` : 'New'),
+      h('h3', null, GAME_INFO[id].title), h('div', { class: 'meta' }, GAME_INFO[id].blurb))));
   });
 }
 $('tileGames').addEventListener('click', () => go('games'));
