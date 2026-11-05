@@ -1,0 +1,3360 @@
+{
+ "format": "family-piano-library/1",
+ "version": "2026-11-04a",
+ "book": {
+  "id": "pd-library",
+  "title": "Classics, Hymns & Folk"
+ },
+ "songs": [
+  {
+   "id": "pd-mozart-twinkle",
+   "title": "Twinkle Variations: Theme",
+   "composer": "W. A. Mozart (1756\u20131791), K. 265, theme",
+   "timeSignature": [
+    2,
+    4
+   ],
+   "key": 0,
+   "tempo": {
+    "text": "Moderato",
+    "bpm": 96
+   },
+   "source": "W. A. Mozart (1756\u20131791), K. 265, theme",
+   "tips": [
+    {
+     "label": "Did you know?",
+     "text": "Mozart wrote twelve variations on this French children\u2019s song, \u201cAh, vous dirai-je, maman.\u201d It is the same tune as \u201cTwinkle, Twinkle, Little Star.\u201d"
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 1,
+       "finger": 1,
+       "pos": "1 on C"
+      },
+      {
+       "p": "C4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2,
+       "finger": 5,
+       "pos": "5 on C"
+      }
+     ],
+     "ch": "C",
+     "text": "Moderato"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 5
+      },
+      {
+       "p": "G4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "E3",
+       "d": 2,
+       "finger": 3
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1
+      },
+      {
+       "p": "A4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "F3",
+       "d": 2,
+       "finger": 2
+      }
+     ],
+     "ch": "F"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "E3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "F4",
+       "d": 1,
+       "finger": 4
+      },
+      {
+       "p": "F4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2,
+       "finger": 4
+      }
+     ],
+     "ch": "G7"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1
+      },
+      {
+       "p": "E4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 2
+      },
+      {
+       "p": "D4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 9,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1
+      },
+      {
+       "p": "G4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "E3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 10,
+     "treble": [
+      {
+       "p": "F4",
+       "d": 1
+      },
+      {
+       "p": "F4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 11,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1
+      },
+      {
+       "p": "E4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 12,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 13,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1
+      },
+      {
+       "p": "G4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "E3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 14,
+     "treble": [
+      {
+       "p": "F4",
+       "d": 1
+      },
+      {
+       "p": "F4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 15,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1
+      },
+      {
+       "p": "E4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 16,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 17,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 1
+      },
+      {
+       "p": "C4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 18,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1
+      },
+      {
+       "p": "G4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "E3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 19,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1
+      },
+      {
+       "p": "A4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "F3",
+       "d": 2
+      }
+     ],
+     "ch": "F"
+    },
+    {
+     "number": 20,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "E3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 21,
+     "treble": [
+      {
+       "p": "F4",
+       "d": 1
+      },
+      {
+       "p": "F4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G7"
+    },
+    {
+     "number": 22,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1
+      },
+      {
+       "p": "E4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 23,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 1
+      },
+      {
+       "p": "D4",
+       "d": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 24,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C",
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-bach-minuet-g",
+   "title": "Minuet in G",
+   "composer": "J. S. Bach (attributed; Christian Petzold), BWV Anh. 114, left hand simplified",
+   "timeSignature": [
+    3,
+    4
+   ],
+   "key": 1,
+   "tempo": {
+    "text": "Gracefully",
+    "bpm": 108
+   },
+   "source": "J. S. Bach (attributed; Christian Petzold), BWV Anh. 114, left hand simplified",
+   "tips": [
+    {
+     "label": "Key signature:",
+     "text": "The sharp on the F line means every F is played as F\u266f, the black key just below G."
+    },
+    {
+     "label": "Did you know?",
+     "text": "This minuet is in the notebook Bach kept for his wife, Anna Magdalena. Scholars now think Christian Petzold wrote it, but Bach\u2019s family played it at home."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 1,
+       "finger": 5,
+       "slur": "start"
+      },
+      {
+       "p": "G4",
+       "d": 0.5,
+       "finger": 1
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "C5",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 2,
+       "finger": 5
+      },
+      {
+       "p": "A3",
+       "d": 1,
+       "finger": 4
+      }
+     ],
+     "ch": "G",
+     "text": "Gracefully"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 1
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "staccato": true
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "staccato": true
+      }
+     ],
+     "bass": [
+      {
+       "p": "B3",
+       "d": 3,
+       "finger": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "E5",
+       "d": 1,
+       "finger": 3,
+       "slur": "start"
+      },
+      {
+       "p": "C5",
+       "d": 0.5,
+       "finger": 1
+      },
+      {
+       "p": "D5",
+       "d": 0.5
+      },
+      {
+       "p": "E5",
+       "d": 0.5
+      },
+      {
+       "p": "F#5",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C4",
+       "d": 3,
+       "finger": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "G5",
+       "d": 1
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "staccato": true
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "staccato": true
+      }
+     ],
+     "bass": [
+      {
+       "p": "B3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "C5",
+       "d": 1,
+       "finger": 4,
+       "slur": "start"
+      },
+      {
+       "p": "D5",
+       "d": 0.5
+      },
+      {
+       "p": "C5",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "A3",
+       "d": 3
+      }
+     ],
+     "ch": "Am"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 1,
+       "finger": 3,
+       "slur": "start"
+      },
+      {
+       "p": "C5",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "F#4",
+       "d": 1,
+       "finger": 2,
+       "slur": "start"
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 1
+      },
+      {
+       "p": "B3",
+       "d": 1
+      },
+      {
+       "p": "G3",
+       "d": 1
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 3,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "D4",
+       "d": 1
+      },
+      {
+       "p": "D3",
+       "d": 1
+      },
+      {
+       "p": "C4",
+       "d": 1
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 9,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 1,
+       "finger": 5,
+       "slur": "start"
+      },
+      {
+       "p": "G4",
+       "d": 0.5,
+       "finger": 1
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "C5",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "B3",
+       "d": 2
+      },
+      {
+       "p": "A3",
+       "d": 1
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 10,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 1
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "staccato": true
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "staccato": true
+      }
+     ],
+     "bass": [
+      {
+       "p": "B3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 11,
+     "treble": [
+      {
+       "p": "E5",
+       "d": 1,
+       "finger": 3,
+       "slur": "start"
+      },
+      {
+       "p": "C5",
+       "d": 0.5,
+       "finger": 1
+      },
+      {
+       "p": "D5",
+       "d": 0.5
+      },
+      {
+       "p": "E5",
+       "d": 0.5
+      },
+      {
+       "p": "F#5",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C4",
+       "d": 3
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 12,
+     "treble": [
+      {
+       "p": "G5",
+       "d": 1
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "staccato": true
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "staccato": true
+      }
+     ],
+     "bass": [
+      {
+       "p": "B3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 13,
+     "treble": [
+      {
+       "p": "C5",
+       "d": 1,
+       "finger": 4,
+       "slur": "start"
+      },
+      {
+       "p": "D5",
+       "d": 0.5
+      },
+      {
+       "p": "C5",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "A3",
+       "d": 3
+      }
+     ],
+     "ch": "Am"
+    },
+    {
+     "number": 14,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 1,
+       "finger": 3,
+       "slur": "start"
+      },
+      {
+       "p": "C5",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 15,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 2,
+       "slur": "start"
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "F#4",
+       "d": 0.5,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "D4",
+       "d": 1
+      },
+      {
+       "p": "D3",
+       "d": 1,
+       "finger": 5
+      },
+      {
+       "p": "F#3",
+       "d": 1
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 16,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 3,
+       "slur": "end"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 1
+      }
+     ],
+     "ch": "G",
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-mozart-nachtmusik",
+   "title": "Eine kleine Nachtmusik (opening)",
+   "composer": "W. A. Mozart (1756\u20131791), K. 525, first movement",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 1,
+   "tempo": {
+    "text": "Allegro",
+    "bpm": 100
+   },
+   "source": "W. A. Mozart (1756\u20131791), K. 525, first movement",
+   "tips": [
+    {
+     "label": "Both hands play the same notes",
+     "text": "an octave apart, just as the whole orchestra plays this opening together. Mozart wrote it in 1787."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 1
+      },
+      {
+       "r": 0.5
+      },
+      {
+       "p": "D4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 1
+      },
+      {
+       "r": 0.5
+      },
+      {
+       "p": "D4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 1,
+       "finger": 1
+      },
+      {
+       "r": 0.5
+      },
+      {
+       "p": "D3",
+       "d": 0.5
+      },
+      {
+       "p": "G3",
+       "d": 1
+      },
+      {
+       "r": 0.5
+      },
+      {
+       "p": "D3",
+       "d": 0.5
+      }
+     ],
+     "text": "Allegro"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "D4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "D5",
+       "d": 2,
+       "finger": 5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 0.5
+      },
+      {
+       "p": "D3",
+       "d": 0.5
+      },
+      {
+       "p": "G3",
+       "d": 0.5
+      },
+      {
+       "p": "B3",
+       "d": 0.5
+      },
+      {
+       "p": "D4",
+       "d": 2
+      }
+     ]
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "C5",
+       "d": 1,
+       "finger": 4
+      },
+      {
+       "r": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "C5",
+       "d": 1
+      },
+      {
+       "r": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "C4",
+       "d": 1
+      },
+      {
+       "r": 0.5
+      },
+      {
+       "p": "A3",
+       "d": 0.5
+      },
+      {
+       "p": "C4",
+       "d": 1
+      },
+      {
+       "r": 0.5
+      },
+      {
+       "p": "A3",
+       "d": 0.5
+      }
+     ]
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "C5",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "F#4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "D4",
+       "d": 2,
+       "finger": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "C4",
+       "d": 0.5
+      },
+      {
+       "p": "A3",
+       "d": 0.5
+      },
+      {
+       "p": "F#3",
+       "d": 0.5
+      },
+      {
+       "p": "A3",
+       "d": 0.5
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ]
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2
+      },
+      {
+       "r": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 2
+      },
+      {
+       "r": 2
+      }
+     ],
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-hymn-amazing-grace",
+   "title": "Amazing Grace",
+   "composer": "Words: John Newton (1779); tune: NEW BRITAIN (American, 1829)",
+   "timeSignature": [
+    3,
+    4
+   ],
+   "key": 1,
+   "tempo": {
+    "text": "Reverently",
+    "bpm": 84
+   },
+   "source": "Words: John Newton (1779); tune: NEW BRITAIN (American, 1829)",
+   "tips": [
+    {
+     "label": "Pickup note:",
+     "text": "the song starts on beat 3, so the first bar has only one note, \u201cA-\u201d."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "r": 2,
+       "hide": true
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 1,
+       "lyric": "A-"
+      }
+     ],
+     "bass": [
+      {
+       "r": 3,
+       "hide": true
+      }
+     ],
+     "text": "Reverently"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "finger": 3,
+       "lyric": "maz-"
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "finger": 5,
+       "lyric": "ing"
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3,
+       "finger": 1
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 2,
+       "lyric": "grace"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 4,
+       "lyric": "how"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "sweet"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 2,
+       "lyric": "the"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 3,
+       "finger": 5
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 2,
+       "finger": 1,
+       "lyric": "sound"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "that"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "finger": 3,
+       "lyric": "saved"
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "finger": 5,
+       "lyric": "a"
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 2,
+       "lyric": "wretch"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 4,
+       "lyric": "like"
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 3,
+       "finger": 4
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 3,
+       "finger": 5,
+       "lyric": "me",
+       "tie": true
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 3
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 9,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 2
+      },
+      {
+       "p": "B4",
+       "d": 1,
+       "finger": 3,
+       "lyric": "I"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 10,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 2,
+       "finger": 5,
+       "lyric": "once"
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "lyric": "was"
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 11,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 2,
+       "lyric": "lost"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "but"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3
+      }
+     ],
+     "ch": "G7"
+    },
+    {
+     "number": 12,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "now"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 2,
+       "lyric": "am"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 3
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 13,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 2,
+       "finger": 1,
+       "lyric": "found"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "was"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 14,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "finger": 3,
+       "lyric": "blind"
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "lyric": "but"
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 15,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 2,
+       "lyric": "now"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "I"
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 3
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 16,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 3,
+       "lyric": "see."
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 3
+      }
+     ],
+     "ch": "G",
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-hymn-doxology",
+   "title": "Doxology (Old Hundredth)",
+   "composer": "Words: Thomas Ken (1674); tune: OLD 100TH, Genevan Psalter (1551)",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 1,
+   "tempo": {
+    "text": "Steady and strong",
+    "bpm": 76
+   },
+   "source": "Words: Thomas Ken (1674); tune: OLD 100TH, Genevan Psalter (1551)",
+   "tips": [],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "finger": 1,
+       "lyric": "Praise"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "God"
+      },
+      {
+       "p": "F#4",
+       "d": 1,
+       "lyric": "from"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 4
+      }
+     ],
+     "ch": "G",
+     "text": "Steady and strong"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "whom"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "all"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "bless-"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "ings"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "C",
+      "D"
+     ]
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 2,
+       "lyric": "flow;"
+      },
+      {
+       "r": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "r": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 2,
+       "lyric": "Praise"
+      },
+      {
+       "p": "B4",
+       "d": 1,
+       "lyric": "Him"
+      },
+      {
+       "p": "B4",
+       "d": 1,
+       "lyric": "all"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 4
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "crea-"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "tures"
+      },
+      {
+       "p": "C5",
+       "d": 1,
+       "lyric": "here"
+      },
+      {
+       "p": "B4",
+       "d": 1,
+       "lyric": "be-"
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "D",
+      "C"
+     ]
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 2,
+       "lyric": "low;"
+      },
+      {
+       "r": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      },
+      {
+       "r": 2
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "Praise"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "Him"
+      },
+      {
+       "p": "B4",
+       "d": 1,
+       "lyric": "a-"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "G",
+      "D"
+     ]
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "bove"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "ye"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "heav'n-"
+      },
+      {
+       "p": "F#4",
+       "d": 1,
+       "lyric": "ly"
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "D",
+      "C"
+     ]
+    },
+    {
+     "number": 9,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "host;"
+      },
+      {
+       "r": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "r": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 10,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 2,
+       "lyric": "Praise"
+      },
+      {
+       "p": "B4",
+       "d": 1,
+       "lyric": "Fa-"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "ther,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G3",
+       "d": 4
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 11,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "Son,"
+      },
+      {
+       "p": "C5",
+       "d": 1,
+       "lyric": "and"
+      },
+      {
+       "p": "B4",
+       "d": 1,
+       "lyric": "Ho-"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "ly"
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 4
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 12,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 4,
+       "lyric": "Ghost."
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 4
+      }
+     ],
+     "ch": "G",
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-hymn-jesus-loves-me",
+   "title": "Jesus Loves Me",
+   "composer": "Words: Anna B. Warner (1860); music: William B. Bradbury (1862)",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 0,
+   "tempo": {
+    "text": "Gently",
+    "bpm": 92
+   },
+   "source": "Words: Anna B. Warner (1860); music: William B. Bradbury (1862)",
+   "tips": [],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 5,
+       "lyric": "Je-"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 3,
+       "lyric": "sus"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "loves"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 2,
+       "lyric": "me!"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C",
+     "text": "Gently"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "this"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "I"
+      },
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "know,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "For"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "the"
+      },
+      {
+       "p": "C5",
+       "d": 1,
+       "lyric": "Bi-"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "ble"
+      }
+     ],
+     "bass": [
+      {
+       "p": "F3",
+       "d": 4
+      }
+     ],
+     "ch": "F"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "tells"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "me"
+      },
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "so;"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "Lit-"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "tle"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "ones"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "to"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "Him"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "be-"
+      },
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "long;"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "they"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "are"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "weak,"
+      },
+      {
+       "p": "C4",
+       "d": 1,
+       "finger": 1,
+       "lyric": "but"
+      }
+     ],
+     "bass": [
+      {
+       "p": "F3",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "F",
+      "C"
+     ]
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "He"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "is"
+      },
+      {
+       "p": "C4",
+       "d": 2,
+       "lyric": "strong."
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "G",
+      "C"
+     ]
+    },
+    {
+     "number": 9,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "Yes,"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "Je-"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "sus"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 10,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "loves"
+      },
+      {
+       "p": "C5",
+       "d": 3,
+       "lyric": "me!"
+      }
+     ],
+     "bass": [
+      {
+       "p": "F3",
+       "d": 4
+      }
+     ],
+     "ch": "F"
+    },
+    {
+     "number": 11,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "Yes,"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "Je-"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "sus"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 12,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "loves"
+      },
+      {
+       "p": "C5",
+       "d": 3,
+       "lyric": "me!"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 4
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 13,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "Yes,"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "Je-"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "sus"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 14,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "loves"
+      },
+      {
+       "p": "C5",
+       "d": 2,
+       "lyric": "me!"
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "lyric": "The"
+      }
+     ],
+     "bass": [
+      {
+       "p": "F3",
+       "d": 4
+      }
+     ],
+     "ch": "F"
+    },
+    {
+     "number": 15,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "Bi-"
+      },
+      {
+       "p": "C4",
+       "d": 1,
+       "lyric": "ble"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "tells"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "me"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "C",
+      "G"
+     ]
+    },
+    {
+     "number": 16,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 4,
+       "lyric": "so."
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C",
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-folk-oh-susanna",
+   "title": "Oh! Susanna",
+   "composer": "Stephen Foster (1848)",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 0,
+   "tempo": {
+    "text": "Brightly",
+    "bpm": 100
+   },
+   "source": "Stephen Foster (1848)",
+   "tips": [
+    {
+     "label": "Dotted rhythm:",
+     "text": "a dotted quarter plus an eighth sounds \u201clong-short\u201d, like a skip."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "r": 2,
+       "hide": true
+      },
+      {
+       "r": 1,
+       "hide": true
+      },
+      {
+       "p": "C4",
+       "d": 0.5,
+       "finger": 1,
+       "lyric": "I"
+      },
+      {
+       "p": "D4",
+       "d": 0.5,
+       "finger": 2,
+       "lyric": "come"
+      }
+     ],
+     "bass": [
+      {
+       "r": 3,
+       "hide": true
+      },
+      {
+       "r": 1,
+       "hide": true
+      }
+     ],
+     "text": "Brightly"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 3,
+       "lyric": "from"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 5,
+       "lyric": "A-"
+      },
+      {
+       "p": "G4",
+       "d": 1.5,
+       "lyric": "la-"
+      },
+      {
+       "p": "A4",
+       "d": 0.5,
+       "lyric": "ba-"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "ma"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "with"
+      },
+      {
+       "p": "C4",
+       "d": 1.5,
+       "lyric": "my"
+      },
+      {
+       "p": "D4",
+       "d": 0.5,
+       "lyric": "ban-"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "jo"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "on"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "my"
+      },
+      {
+       "p": "C4",
+       "d": 1,
+       "lyric": "knee,("
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "C",
+      "G"
+     ]
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 3,
+       "slur": "end"
+      },
+      {
+       "p": "C4",
+       "d": 0.5,
+       "lyric": "I'm"
+      },
+      {
+       "p": "D4",
+       "d": 0.5,
+       "lyric": "goin'"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 4
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "to"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "Lou-"
+      },
+      {
+       "p": "G4",
+       "d": 1.5,
+       "lyric": "i-"
+      },
+      {
+       "p": "A4",
+       "d": 0.5,
+       "lyric": "si-"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "an-"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "a,"
+      },
+      {
+       "p": "C4",
+       "d": 1.5,
+       "lyric": "my"
+      },
+      {
+       "p": "D4",
+       "d": 0.5,
+       "lyric": "true"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "love"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "for"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "to"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "see."
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 9,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 4
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C",
+     "final": true
+    }
+   ]
+  }
+ ],
+ "courses": [
+  {
+   "id": "c-foundations-1",
+   "title": "Piano Foundations 1",
+   "color": "#3a6ea5",
+   "blurb": "Posture, finding notes, reading the staff, and both hands together, with a Mozart theme.",
+   "lessons": [
+    {
+     "title": "Sit tall, curve your fingers",
+     "concept": "Posture & finger numbers",
+     "song": "pd-mozart-twinkle",
+     "bars": [
+      1,
+      4
+     ],
+     "hands": "rh",
+     "bpm": 60,
+     "cards": [
+      {
+       "h": "Your seat",
+       "p": "Sit on the front half of the bench, feet flat, with your elbows a little in front of your body and level with the keys."
+      },
+      {
+       "h": "Your hand",
+       "p": "Let your hand hang loose at your side, then bring it to the keys keeping that natural curve, as if holding a ball. Play on the fingertips."
+      },
+      {
+       "h": "Finger numbers",
+       "p": "Thumbs are 1, pointers 2, middles 3, rings 4 and pinkies 5, on both hands. The small numbers above notes tell you which finger to use."
+      },
+      {
+       "h": "Find Middle C",
+       "p": "C is the white key just left of each group of two black keys. Middle C is the one nearest the center of your piano.",
+       "demo": [
+        60,
+        62,
+        64,
+        65,
+        67
+       ],
+       "mark": [
+        60
+       ],
+       "demoLo": 48,
+       "demoHi": 72
+      }
+     ]
+    },
+    {
+     "title": "Quarter notes and half notes",
+     "concept": "Counting beats",
+     "song": "pd-mozart-twinkle",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "rh",
+     "bpm": 66,
+     "cards": [
+      {
+       "h": "Steady beats",
+       "p": "A filled note with a stem is a quarter note: one beat. A hollow note with a stem is a half note: two beats."
+      },
+      {
+       "h": "Count out loud",
+       "p": "This piece has 2 beats in every bar (the 2/4 at the start). Count \u201c1, 2\u201d in every bar while you play.",
+       "demo": [
+        60,
+        60,
+        67,
+        67,
+        69,
+        69,
+        67,
+        null
+       ],
+       "demoLo": 48,
+       "demoHi": 72,
+       "bpm": 96
+      }
+     ]
+    },
+    {
+     "title": "Reading lines and spaces",
+     "concept": "The treble staff",
+     "song": "pd-mozart-twinkle",
+     "bars": [
+      9,
+      16
+     ],
+     "hands": "rh",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "Steps",
+       "p": "When notes move from a line to the next space (or space to line), you move to the very next white key. That is a step."
+      },
+      {
+       "h": "Read the direction",
+       "p": "Before you play, look at the shape: is the tune going up, down, or repeating? In bars 9\u201316 it walks down by steps."
+      }
+     ]
+    },
+    {
+     "title": "Meet the left hand",
+     "concept": "The bass clef",
+     "song": "pd-mozart-twinkle",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "lh",
+     "bpm": 66,
+     "cards": [
+      {
+       "h": "Bass clef",
+       "p": "The lower staff has the bass clef. Its two dots sit around the F line, which is the F below Middle C."
+      },
+      {
+       "h": "Left hand C position",
+       "p": "Put L.H. finger 5 on the C an octave below Middle C. Here the left hand plays one long note in each bar.",
+       "demo": [
+        48,
+        52,
+        53,
+        52
+       ],
+       "demoLo": 36,
+       "demoHi": 60,
+       "bpm": 60
+      }
+     ]
+    },
+    {
+     "title": "Hands together",
+     "concept": "Coordination",
+     "song": "pd-mozart-twinkle",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "both",
+     "bpm": 60,
+     "cards": [
+      {
+       "h": "Line them up",
+       "p": "Look straight down the music: notes stacked above each other are played at the same moment."
+      },
+      {
+       "h": "Go slow to go fast",
+       "p": "Practice mode waits for you, so take your time. Then try it with the beat. Speed comes later."
+      }
+     ]
+    },
+    {
+     "title": "The whole theme",
+     "concept": "Playing a full piece",
+     "song": "pd-mozart-twinkle",
+     "bars": [
+      1,
+      24
+     ],
+     "hands": "both",
+     "bpm": 80,
+     "cards": [
+      {
+       "h": "Mozart\u2019s theme",
+       "p": "You now know every part of this theme. Play it from start to finish with both hands."
+      },
+      {
+       "h": "Try the band",
+       "p": "In \u201cPlay with the beat\u201d, switch on Band for a bass and chords to play along with you."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c-bach-mozart-1",
+   "title": "Bach & Mozart 1",
+   "color": "#8a5cc2",
+   "blurb": "Key signatures, eighth notes and phrasing through Bach\u2019s Minuet in G and Mozart\u2019s Night Music.",
+   "lessons": [
+    {
+     "title": "A new key: G major",
+     "concept": "Key signatures & F\u266f",
+     "song": "pd-bach-minuet-g",
+     "bars": [
+      1,
+      4
+     ],
+     "hands": "rh",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "Key signature",
+       "p": "The sharp at the start of every line is the key signature. It means every F in the piece is F\u266f, the black key just left of G.",
+       "demo": [
+        67,
+        69,
+        71,
+        72,
+        74,
+        76,
+        78,
+        79
+       ],
+       "mark": [
+        66,
+        78
+       ],
+       "demoLo": 60,
+       "demoHi": 84,
+       "bpm": 120
+      },
+      {
+       "h": "Hand position",
+       "p": "R.H. thumb on G above Middle C. The tune leaps from D down to G and climbs back up."
+      }
+     ]
+    },
+    {
+     "title": "Eighth notes",
+     "concept": "Two notes per beat",
+     "song": "pd-bach-minuet-g",
+     "bars": [
+      5,
+      8
+     ],
+     "hands": "rh",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "Twice as fast",
+       "p": "Eighth notes have a flag or a beam. Two of them fit in one beat. Count \u201c1 and 2 and 3 and\u201d."
+      },
+      {
+       "h": "Smooth line",
+       "p": "The curved slurs mean legato: connect the notes smoothly, one finger lifting as the next goes down."
+      }
+     ]
+    },
+    {
+     "title": "The left hand\u2019s part",
+     "concept": "Bass line",
+     "song": "pd-bach-minuet-g",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "lh",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "A walking bass",
+       "p": "The left hand plays mostly long dotted half notes (3 beats). In bars 7\u20138 it gets busier. Read carefully."
+      }
+     ]
+    },
+    {
+     "title": "First half, hands together",
+     "concept": "Coordination",
+     "song": "pd-bach-minuet-g",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "both",
+     "bpm": 66,
+     "cards": [
+      {
+       "h": "Staccato dots",
+       "p": "A dot above or below a note means staccato: short and light, bouncing off the key."
+      }
+     ]
+    },
+    {
+     "title": "Second half and the ending",
+     "concept": "Cadence",
+     "song": "pd-bach-minuet-g",
+     "bars": [
+      9,
+      16
+     ],
+     "hands": "both",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "A cadence",
+       "p": "The last two bars bring the music home to G. That \u201ccoming home\u201d is called a cadence. Let the final G ring."
+      }
+     ]
+    },
+    {
+     "title": "Mozart: playing in octaves",
+     "concept": "Octaves & rests",
+     "song": "pd-mozart-nachtmusik",
+     "bars": [
+      1,
+      5
+     ],
+     "hands": "both",
+     "bpm": 80,
+     "cards": [
+      {
+       "h": "Octaves",
+       "p": "Both hands play the same note names, 8 white keys apart. That distance is an octave."
+      },
+      {
+       "h": "Rests are music too",
+       "p": "The little rests between notes make Mozart\u2019s opening crisp. Lift your hands exactly on time."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c-hymns-1",
+   "title": "Hymns 1",
+   "color": "#2f9e6b",
+   "blurb": "Pickup notes, 3/4 time and steady hymn playing with Amazing Grace, the Doxology and Jesus Loves Me.",
+   "lessons": [
+    {
+     "title": "3/4 time and pickup notes",
+     "concept": "Meter",
+     "song": "pd-hymn-amazing-grace",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "rh",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "Three beats",
+       "p": "In 3/4 each bar has three beats. A dotted half note fills the whole bar."
+      },
+      {
+       "h": "Pickup",
+       "p": "Amazing Grace starts on beat 3: count \u201c1, 2,\u201d then play \u201cA-\u201d on 3."
+      }
+     ]
+    },
+    {
+     "title": "Amazing Grace, both hands",
+     "concept": "Melody with bass",
+     "song": "pd-hymn-amazing-grace",
+     "bars": [
+      1,
+      16
+     ],
+     "hands": "both",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "Melody on top",
+       "p": "Let the right hand sing a little louder than the left. The left hand plays one bass note per bar."
+      }
+     ]
+    },
+    {
+     "title": "Doxology: steady quarters",
+     "concept": "Hymn rhythm",
+     "song": "pd-hymn-doxology",
+     "bars": [
+      1,
+      6
+     ],
+     "hands": "rh",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "Old Hundredth",
+       "p": "This tune is over 450 years old. Each line starts with a long note, moves in steady quarters, and rests at the end."
+      }
+     ]
+    },
+    {
+     "title": "Doxology, hands together",
+     "concept": "Phrasing",
+     "song": "pd-hymn-doxology",
+     "bars": [
+      1,
+      12
+     ],
+     "hands": "both",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "Breathe",
+       "p": "The rests at the end of each line are like a choir taking a breath. Lift both hands together."
+      }
+     ]
+    },
+    {
+     "title": "Jesus Loves Me: verse",
+     "concept": "Reading a melody",
+     "song": "pd-hymn-jesus-loves-me",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "both",
+     "bpm": 80,
+     "cards": [
+      {
+       "h": "Two-bar phrases",
+       "p": "Each line of words takes two bars. The tune repeats a lot. Spot the patterns before you play."
+      }
+     ]
+    },
+    {
+     "title": "Jesus Loves Me: refrain",
+     "concept": "Longer notes",
+     "song": "pd-hymn-jesus-loves-me",
+     "bars": [
+      9,
+      16
+     ],
+     "hands": "both",
+     "bpm": 80,
+     "cards": [
+      {
+       "h": "Hold it",
+       "p": "The dotted half on \u201cme\u201d lasts three beats. Count it out so you don\u2019t rush."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c-folk-1",
+   "title": "Folk & Bluegrass 1",
+   "color": "#c98a0c",
+   "blurb": "Dotted rhythms and toe-tapping tunes. Starting with Stephen Foster; more bluegrass coming.",
+   "lessons": [
+    {
+     "title": "Long-short rhythm",
+     "concept": "Dotted quarter + eighth",
+     "song": "pd-folk-oh-susanna",
+     "bars": [
+      1,
+      5
+     ],
+     "hands": "rh",
+     "bpm": 76,
+     "cards": [
+      {
+       "h": "Dotted rhythm",
+       "p": "A dot adds half the note\u2019s value. A dotted quarter lasts 1\u00bd beats, then a quick eighth finishes the beat: \u201clong-short\u201d."
+      }
+     ]
+    },
+    {
+     "title": "Oh! Susanna, both hands",
+     "concept": "Bass on the beat",
+     "song": "pd-folk-oh-susanna",
+     "bars": [
+      1,
+      9
+     ],
+     "hands": "both",
+     "bpm": 84,
+     "cards": [
+      {
+       "h": "Banjo feel",
+       "p": "The left hand plays steady half notes like a bass. Switch on Band in Play mode for the full pickin\u2019 sound."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
