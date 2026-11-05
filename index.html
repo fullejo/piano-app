@@ -798,6 +798,33 @@ function importLibraryJson(text) {
    MIDI: one connection, routed to whichever screen is active
    ========================================================= */
 let keyHandler = null, midiReady = false;
+/* Inside the Android app, Android's WebView has no Web MIDI, so the app's own Piano link stands in for it. */
+const CAP = window.Capacitor, NATIVE = !!(CAP && CAP.isNativePlatform && CAP.isNativePlatform());
+const native = (method, opts) => CAP.nativePromise('Piano', method, opts || {});
+if (NATIVE) {
+  const input = { state: 'connected', onmidimessage: null };
+  const access = { inputs: new Map(), onstatechange: null };
+  let pending = [], run = 0;
+  const LEN = st => { const t = st & 0xf0; return t === 0xc0 || t === 0xd0 ? 2 : t >= 0x80 && t < 0xf0 ? 3 : st === 0xf2 ? 3 : st === 0xf1 || st === 0xf3 ? 2 : 1; };
+  const emit = data => input.onmidimessage && input.onmidimessage({ data: Uint8Array.from(data), timeStamp: performance.now() });
+  let started = null;
+  navigator.requestMIDIAccess = () => started || (started = (async () => {
+    CAP.addListener('Piano', 'midi', d => {
+      let sysex = false;
+      for (const b of (d && d.data) || []) {         // a USB packet can hold several messages, and may use running status
+        if (b === 0xf0) { sysex = true; continue; } if (sysex) { if (b === 0xf7) sysex = false; continue; }
+        if (b >= 0xf8) continue;                    // clock and active sensing
+        if (b & 0x80) { run = b; pending = [b]; } else if (run) { if (!pending.length) pending = [run]; pending.push(b); } else continue;
+        if (pending.length >= LEN(pending[0])) { emit(pending); pending = []; }
+      }
+    });
+    const setDevices = d => { access.inputs.clear(); ((d && d.devices) || []).filter(x => x.open).forEach(x => access.inputs.set(String(x.id), Object.assign(input, { name: x.name }))); };
+    CAP.addListener('Piano', 'devices', d => { setDevices(d); access.onstatechange && access.onstatechange(); });
+    setDevices(await native('start'));
+    return access;
+  })());
+}
+
 const setStatus = (text, state) => { $('statusText').textContent = text; $('dot').className = 'dot' + (state ? ' ' + state : ''); };
 function onMessage(e) {
   const [st, d1, d2] = e.data;
@@ -816,9 +843,10 @@ function hook(access) {
 async function connect() {
   if (!navigator.requestMIDIAccess) { setStatus('Use Chrome to connect the piano', 'err'); return; }
   try { const a = await navigator.requestMIDIAccess(); hook(a); a.onstatechange = () => hook(a); }
-  catch (err) { setStatus('Piano access blocked', 'err'); toast('Chrome blocked the piano. Allow MIDI devices for this site in Chrome settings.', 'try', 4000); }
+  catch (err) { setStatus('Piano access blocked', 'err'); if (NATIVE) { toast(err.message || 'Could not reach the piano.', 'try', 4000); return; } toast('Chrome blocked the piano. Allow MIDI devices for this site in Chrome settings.', 'try', 4000); }
 }
-if (navigator.permissions && navigator.permissions.query) navigator.permissions.query({ name: 'midi' }).then(p => { if (p.state === 'granted') connect(); }).catch(() => {});
+if (NATIVE) setTimeout(connect, 300);
+else if (navigator.permissions && navigator.permissions.query) navigator.permissions.query({ name: 'midi' }).then(p => { if (p.state === 'granted') connect(); }).catch(() => {});
 $('connectBtn').addEventListener('click', () => { ensureAudio(); connect(); });
 $('pianoStatus').addEventListener('click', () => { if (!midiReady) { ensureAudio(); connect(); } });
 
@@ -905,6 +933,7 @@ function show(v) {
   if (v === 'song' && !SV.song) v = 'me';
   leaveView(view);
   view = v;
+  if (NATIVE) native('keepAwake', { on: ['song', 'game', 'reader', 'lesson'].includes(v) }).catch(() => {});
   document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== v; });
   const withNav = !!me() && ['me', 'songs', 'courses', 'course', 'lesson', 'games', 'challenge', 'progress', 'assign', 'settings'].includes(v);
   document.body.classList.toggle('withnav', withNav); $('sidenav').hidden = !withNav;
@@ -1878,7 +1907,7 @@ function saveReportNote() {
   document.title = 'Family Piano';
 }
 $('rpNote').addEventListener('change', saveReportNote);
-$('rpPrint').addEventListener('click', () => { saveReportNote(); renderReport(); window.print(); });
+$('rpPrint').addEventListener('click', () => { saveReportNote(); renderReport(); if (NATIVE) native('print', { title: 'Family Piano weekly report' }).catch(e => toast(e.message, 'try', 3000)); else window.print(); });
 $('rpPrev').addEventListener('click', () => { saveReportNote(); RP.offset++; renderReport(); });
 $('rpNext').addEventListener('click', () => { saveReportNote(); RP.offset = Math.max(0, RP.offset - 1); renderReport(); });
 
@@ -1924,7 +1953,9 @@ $('libFile').addEventListener('change', ev => {
 });
 $('bkSave').addEventListener('click', () => {
   const data = { format: 'family-piano-backup/1', saved: new Date().toISOString(), profiles: App.profiles, library: App.library, sessions: App.sessions, settings: App.settings };
-  const a = h('a', { href: URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' })), download: `family-piano-backup-${dayKey(Date.now())}.json` });
+  const fname = `family-piano-backup-${dayKey(Date.now())}.json`;
+  if (NATIVE) { native('saveFile', { name: fname, text: JSON.stringify(data) }).then(() => toast('Backup saved to Downloads', 'good', 2200)).catch(e => toast(e.message, 'try', 4000)); return; }
+  const a = h('a', { href: URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' })), download: fname });
   document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   toast('Backup saved to Downloads', 'good', 2200);
 });
@@ -1964,7 +1995,7 @@ $('bkFile').addEventListener('change', ev => {
   history.replaceState(null, '', '#home');
   show('home');
   if (start === 'settings') go('settings');
-  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+  if (!NATIVE && 'serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 })();
 
 /* =========================================================
