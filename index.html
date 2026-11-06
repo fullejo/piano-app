@@ -93,6 +93,8 @@
   .banner { border-radius: 22px; min-height: 220px; display: flex; align-items: flex-end; padding: 28px; margin-top: 8px; position: relative; overflow: hidden; }
   .banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0) 65%); }
   .banner > * { position: relative; z-index: 1; color: #fff; }
+  .banner > .bgl { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 3s ease; }
+  .banner > .bgl.on { opacity: 1; }
   .banner h2 { font-size: clamp(28px, 5vw, 44px); }
 
   .dashhead { display: flex; align-items: flex-end; gap: 16px; }
@@ -183,6 +185,12 @@
   /* sheet music */
   .tips { display: grid; gap: 6px; margin-bottom: 12px; font-size: 15px; }
   .tips b { font-family: var(--display); font-weight: 600; }
+  .order { display: grid; gap: 6px; margin-bottom: 12px; font-size: 15px; }
+  .order summary { cursor: pointer; margin-bottom: 4px; }
+  .order details > div { margin: 4px 0; }
+  .order .ch { padding-left: 10px; border-left: 3px solid var(--line, #ccc); opacity: .9; }
+  .order .ch i { font-style: normal; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; opacity: .7; margin-right: 6px; }
+  .order .sg { font-weight: 600; }
   .sheet { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 12px; }
   .score { display: block; width: 100%; height: auto; }
   .staffline { stroke: var(--staff); stroke-width: 1.1; }
@@ -312,6 +320,23 @@
   .kpi .v { font-family: var(--display); font-weight: 600; font-size: 34px; font-variant-numeric: tabular-nums; }
   .kpi .k { font-size: 14px; color: var(--quiet); }
   .chartwrap { overflow-x: auto; }
+  .sghead { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+  .sgscore { font-family: var(--display); font-weight: 600; font-size: 64px; line-height: 1; color: var(--accent); min-width: 120px; text-align: center; }
+  .sgbtns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  #sgChart { display: block; width: 100%; height: auto; }
+  #sgChart .line { fill: none; stroke: var(--accent); stroke-width: 3; }
+  #sgChart .dot { fill: var(--panel); stroke: var(--accent); stroke-width: 3; }
+  #sgChart .val { font-size: 14px; font-weight: 600; fill: currentColor; }
+  #sgChart .lab, #sgChart .muted { font-size: 12px; fill: var(--quiet); }
+  #sgChart .axis { stroke: var(--line); }
+  #sgBands tr.here td { background: color-mix(in srgb, var(--accent) 14%, transparent); font-weight: 600; }
+  #sgLevels { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; font-size: 15px; }
+  #sgLevels li.done { color: var(--quiet); }
+  .startcard { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 16px 18px; border: 1.5px solid var(--line); border-radius: 14px; background: var(--panel); font-size: 18px; margin-bottom: 10px; cursor: pointer; text-align: left; }
+  .startcard span { color: var(--quiet); font-size: 15px; }
+  .startcard:hover { border-color: var(--accent); }
+  body.sighting #sModes, body.sighting #sListen, body.sighting #sHands, body.sighting .range, body.sighting #sTempo, body.sighting #sBandBox { display: none !important; }
+  body.sighting.nocursor #band { visibility: hidden; }
   #chart { display: block; width: 100%; min-width: 560px; height: auto; }
   .bars rect { fill: var(--accent); }
   .bars rect.today { fill: var(--star); }
@@ -414,16 +439,19 @@
   </div>
   <div class="sechead"><h3>Explore</h3></div>
   <div class="grid4">
-    <button class="tile phototile" id="tileCourses"><div class="photo" data-ph="6"></div><div class="tx">
+    <button class="tile phototile" id="tileCourses"><div class="photo" data-ph="7"></div><div class="tx">
       <div class="label">Learn step by step</div><h3>Courses</h3><div class="meta" id="coursesMeta">Foundations, Bach &amp; Mozart, Hymns, Folk</div></div>
     </button>
-    <button class="tile phototile" id="tileGames"><div class="photo" data-ph="13"></div><div class="tx">
+    <button class="tile phototile" id="tileGames"><div class="photo" data-ph="16"></div><div class="tx">
       <div class="label">Play and learn</div><h3>Games</h3><div class="meta" id="gamesMeta">Note Invaders, Echo, Interval Hop, Rhythm Drum</div></div>
     </button>
-    <button class="tile phototile" id="tileReader"><div class="photo" data-ph="8"></div><div class="tx">
+    <button class="tile phototile" id="tileReader"><div class="photo" data-ph="10"></div><div class="tx">
       <div class="label">Reading drill</div><h3>Note Reader</h3><div class="meta" id="readerMeta">Ten notes on the grand staff</div></div>
     </button>
-    <button class="tile phototile" id="tileProgress"><div class="photo" data-ph="1"></div><div class="tx">
+    <button class="tile phototile" id="tileSight"><div class="photo" data-ph="21"></div><div class="tx">
+      <div class="label">Test yourself</div><h3>Sight Reading</h3><div class="meta" id="sightMeta">Find your sight-reading score</div></div>
+    </button>
+    <button class="tile phototile" id="tileProgress"><div class="photo" data-ph="11"></div><div class="tx">
       <div class="label">How it's going</div><h3>My progress</h3><div class="meta" id="progressMeta">Practice days, minutes and best scores</div></div>
     </button>
   </div>
@@ -467,6 +495,7 @@
     </div>
   </div>
   <div class="panel tips" id="sTips" hidden></div>
+  <div class="panel order" id="sOrder" hidden></div>
   <div class="fallwrap" id="fallWrap" hidden><canvas id="fall" width="1000" height="420"></canvas></div>
   <div class="sheet" id="sheetWrap">
     <svg class="score" id="score" role="img" aria-label="Sheet music"></svg>
@@ -478,6 +507,30 @@
     </div>
   </div>
   <div class="kbdwrap" id="kbdWrap"><svg id="kbd" viewBox="0 0 1000 110" role="img" aria-label="Keyboard showing the next keys"></svg></div>
+</section>
+
+<!-- SIGHT READING -->
+<section data-view="sight" class="stack" hidden>
+  <div class="panel">
+    <div class="sghead">
+      <div class="sgscore" id="sgScore">–</div>
+      <div class="grow">
+        <div class="label">Your sight-reading score</div>
+        <h2 style="margin:4px 0">Sight-Reading Test</h2>
+        <div class="muted" id="sgMeta"></div>
+      </div>
+    </div>
+    <p style="margin:12px 0 0">Fresh music you have never seen, one excerpt at a time. Each pass (80% or better) moves you up; under 80% is a strike, and three strikes end the test. Pick a starting level a little <b>higher</b> than you think: the test quickly finds your level.</p>
+    <div class="sgbtns">
+      <button class="primary" id="sgFind">Start test</button>
+      <button class="secondary" id="sgPractice">Practice</button>
+      <label class="check"><input type="checkbox" id="sgCursor"> Show the moving cursor</label>
+    </div>
+  </div>
+  <div class="panel"><div class="label" style="margin-bottom:8px">Scores, last 10 tests</div><svg id="sgChart" viewBox="0 0 600 220" role="img" aria-label="Sight-reading scores over time"></svg></div>
+  <div class="panel"><div class="label" style="margin-bottom:8px">What the scores mean</div>
+    <table><thead><tr><th>Reader</th><th>Levels</th><th>Score</th></tr></thead><tbody id="sgBands"></tbody></table></div>
+  <div class="panel"><div class="label" style="margin-bottom:8px">The ten levels (each has steps A to E)</div><ol id="sgLevels"></ol></div>
 </section>
 
 <!-- NOTE READER -->
@@ -573,7 +626,7 @@
 <!-- GAMES HUB -->
 <section data-view="games" class="stack" hidden>
   <div class="grid2" id="gameTiles"></div>
-  <button class="tile challenge phototile" id="tileChallenge"><div class="photo" data-ph="12"></div><div class="tx">
+  <button class="tile challenge phototile" id="tileChallenge"><div class="photo" data-ph="14"></div><div class="tx">
     <div class="label">Take turns</div>
     <h3>Family Challenge</h3>
     <div class="meta">Pick a game and two or more players. Everyone gets one turn, and the highest score wins.</div></div>
@@ -686,6 +739,24 @@
 </div>
 
 <!-- results -->
+<div class="modal" id="sgStartModal" hidden>
+  <div class="card" role="dialog" aria-labelledby="sgStartTitle">
+    <h2 id="sgStartTitle">Choose where to start</h2>
+    <p class="muted" style="margin-top:0">Aim a little high. A miss just moves you back down.</p>
+    <div id="sgStarts"></div>
+    <div class="actions"><button class="secondary" id="sgStartClose">Cancel</button></div>
+  </div>
+</div>
+<div class="modal" id="sgResModal" hidden>
+  <div class="card center" role="dialog" aria-labelledby="sgResTitle">
+    <h2 id="sgResTitle">Passed!</h2>
+    <div class="rows" id="sgResRows"></div>
+    <div class="actions">
+      <button class="primary" id="sgResNext">Next</button>
+      <button class="secondary" id="sgResQuit">End test now</button>
+    </div>
+  </div>
+</div>
 <div class="modal" id="resModal" hidden>
   <div class="card center" role="dialog" aria-labelledby="resTitle">
     <h2 id="resTitle">Nice playing!</h2>
@@ -767,7 +838,7 @@ const App = { profiles: [], library: { books: [] }, sessions: [], settings: {}, 
 const save = k => DB.set(k, App[k]);
 const me = () => App.profiles.find(p => p.id === App.current);
 const allSongs = () => App.library.books.flatMap(b => b.songs.map(s => ({ ...s, _book: b })));
-const findSong = id => allSongs().find(s => s.id === id);
+const findSong = id => (typeof SIGHT !== 'undefined' && SIGHT.song && SIGHT.song.id === id) ? SIGHT.song : allSongs().find(s => s.id === id);
 
 /* =========================================================
    LIBRARY: import book files or single song files
@@ -917,7 +988,7 @@ function songBest(pid, songId) {
 /* =========================================================
    ROUTER
    ========================================================= */
-const TITLES = { home: 'Family Piano', me: '', song: '', reader: 'Note Reader', progress: 'Progress', report: 'Weekly report', settings: 'Settings', games: 'Games', game: 'Games', challenge: 'Family Challenge', courses: 'Courses', course: 'Course', lesson: 'Lesson', assign: "This week's practice", songs: 'Songs' };
+const TITLES = { home: 'Family Piano', me: '', song: '', reader: 'Note Reader', progress: 'Progress', report: 'Weekly report', settings: 'Settings', games: 'Games', game: 'Games', challenge: 'Family Challenge', courses: 'Courses', course: 'Course', lesson: 'Lesson', sight: 'Sight Reading', assign: "This week's practice", songs: 'Songs' };
 let view = 'home';
 function go(v, replace) {
   const hash = '#' + v;
@@ -929,25 +1000,25 @@ window.addEventListener('popstate', () => show((location.hash || '#home').slice(
 function show(v) {
   if (!document.querySelector(`[data-view="${v}"]`)) v = 'home';
   if (v !== 'game' && GR.challenge) { App.current = GR.challenge.home; GR.challenge = null; }
-  if (['me', 'songs', 'song', 'reader', 'progress', 'report', 'games', 'game', 'challenge', 'assign', 'courses', 'course', 'lesson'].includes(v) && !me()) v = 'home';
+  if (['me', 'songs', 'song', 'reader', 'progress', 'report', 'games', 'game', 'challenge', 'assign', 'courses', 'course', 'lesson', 'sight'].includes(v) && !me()) v = 'home';
   if (v === 'song' && !SV.song) v = 'me';
-  leaveView(view);
+  leaveView(view, v);
   view = v;
   if (NATIVE) native('keepAwake', { on: ['song', 'game', 'reader', 'lesson'].includes(v) }).catch(() => {});
   document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== v; });
-  const withNav = !!me() && ['me', 'songs', 'courses', 'course', 'lesson', 'games', 'challenge', 'progress', 'assign', 'settings'].includes(v);
+  const withNav = !!me() && ['me', 'songs', 'courses', 'course', 'lesson', 'games', 'challenge', 'progress', 'assign', 'settings', 'sight'].includes(v);
   document.body.classList.toggle('withnav', withNav); $('sidenav').hidden = !withNav;
-  if (withNav) { const sec = { course: 'courses', lesson: 'courses', challenge: 'games', assign: 'me' }[v] || v; document.querySelectorAll('#sidenav [data-nav]').forEach(b => { if (b.dataset.nav === sec) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); const p0 = me(); $('navMe').textContent = p0.name.charAt(0).toUpperCase(); $('navMe').style.background = p0.color; }
+  if (withNav) { const sec = { course: 'courses', lesson: 'courses', challenge: 'games', assign: 'me', sight: 'me' }[v] || v; document.querySelectorAll('#sidenav [data-nav]').forEach(b => { if (b.dataset.nav === sec) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); const p0 = me(); $('navMe').textContent = p0.name.charAt(0).toUpperCase(); $('navMe').style.background = p0.color; }
   $('backBtn').hidden = v === 'home';
   $('homeBtn').hidden = v === 'home' || withNav;
   $('setBtn').hidden = v === 'settings' || withNav;
   const p = me();
-  $('topTitle').textContent = v === 'me' && p ? 'Family Piano' : v === 'song' ? 'Play Along' : TITLES[v];
-  ({ home: renderHome, me: renderMe, songs: renderSongs, song: renderSongView, reader: enterReader, progress: renderProgress, report: renderReport, settings: renderSettings, games: renderGames, game: enterGame, challenge: renderChallenge, assign: renderAssign, courses: renderCourses, course: renderCourse, lesson: renderLesson })[v]();
+  $('topTitle').textContent = v === 'me' && p ? 'Family Piano' : v === 'song' ? (SV.from === 'sight' ? 'Sight Reading' : 'Play Along') : TITLES[v];
+  ({ home: renderHome, me: renderMe, songs: renderSongs, song: renderSongView, reader: enterReader, progress: renderProgress, report: renderReport, settings: renderSettings, games: renderGames, game: enterGame, challenge: renderChallenge, assign: renderAssign, courses: renderCourses, course: renderCourse, lesson: renderLesson, sight: renderSight })[v]();
   window.scrollTo({ top: 0 });
 }
-function leaveView(v) {
-  if (v === 'song') { stopSong(true); stopListen(); }
+function leaveView(v, next) {
+  if (v === 'song') { stopSong(true); stopListen(); if (next !== 'song' && SIGHT.active) { SIGHT.active = false; clearInterval(SIGHT.preTick); } }
   if (v === 'reader') { R.playing = false; }
   if (v === 'game') { stopGame(); $('gModal').hidden = true; }
   if (v === 'report') saveReportNote();
@@ -965,14 +1036,26 @@ $('navMe').addEventListener('click', () => go('home'));
 /* photos (img/01-15.jpg) and color schemes */
 const IMG = n => `img/${String(n).padStart(2, '0')}.jpg`;
 const DAY = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 6e4) / 864e5);
-const POOL = [2, 3, 4, 5, 7, 8, 1, 6, 11, 13];
-const dayPhoto = i => POOL[(DAY() + i) % POOL.length];
-const hashStr = t => [...String(t)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
-function songPhoto(s) { const id = s.id || ''; if (/hymn/.test(id)) return hashStr(id) % 2 ? 9 : 15; if (/bach|mozart/.test(id)) return 10; if (/folk|blue/.test(id)) return 14; return POOL[hashStr(id) % POOL.length]; }
-const COURSE_PH = { 'c-foundations-1': 5, 'c-bach-mozart-1': 10, 'c-hymns-1': 15, 'c-folk-1': 14 };
-const GAME_PH = { invaders: 13, echo: 4, hop: 3, rhythm: 2, reader: 7, challenge: 12 };
-function photo(n, cls) { const d = h('div', { class: 'photo ' + (cls || '') }); d.style.backgroundImage = `url(${IMG(n)})`; return d; }
-function fillPhotos() { document.querySelectorAll('[data-ph]').forEach(d => { d.style.backgroundImage = `url(${IMG(d.dataset.ph)})`; }); }
+/* Fixed photo for each spot. A list rotates by day (Orthodox). */
+const pick = v => Array.isArray(v) ? v[DAY() % v.length] : v;
+const PH_POS = { 2: '50% 25%', 4: '35% 35%', 5: '50% 30%', 14: '55% 60%', 27: '50% 45%', 28: '50% 35%', 29: '40% 35%', 30: '50% 20%' };
+const OLDTIME_SONGS = ['pd-folk-aunt-rhody', 'pd-folk-camptown', 'pd-folk-saints'];
+function songPhoto(s) {
+  const id = s.id || '';
+  if (/orth/.test(id)) return pick([28, 30]);
+  if (/hymn/.test(id)) return 5;
+  if (/bach|mozart|classic/.test(id)) return 2;
+  if (/^pd-blue/.test(id)) return 18;
+  if (OLDTIME_SONGS.includes(id) || /oldtime/.test(id)) return 17;
+  if (/folk/.test(id)) return 20;
+  return 3;
+}
+const COURSE_PH = { 'c-foundations-1': 8, 'c-bach-mozart-1': 2, 'c-bach-mozart-2': 6, 'c-hymns-1': 5, 'c-folk-1': 20, 'c-oldtime-1': 17, 'c-bluegrass-1': 18, 'c-bluegrass-2': 25, 'c-orthodox-1': [27, 29] };
+const coursePhoto = c => pick(COURSE_PH[c.id] || c.photo || 8);
+const GAME_PH = { invaders: 16, echo: 4, hop: 9, rhythm: 12, reader: 10, challenge: 14, sightread: 21 };
+const HOME_ROTATION = [19, 22, 23, 24, 26];
+function photo(n, cls) { const d = h('div', { class: 'photo ' + (cls || '') }); d.style.backgroundImage = `url(${IMG(n)})`; if (PH_POS[n]) d.style.backgroundPosition = PH_POS[n]; return d; }
+function fillPhotos() { document.querySelectorAll('[data-ph]').forEach(d => { d.style.backgroundImage = `url(${IMG(d.dataset.ph)})`; if (PH_POS[d.dataset.ph]) d.style.backgroundPosition = PH_POS[d.dataset.ph]; }); }
 const SCHEMES = { studio: 'Sunlit Studio', concert: 'Concert Hall', family: 'Family Room' };
 function applyTheme(t) {
   t = t || App.settings.theme || {};
@@ -989,8 +1072,19 @@ fillPhotos();
    HOME + PEOPLE
    ========================================================= */
 function avatar(p, cls) { const a = h('div', { class: 'avatar ' + (cls || '') }, (p.name || '?').trim().charAt(0).toUpperCase()); a.style.background = p.color; return a; }
+let homeRot = null;
+function startHomeRotation() {
+  const b = $('homeBanner'); b.style.backgroundImage = 'none';
+  let layers = b.querySelectorAll('.bgl');
+  if (!layers.length) { layers = [h('div', { class: 'bgl' }), h('div', { class: 'bgl' })]; b.prepend(...layers); }
+  let i = DAY() % HOME_ROTATION.length, cur = 0;
+  const show = () => { const L = layers[cur]; L.style.backgroundImage = `url(${IMG(HOME_ROTATION[i])})`; layers.forEach(x => x.classList.toggle('on', x === L)); i = (i + 1) % HOME_ROTATION.length; cur = 1 - cur; new Image().src = IMG(HOME_ROTATION[i]); };
+  show();
+  if (homeRot) clearInterval(homeRot);
+  homeRot = setInterval(() => { if (view === 'home' && !document.hidden) show(); }, 15000);
+}
 function renderHome() {
-  $('homeBanner').style.backgroundImage = `url(${IMG([11, 12, 1, 4][DAY() % 4])})`;
+  startHomeRotation();
   const box = $('people'); box.textContent = '';
   App.profiles.forEach(p => {
     const st = streak(p.id);
@@ -1042,6 +1136,7 @@ function renderMe() {
   [[st, st === 1 ? 'day in a row' : 'days in a row'], [wk, 'minutes this week'], [starsWon, 'song stars earned']].forEach(([v, k]) => $('meChips').append(h('span', { class: 'chip' }, h('b', null, v), k)));
   // reader meta
   const rd = mySessions(p.id).filter(s => s.kind === 'reader');
+  { const sc = sightScore(p.id); $('sightMeta').textContent = sc == null ? 'Find your sight-reading score' : `Score ${sc} · Level ${stepName(sightStepOf(sc))}`; }
   $('readerMeta').textContent = rd.length ? `Best round: ${Math.max(...rd.map(s => s.score))} of 10 · ${rd.length} round${rd.length === 1 ? '' : 's'} played` : 'Ten notes on the grand staff';
   // trouble spot from latest song run
   const lastTrouble = [...mySessions(p.id)].reverse().find(s => s.kind === 'song' && s.trouble && findSong(s.songId));
@@ -1064,7 +1159,7 @@ function renderMe() {
     cs.lessons.slice(from, from + 4).forEach((L, k) => {
       const i = from + k, st = lessonState(L);
       strip.append(h('button', { class: 'lcardp' + (i === nx ? ' next' : ''), onclick: () => { CS.course = cs.id; CS.lesson = i; go('lesson'); } },
-        photo(dayPhoto(i)), h('div', { class: 'tx' }, h('span', { class: 'k' }, `Lesson ${i + 1}${i === nx ? ' · up next' : st.done ? ' · done ✓' : ''}`), h('span', { class: 'n' }, L.title))));
+        photo(coursePhoto(cs)), h('div', { class: 'tx' }, h('span', { class: 'k' }, `Lesson ${i + 1}${i === nx ? ' · up next' : st.done ? ' · done ✓' : ''}`), h('span', { class: 'n' }, L.title))));
     });
   }
   // recently played
@@ -1093,6 +1188,7 @@ function renderSongs() {
   });
 }
 $('tileReader').addEventListener('click', () => go('reader'));
+$('tileSight').addEventListener('click', () => go('sight'));
 $('tileProgress').addEventListener('click', () => go('progress'));
 
 /* =========================================================
@@ -1155,11 +1251,23 @@ function openSong(id, range, loop, opts) {
 }
 function renderSongView() {
   const s = SV.song;
+  const sighting = SV.from === 'sight';
+  document.body.classList.toggle('sighting', sighting); document.body.classList.toggle('nocursor', sighting && !sightCursor());
+  if (sighting) { SV.mode = 'perform'; SV.hands = 'both'; SV.loop = false; }
   $('sTitle').textContent = s.title;
   $('sSrc').textContent = [s._book?.title || s.source, s.page ? 'page ' + s.page : ''].filter(Boolean).join(' · ');
   const tips = $('sTips'); tips.textContent = '';
   (s.tips || []).forEach(t => tips.append(h('div', null, h('b', null, t.label + ' '), t.text)));
   tips.hidden = !(s.tips || []).length;
+  // Service order: verses that are chanted (no notes) between the sung parts
+  const ord = $('sOrder'); ord.textContent = '';
+  if ((s.order || []).length) {
+    const det = h('details', null, h('summary', null, h('b', null, 'How it’s sung'), ' — verses and order in the service')); ord.append(det);
+    s.order.forEach(o => det.append(o.chant
+      ? h('div', { class: 'ch' }, h('i', null, o.label || 'Chant'), o.chant)
+      : h('div', { class: 'sg' }, '♪ ' + (o.sing || 'Sing the music') + (o.bars ? ` (bars ${o.bars[0]}–${o.bars[1]})` : ''))));
+  }
+  ord.hidden = !(s.order || []).length;
   $('sTempo').value = SV.bpm; $('sTempoVal').textContent = SV.bpm;
   $('sLoop').checked = SV.loop; $('sClicks').checked = SV.clicks;
   setMode(SV.mode);
@@ -1170,8 +1278,12 @@ function renderSongView() {
   kbdBuild();
   keyHandler = songKey;
   if (SV.autoListen) { SV.autoListen = false; setTimeout(listen, 400); }
+  if (sighting) sightPreview();
 }
 function setMode(m) {
+  const free = !!(SV.song && SV.song.free);
+  if (free && m === 'perform') m = 'practice';
+  const pb = $('sModes').querySelector('[data-mode="perform"]'); if (pb) pb.hidden = free;
   SV.mode = m;
   $('sModes').querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', b.dataset.mode === m));
   $('sClickBox').hidden = m === 'practice';
@@ -1184,7 +1296,7 @@ function setMode(m) {
 $('sBand').addEventListener('change', e => { SV.band = e.target.checked; });
 // keyboard helper on/off, remembered per person (falling notes always shows the keyboard)
 const kbdOn = () => { const v = (App.settings.kbdHelper || {})[App.current]; return v == null ? true : v; };
-function applyKbd() { const on = kbdOn() || SV.mode === 'falling'; $('kbdWrap').hidden = !on; $('sKbd').checked = kbdOn(); $('sKbd').disabled = SV.mode === 'falling'; }
+function applyKbd() { const on = (kbdOn() || SV.mode === 'falling') && SV.from !== 'sight'; $('kbdWrap').hidden = !on; $('sKbd').checked = kbdOn(); $('sKbd').disabled = SV.mode === 'falling'; }
 $('sKbd').addEventListener('change', e => { App.settings.kbdHelper = App.settings.kbdHelper || {}; App.settings.kbdHelper[App.current] = e.target.checked; save('settings'); applyKbd(); });
 $('sHands').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
   if (SV.running) return; stopListen();
@@ -1663,6 +1775,7 @@ function finishSong() {
     stars = notesPct >= 90 && timePct >= 75 ? 3 : notesPct >= 75 ? 2 : 1;
     rows = [['Notes played', `${hit} of ${total} (${notesPct}%)`], ['On the beat', `${timePct}%`], ['Missed', String(missed)], ['Extra notes', String(wrong)], ['Speed', `${SV.bpm} beats a minute`]];
   }
+  if (SV.from === 'sight' && SIGHT.active) return sightDone(notesPct, timePct ?? 0, wrong, seconds);
   const [a, b] = SV.range, last = SV.song.measures.length - 1, num = i => SV.song.measures[i].number ?? i + 1;
   const trouble = troubleSpot();
   logSession({ kind: 'song', songId: SV.song.id, title: SV.song.title, range: [num(a), num(b)], whole: a === 0 && b === last,
@@ -1818,12 +1931,16 @@ function renderProgress() {
   recent.forEach(s => rt.append(h('tr', null, h('td', null, fmtWhen(s.when)), h('td', null, describe(s)), h('td', null, result(s)), h('td', null, s.seconds ? Math.max(1, Math.round(s.seconds / 60)) + ' min' : ''))));
 }
 function describe(s) {
+  if (s.kind === 'sighttest') return `Sight-reading test${s.ended ? ' (ended early)' : ''}`;
+  if (s.kind === 'sightpractice') return `Sight-reading practice, Level ${s.level}`;
   if (s.kind === 'reader') return `Note Reader (${s.clef === 'both' ? 'both clefs' : s.clef})`;
   if (s.kind === 'game') return s.title;
   if (s.kind === 'listen') return `${s.title} · listened`;
   return `${s.title}${s.whole ? '' : `, bars ${s.range[0]}–${s.range[1]}`} · ${s.mode === 'practice' ? 'practice' : (s.mode === 'falling' ? 'falling notes at ' : 'with beat at ') + s.bpm}`;
 }
 function result(s) {
+  if (s.kind === 'sighttest') return `Score ${s.score} · Level ${s.level}`;
+  if (s.kind === 'sightpractice') return `${s.score}%${s.pass ? ' (passed)' : ''}`;
   if (s.kind === 'reader') return `${s.score}/10 first try`;
   if (s.kind === 'listen') return '';
   if (s.kind === 'game') return `${s.score}${s.game === 'rhythm' ? '% timing' : s.game === 'echo' ? '-note tune' : s.game === 'hop' ? '/10 first try' : ' notes zapped'}`;
@@ -2124,14 +2241,15 @@ function lessonState(L, pid) {
   const runs = lessonRuns(L, pid);
   const listened = runs.some(s => s.kind === 'listen');
   const practiced = runs.some(s => s.kind === 'song' && s.mode === 'practice' && s.stars >= 2);
-  const plays = runs.filter(s => s.kind === 'song' && s.mode === 'perform');
+  const free = !!(findSong(L.song) || {}).free;  // chant: no steady beat, finished in Practice
+  const plays = runs.filter(s => s.kind === 'song' && (free ? s.mode === 'practice' : s.mode === 'perform'));
   const stars = plays.length ? Math.max(...plays.map(s => s.stars)) : 0;
-  return { listened, practiced, stars, done: stars >= 2 };
+  return { listened, practiced, stars, done: stars >= (free ? 3 : 2) };
 }
 function nextLesson(c) { return c.lessons.findIndex(L => !lessonState(L).done); }
 function courseCard(c) {
   const done = c.lessons.filter(L => lessonState(L).done).length;
-  const b = h('button', { class: 'tile coursecard phototile', onclick: () => { CS.course = c.id; go('course'); } }, photo(COURSE_PH[c.id] || 7),
+  const b = h('button', { class: 'tile coursecard phototile', onclick: () => { CS.course = c.id; go('course'); } }, photo(coursePhoto(c)),
     h('div', { class: 'tx' }, h('div', { class: 'label' }, `${done} of ${c.lessons.length} lessons`), h('h3', null, c.title), h('div', { class: 'meta' }, c.blurb)));
   return b;
 }
@@ -2175,7 +2293,9 @@ function renderLesson() {
   const bars = r ? `bars ${r[0] + 1}–${r[1] + 1}` : '';
   [[st.listened, 'Listen', `Hear ${song ? song.title : ''}, ${bars}, and follow the notes.`, () => openSong(L.song, r, false, { hands, bpm, mode: 'practice', from: 'lesson', listen: true })],
    [st.practiced, 'Practice', `Play at your own speed, ${hn}. The app waits for each note.`, () => openSong(L.song, r, false, { hands, mode: 'practice', from: 'lesson' })],
-   [st.done, 'Play with the beat', `Keep the beat at ${bpm}. Two stars finishes the lesson.${song && song.measures.some(m => m.ch) ? ' Turn on Band for accompaniment.' : ''}`, () => openSong(L.song, r, false, { hands, bpm, mode: 'perform', from: 'lesson' })]]
+   song && song.free
+    ? [st.done, 'Play it through', 'Chant follows the words, not a steady beat. Play the whole section in Practice; three stars finishes the lesson.', () => openSong(L.song, r, false, { hands, mode: 'practice', from: 'lesson' })]
+    : [st.done, 'Play with the beat', `Keep the beat at ${bpm}. Two stars finishes the lesson.${song && song.measures.some(m => m.ch) ? ' Turn on Band for accompaniment.' : ''}`, () => openSong(L.song, r, false, { hands, bpm, mode: 'perform', from: 'lesson' })]]
     .forEach(([done, t, sub, fn]) => steps.append(h('button', { class: 'item' + (done ? ' done' : ''), onclick: fn }, h('span', { class: 'tick' }, done ? '✓' : ''), h('span', { class: 'what' }, t, h('span', { class: 'sub' }, sub)), h('span', { class: 'ghost' }, done ? 'Again' : 'Start'))));
   $('lNext').hidden = CS.lesson >= c.lessons.length - 1;
 }
@@ -2605,7 +2725,250 @@ function challengeTurnDone(score) {
   $('gModal').hidden = false;
 }
 
-window.familyPiano = { GR, GAMES, App, SV, R, press: (m, t) => keyHandler && keyHandler(m, t || performance.now()), importLibraryJson, openSong, go };
+/* =========================================================
+   SIGHT-READING TEST (Piano Marvel style)
+   Fresh, never-seen music at 10 levels. Each excerpt is played once
+   with the beat; 80% passes and moves you up 1-5 steps, three strikes end the test.
+   ========================================================= */
+const SR = {   // rhythm patterns per bar, in beats; negative = rest
+  A4: [[1,1,1,1],[2,1,1],[1,1,2],[2,2],[1,2,1]],
+  B4: [[3,1],[1,3],[1,1,1,1],[2,1,1],[1,1,2],[2,2]],
+  C4: [[.5,.5,1,1,1],[1,.5,.5,2],[1,1,.5,.5,1],[.5,.5,.5,.5,2]],
+  D4: [[1.5,.5,1,1],[1.5,.5,2],[1,1.5,.5,1],[1,1,1,-1],[2,-1,1],[1,-1,1,1]],
+  E4: [[.5,.5,.5,.5,1,1],[1,.5,.5,.5,.5,1],[.5,.5,1,.5,.5,1]],
+  F4: [[.25,.25,.5,1,1,1],[1,.25,.25,.25,.25,2],[.5,1,.5,2],[1,.5,1,.5,1]],
+  A3: [[1,1,1],[2,1],[1,2]],
+  C3: [[.5,.5,1,1],[1,.5,.5,1],[1,1,.5,.5]],
+  D3: [[1.5,.5,1],[1,-1,1],[2,-1]],
+  E3: [[.5,.5,.5,.5,1],[1,.5,.5,.5,.5]],
+  F3: [[.25,.25,.5,1,1],[.5,1,.5,1]],
+  END4: [[4],[2,2],[3,1]], END3: [[3],[2,1]],
+};
+const SIGHT_LEVELS = [null,
+  { desc: 'Right hand in C position. Quarter and half notes, moving by step.', hands: 'rh', keys: [0], ts: [4], bars: 4, rng: [0, 4], leap: 1, sets: ['A'], lh: null, bpm: 60, pos: true },
+  { desc: 'Left hand in C position. Steps and skips.', hands: 'lh', keys: [0], ts: [4], bars: 4, rng: [0, 4], leap: 2, sets: ['A'], lh: null, bpm: 60, pos: true },
+  { desc: 'Hands take turns. Skips, dotted half notes, 3/4 time.', hands: 'alt', keys: [0], ts: [4, 3], bars: 4, rng: [0, 4], leap: 2, sets: ['A', 'B'], lh: null, bpm: 63, pos: true },
+  { desc: 'Hands together: melody over a held bass. C and G positions.', hands: 'both', keys: [0, 1], ts: [4, 3], bars: 4, rng: [0, 4], leap: 4, sets: ['A', 'B'], lh: 'whole', bpm: 66, pos: true },
+  { desc: 'Keys of C, G and F. Eighth notes. Root-and-fifth bass.', hands: 'both', keys: [0, 1, -1], ts: [4, 3], bars: 6, rng: [-1, 5], leap: 4, sets: ['A', 'B', 'C'], lh: 'half', bpm: 69 },
+  { desc: 'Dotted rhythms and rests. Wider skips. Moving bass.', hands: 'both', keys: [0, 1, -1], ts: [4, 3], bars: 6, rng: [-2, 7], leap: 5, sets: ['B', 'C', 'D'], lh: 'quarter', bpm: 72 },
+  { desc: 'Hand moves across an octave. Keys up to two sharps or flats.', hands: 'both', keys: [0, 1, -1, 2, -2], ts: [4, 3], bars: 6, rng: [-3, 9], leap: 7, sets: ['B', 'C', 'D'], lh: 'dyad', bpm: 76 },
+  { desc: 'Accidentals and running eighths. Minor keys.', hands: 'both', keys: [0, 1, -1, 2, -2], minor: true, ts: [4, 3], bars: 8, rng: [-3, 9], leap: 5, sets: ['C', 'D', 'E'], lh: 'quarter', acc: .12, bpm: 76 },
+  { desc: 'Sixteenths and syncopation. Up to three sharps or flats.', hands: 'both', keys: [0, 1, -1, 2, -2, 3, -3], minor: true, ts: [4, 3], bars: 8, rng: [-3, 9], leap: 7, sets: ['C', 'D', 'E', 'F'], lh: 'broken', acc: .15, bpm: 80 },
+  { desc: 'Two notes at once in the right hand, broken-chord bass. Up to four sharps or flats.', hands: 'both', keys: [0, 1, -1, 2, -2, 3, -3, 4, -4], minor: true, ts: [4, 3], bars: 8, rng: [-3, 9], leap: 7, sets: ['C', 'D', 'E', 'F'], lh: 'broken', acc: .15, dyads: .35, bpm: 84 },
+];
+const MAJ = [0, 2, 4, 5, 7, 9, 11], MIN = [0, 2, 3, 5, 7, 8, 10];
+const SHARPN = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'], FLATN = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+const rnd = n => Math.floor(Math.random() * n), pick1 = a => a[rnd(a.length)];
+function spell(midi, key, raised) {
+  const pc = ((midi % 12) + 12) % 12, oct = Math.floor(midi / 12) - 1;
+  const n = (raised === 1 ? SHARPN : raised === -1 ? FLATN : key < 0 ? FLATN : SHARPN)[pc];
+  // Cb / B# / E# / Fb never needed in keys up to 4 accidentals
+  return n + oct;
+}
+function genSight(level, bucket) {
+  bucket = bucket || 0;
+  const L0 = SIGHT_LEVELS[level], frac = a => a.slice(0, Math.max(1, Math.ceil(a.length * (bucket + 1) / 5)));
+  const L = { ...L0, keys: frac(L0.keys), sets: frac(L0.sets), bpm: L0.bpm + 3 * bucket, ts: bucket < 2 ? L0.ts.slice(0, 1) : L0.ts };
+  const key = pick1(L.keys), minor = !!L.minor && Math.random() < .4, per = pick1(L.ts);
+  const scale = minor ? MIN : MAJ;
+  let pc = ((key * 7) % 12 + 12) % 12; if (minor) pc = (pc + 9) % 12;
+  let tonic = 60 + pc; if (tonic > 69) tonic -= 12;
+  const lhTonic = tonic - 12 > 52 ? tonic - 24 : tonic - 12;
+  const deg2midi = (d, base) => { const o = Math.floor(d / 7), i = ((d % 7) + 7) % 7; return base + 12 * o + scale[i]; };
+  // rhythm per bar
+  const sets = L.sets.map(s => SR[s + per] || []).flat();
+  const rhythms = [];
+  for (let b = 0; b < L.bars; b++) rhythms.push(b === L.bars - 1 ? pick1(SR['END' + per]) : pick1(sets.length ? sets : SR['A' + per]));
+  // chords per bar (degree of root): I, IV, V; end V-I
+  const chords = []; for (let b = 0; b < L.bars; b++) chords.push(b === L.bars - 1 ? 0 : b === L.bars - 2 ? 4 : b === 0 ? 0 : pick1([0, 0, 3, 4]));
+  // melody as scale degrees, random walk with chord tones on beat 1
+  const [lo, hi] = L.rng;
+  let d = pick1([0, 0, 2, 4].filter(x => x >= lo && x <= hi));
+  const mel = [];
+  rhythms.forEach((pat, b) => {
+    let t = 0;
+    pat.forEach((v, i) => {
+      if (v < 0) { mel.push({ bar: b, t, dur: -v, rest: true }); t += -v; return; }
+      const last = b === L.bars - 1 && i === pat.length - 1;
+      if (last) d = d >= 3 ? 7 * Math.round(d / 7) : 0;
+      else if (mel.length) {
+        const w = [1, 1, 1, 2, 2, 3, 4, 5, 7].filter(s => s <= L.leap);
+        let step = pick1(w) * (Math.random() < .5 ? -1 : 1), nd = d + step;
+        if (nd < lo || nd > hi) nd = d - step;
+        d = Math.max(lo, Math.min(hi, nd));
+        if (t === 0 && L.lh) { const ct = [0, 2, 4].map(x => x + chords[b]); const opts = []; for (let k = lo; k <= hi; k++) if (ct.some(c => ((k - c) % 7 + 7) % 7 === 0)) opts.push(k); if (opts.length) d = opts.sort((a, z) => Math.abs(a - d) - Math.abs(z - d))[0]; }
+      }
+      mel.push({ bar: b, t, dur: v, d });
+      t += v;
+    });
+  });
+  // accidentals: chromatic passing tone between notes a whole step apart (weak beats)
+  mel.forEach((n, i) => {
+    n.raised = 0;
+    if (n.rest || !L.acc || i === 0 || n.t % 1 === 0) return;
+    const nx = mel[i + 1]; if (!nx || nx.rest || Math.random() > L.acc * 3) return;
+    const a = deg2midi(n.d, tonic), b2 = deg2midi(nx.d, tonic);
+    if (Math.abs(b2 - a) === 1) { n.raised = b2 > a ? 1 : -1; n.chrom = true; }
+  });
+  // build bars
+  const hand = b => L.hands === 'alt' ? (b % 2 === 0 ? 'rh' : 'lh') : L.hands;
+  const measures = [];
+  for (let b = 0; b < L.bars; b++) {
+    const notes = mel.filter(n => n.bar === b), h1 = hand(b);
+    const base = h1 === 'lh' ? lhTonic + 12 * (tonic - lhTonic > 12 ? 1 : 0) : tonic;
+    const line = notes.map(n => {
+      if (n.rest) return { r: n.dur };
+      let m = deg2midi(n.d, h1 === 'lh' ? (L.hands === 'lh' || L.hands === 'alt' ? tonic - 12 : base) : base);
+      if (n.chrom) m += n.raised;
+      const it = { p: spell(m, key, n.chrom ? n.raised : 0), d: n.dur };
+      if (L.dyads && h1 !== 'lh' && n.t % 1 === 0 && n.dur >= 1 && Math.random() < L.dyads && !n.chrom) {
+        const low = deg2midi(n.d - 2, tonic) ; it.p = [spell(low, key, 0), it.p];
+      }
+      return it;
+    });
+    const rest = [{ r: per }];
+    let bass = rest;
+    if (L.lh && h1 === 'both') {
+      const r0 = deg2midi(chords[b], lhTonic), r5 = deg2midi(chords[b] + 4, lhTonic), r3 = deg2midi(chords[b] + 2, lhTonic), r8 = r0 + 12;
+      const S = m => spell(m, key, 0);
+      if (L.lh === 'whole') bass = [{ p: S(r0), d: per }];
+      else if (L.lh === 'half') bass = per === 4 ? [{ p: S(r0), d: 2 }, { p: S(r5), d: 2 }] : [{ p: S(r0), d: 2 }, { p: S(r5), d: 1 }];
+      else if (L.lh === 'quarter') bass = per === 4 ? [r0, r5, r8, r5].map(m => ({ p: S(m), d: 1 })) : [r0, r5, r8].map(m => ({ p: S(m), d: 1 }));
+      else if (L.lh === 'dyad') bass = per === 4 ? [{ p: [S(r0), S(r5)], d: 2 }, { p: [S(r0), S(r5)], d: 2 }] : [{ p: S(r0), d: 1 }, { p: [S(r3), S(r5)], d: 1 }, { p: [S(r3), S(r5)], d: 1 }];
+      else if (L.lh === 'broken') { const cyc = [r0, r5, r8, r5]; bass = []; for (let k = 0; k < per * 2; k++) bass.push({ p: S(cyc[k % 4]), d: .5 }); }
+      if (b === L.bars - 1) bass = [{ p: S(r0), d: per }];
+    }
+    const m = { number: b + 1, treble: h1 === 'lh' ? rest : line, bass: h1 === 'lh' ? line : bass };
+    measures.push(m);
+  }
+  measures[measures.length - 1].final = true;
+  if (L.pos) {
+    const first = measures.flatMap(m => [...m.treble, ...m.bass]).find(x => x.p);
+    if (first) first.pos = L.hands === 'lh' ? 'L.H. 5 on C' : 'thumb on ' + (Array.isArray(first.p) ? first.p[0] : spell(tonic, key, 0)).replace(/\d/, '');
+  }
+  const tname = (minor ? FLATN : (key < 0 ? FLATN : SHARPN))[pc] + (minor ? ' minor' : ' major');
+  return { id: 'sight-' + Date.now(), title: `Sight-reading ${level}${'ABCDE'[bucket]}`, source: tname + ` · ${per}/4`, timeSignature: [per, 4], key, tempo: { text: '', bpm: L.bpm }, tips: [], measures, _sight: true };
+}
+
+
+/* ---- the test: 50 steps (levels 1-10, buckets A-E), three strikes ---- */
+const SIGHT = { active: false, mode: 'test', step: 0, strikes: 0, results: [], song: null, seconds: 0, preTick: 0 };
+const PASS = 80, STEPS = 50;
+const stepName = g => `${Math.floor(g / 5) + 1}${'ABCDE'[g % 5]}`;
+const stepPoints = (g, pct) => (g + 1) * 20 + Math.max(0, Math.min(19, pct - 81));   // 1A = 20-39 ... 10E = 1000-1019
+const SIGHT_STARTS = [['Beginner', 'Level 1', 0], ['Intermediate', 'Levels 2–4', 5], ['Advanced', 'Levels 5–7', 20], ['Expert', 'Levels 8–10', 35]];
+const SIGHT_BANDS = [['Early beginner', 1, 2], ['Late beginner', 3, 4], ['Intermediate', 5, 6], ['Advanced', 7, 8], ['Expert reader', 9, 10]];
+const sightTests = pid => mySessions(pid).filter(s => s.kind === 'sighttest');
+const sightScore = pid => { const t = sightTests(pid); return t.length ? t[t.length - 1].score : null; };
+const sightStepOf = score => Math.max(0, Math.min(STEPS - 1, Math.floor(score / 20) - 1));
+const sightCursor = () => { const v = (App.settings.sightCursor || {})[App.current]; return v == null ? true : v; };
+function renderSight() {
+  const p = me(), tests = sightTests(p.id), sc = sightScore(p.id);
+  $('sgScore').textContent = sc == null ? '–' : sc;
+  $('sgMeta').textContent = sc == null ? 'Take the test to get your score.' : `Level ${stepName(sightStepOf(sc))} · best ${Math.max(...tests.map(t => t.score))} · last test ${fmtWhen(tests[tests.length - 1].when)}`;
+  $('sgPractice').textContent = `Practice at ${sc == null ? 'Level 1A' : 'Level ' + stepName(sightStepOf(sc))}`;
+  $('sgCursor').checked = sightCursor();
+  const tb = $('sgBands'); tb.textContent = '';
+  const lv = sc == null ? 0 : Math.floor(sightStepOf(sc) / 5) + 1;
+  SIGHT_BANDS.forEach(([name, a, b]) => tb.append(h('tr', { class: lv >= a && lv <= b ? 'here' : '' }, h('td', null, name), h('td', null, `Levels ${a}–${b}`), h('td', null, `${(a - 1) * 100 + 20}–${b * 100 + 19}`))));
+  const ol = $('sgLevels'); ol.textContent = '';
+  SIGHT_LEVELS.forEach((L, i) => { if (L) ol.append(h('li', { class: i <= lv ? 'done' : '' }, h('b', null, `Level ${i}. `), L.desc)); });
+  drawSightChart(tests.slice(-10));
+}
+function drawSightChart(tests) {
+  const svg = $('sgChart'); svg.textContent = '';
+  if (!tests.length) { el('text', { x: 300, y: 110, 'text-anchor': 'middle', class: 'muted' }, svg).textContent = 'Your scores will show here.'; return; }
+  const max = Math.max(200, ...tests.map(t => t.score)) * 1.15, W = 600, H = 220, x = i => 40 + (tests.length === 1 ? (W - 80) / 2 : i * (W - 80) / (tests.length - 1)), y = v => H - 30 - v / max * (H - 60);
+  el('line', { x1: 40, x2: W - 40, y1: H - 30, y2: H - 30, class: 'axis' }, svg);
+  if (tests.length > 1) el('polyline', { points: tests.map((t, i) => `${x(i)},${y(t.score)}`).join(' '), class: 'line' }, svg);
+  tests.forEach((t, i) => {
+    el('circle', { cx: x(i), cy: y(t.score), r: 6, class: 'dot' }, svg);
+    el('text', { x: x(i), y: y(t.score) - 12, 'text-anchor': 'middle', class: 'val' }, svg).textContent = t.score;
+    const d = new Date(t.when); el('text', { x: x(i), y: H - 10, 'text-anchor': 'middle', class: 'lab' }, svg).textContent = `${d.getMonth() + 1}/${d.getDate()}`;
+  });
+}
+function sightChoose() {
+  const box = $('sgStarts'); box.textContent = '';
+  SIGHT_STARTS.forEach(([name, sub, g]) => box.append(h('button', { class: 'startcard', onclick: () => { $('sgStartModal').hidden = true; sightStart('test', g); } }, h('b', null, name), h('span', null, sub))));
+  $('sgStartModal').hidden = false;
+}
+function sightStart(mode, step) {
+  Object.assign(SIGHT, { active: true, mode, step: Math.max(0, Math.min(STEPS - 1, step)), strikes: 0, results: [], seconds: 0 });
+  sightNext();
+}
+function sightNext() {
+  const g = SIGHT.step;
+  SIGHT.song = genSight(Math.floor(g / 5) + 1, g % 5);
+  openSong(SIGHT.song.id, null, false, { mode: 'perform', bpm: SIGHT.song.tempo.bpm, from: 'sight', hands: 'both' });
+}
+function sightPreview() {
+  clearInterval(SIGHT.preTick);
+  let left = 20;
+  const L = SIGHT_LEVELS[Math.floor(SIGHT.step / 5) + 1];
+  const say = () => {
+    $('sTips').textContent = '';
+    $('sTips').append(h('div', null, h('b', null, `${SIGHT.mode === 'test' ? 'Sight-reading test' : 'Sight-reading practice'} · Level ${stepName(SIGHT.step)}`),
+      SIGHT.mode === 'test' ? `  · strikes ${'✗'.repeat(SIGHT.strikes)}${'○'.repeat(3 - SIGHT.strikes)}` : ''),
+      h('div', null, L.desc), h('div', null, h('b', null, `Starts in ${left} s. `), 'Look it over, or tap Start when you’re ready. You get one bar of count-in, then play it straight through. Stay above 80%.'));
+    $('sTips').hidden = false;
+  };
+  say();
+  SIGHT.preTick = setInterval(() => {
+    if (view !== 'song' || SV.from !== 'sight' || SV.running || !$('sgResModal').hidden) return clearInterval(SIGHT.preTick);
+    left--; say(); if (left <= 0) { clearInterval(SIGHT.preTick); startSong(); }
+  }, 1000);
+}
+function sightDone(notesPct, timePct, wrong, seconds) {
+  clearInterval(SIGHT.preTick);
+  const pct = Math.round(.6 * notesPct + .4 * timePct), pass = pct >= PASS;
+  const g = SIGHT.step;
+  SIGHT.results.push({ step: g, pct, pass }); SIGHT.seconds += seconds;
+  const rows = [['Notes played', notesPct + '%'], ['On the beat', timePct + '%'], ['This excerpt', `${pct}%`]];
+  let title, next, nextLabel, done = false;
+  if (SIGHT.mode === 'practice') {
+    title = pass ? `Passed ${stepName(g)}!` : 'Keep at it'; nextLabel = 'Another one'; next = () => sightNext();
+    logSession({ kind: 'sightpractice', level: stepName(g), score: pct, pass, seconds });
+  } else {
+    const jump = pass ? (pct >= 100 ? 5 : pct >= 90 ? 3 : 1) : -(pct >= 70 ? 1 : pct >= 50 ? 2 : 3);
+    if (!pass) SIGHT.strikes++;
+    const score = Math.max(0, ...SIGHT.results.filter(r => r.pass).map(r => stepPoints(r.step, r.pct)));
+    rows.push(['Score so far', String(score)]);
+    if (pass && g >= STEPS - 1) { done = true; title = 'You finished the whole test!'; }
+    else if (SIGHT.strikes >= 3) { done = true; title = 'Three strikes: test complete'; }
+    else {
+      SIGHT.step = Math.max(0, Math.min(STEPS - 1, g + jump));
+      title = pass ? `Passed ${stepName(g)}! Up ${jump} step${jump > 1 ? 's' : ''}` : `Strike ${SIGHT.strikes}: back to ${stepName(SIGHT.step)}`;
+      nextLabel = `Next: Level ${stepName(SIGHT.step)}`; next = () => sightNext();
+    }
+    if (done) {
+      logSession({ kind: 'sighttest', level: stepName(sightStepOf(score || 20)), score, excerpts: SIGHT.results.length, seconds: SIGHT.seconds });
+      rows.push(['Your sight-reading score', String(score)]);
+      nextLabel = 'See my score'; next = () => { SIGHT.active = false; go('sight'); };
+    }
+  }
+  $('sgResTitle').textContent = title;
+  $('sgResRows').innerHTML = '';
+  rows.forEach(([k, v]) => $('sgResRows').append(h('div', { class: 'row' }, h('span', null, k), h('b', null, v))));
+  $('sgResNext').textContent = nextLabel; $('sgResNext').onclick = () => { $('sgResModal').hidden = true; next(); };
+  $('sgResQuit').hidden = done;
+  $('sgResQuit').textContent = SIGHT.mode === 'test' ? 'End test now' : 'Done';
+  $('sgResModal').hidden = false;
+}
+$('sgResQuit').addEventListener('click', () => {
+  $('sgResModal').hidden = true;
+  if (SIGHT.mode === 'test' && SIGHT.results.length) {
+    const score = Math.max(0, ...SIGHT.results.filter(r => r.pass).map(r => stepPoints(r.step, r.pct)));
+    logSession({ kind: 'sighttest', level: stepName(sightStepOf(score || 20)), score, excerpts: SIGHT.results.length, seconds: SIGHT.seconds, ended: true });
+  }
+  SIGHT.active = false; go('sight');
+});
+$('sgFind').addEventListener('click', sightChoose);
+$('sgStartClose').addEventListener('click', () => { $('sgStartModal').hidden = true; });
+$('sgPractice').addEventListener('click', () => { const sc = sightScore(); sightStart('practice', sc == null ? 0 : sightStepOf(sc)); });
+$('sgCursor').addEventListener('change', e => { App.settings.sightCursor = App.settings.sightCursor || {}; App.settings.sightCursor[App.current] = e.target.checked; save('settings'); });
+
+
+window.familyPiano = { GR, SIGHT, genSight, sightStart, GAMES, App, SV, R, SIGHT, genSight, sightStart, press: (m, t) => keyHandler && keyHandler(m, t || performance.now()), importLibraryJson, openSong, go };
 })();
 </script>
 </body>

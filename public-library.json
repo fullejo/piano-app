@@ -1,6 +1,6 @@
 {
  "format": "family-piano-library/1",
- "version": "2026-11-04b",
+ "version": "2026-11-05b",
  "book": {
   "id": "pd-library",
   "title": "Classics, Hymns & Folk"
@@ -9,7 +9,7 @@
   {
    "id": "pd-mozart-twinkle",
    "title": "Twinkle Variations: Theme",
-   "composer": "W. A. Mozart (1756\u20131791), K. 265, theme",
+   "composer": "W. A. Mozart (1756–1791), K. 265, theme",
    "timeSignature": [
     2,
     4
@@ -19,11 +19,11 @@
     "text": "Moderato",
     "bpm": 96
    },
-   "source": "W. A. Mozart (1756\u20131791), K. 265, theme",
+   "source": "W. A. Mozart (1756–1791), K. 265, theme",
    "tips": [
     {
      "label": "Did you know?",
-     "text": "Mozart wrote twelve variations on this French children\u2019s song, \u201cAh, vous dirai-je, maman.\u201d It is the same tune as \u201cTwinkle, Twinkle, Little Star.\u201d"
+     "text": "Mozart wrote twelve variations on this French children’s song, “Ah, vous dirai-je, maman.” It is the same tune as “Twinkle, Twinkle, Little Star.”"
     }
    ],
    "measures": [
@@ -514,11 +514,11 @@
    "tips": [
     {
      "label": "Key signature:",
-     "text": "The sharp on the F line means every F is played as F\u266f, the black key just below G."
+     "text": "The sharp on the F line means every F is played as F♯, the black key just below G."
     },
     {
      "label": "Did you know?",
-     "text": "This minuet is in the notebook Bach kept for his wife, Anna Magdalena. Scholars now think Christian Petzold wrote it, but Bach\u2019s family played it at home."
+     "text": "This minuet is in the notebook Bach kept for his wife, Anna Magdalena. Scholars now think Christian Petzold wrote it, but Bach’s family played it at home."
     }
    ],
    "measures": [
@@ -1063,7 +1063,7 @@
   {
    "id": "pd-mozart-nachtmusik",
    "title": "Eine kleine Nachtmusik (opening)",
-   "composer": "W. A. Mozart (1756\u20131791), K. 525, first movement",
+   "composer": "W. A. Mozart (1756–1791), K. 525, first movement",
    "timeSignature": [
     4,
     4
@@ -1073,7 +1073,7 @@
     "text": "Allegro",
     "bpm": 100
    },
-   "source": "W. A. Mozart (1756\u20131791), K. 525, first movement",
+   "source": "W. A. Mozart (1756–1791), K. 525, first movement",
    "tips": [
     {
      "label": "Both hands play the same notes",
@@ -1324,7 +1324,7 @@
    "tips": [
     {
      "label": "Pickup note:",
-     "text": "the song starts on beat 3, so the first bar has only one note, \u201cA-\u201d."
+     "text": "the song starts on beat 3, so the first bar has only one note, “A-”."
     }
    ],
    "measures": [
@@ -2576,7 +2576,7 @@
    "tips": [
     {
      "label": "Dotted rhythm:",
-     "text": "a dotted quarter plus an eighth sounds \u201clong-short\u201d, like a skip."
+     "text": "a dotted quarter plus an eighth sounds “long-short”, like a skip."
     }
    ],
    "measures": [
@@ -2711,7 +2711,7 @@
       {
        "p": "C4",
        "d": 1,
-       "lyric": "knee,("
+       "lyric": "knee,"
       }
      ],
      "bass": [
@@ -2882,6 +2882,1977 @@
      "final": true
     }
    ]
+  },
+  {
+   "id": "pd-folk-aunt-rhody",
+   "title": "Go Tell Aunt Rhody",
+   "composer": "American folk song (tune from J.-J. Rousseau, 1752)",
+   "source": "American folk song (tune from J.-J. Rousseau, 1752)",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 0,
+   "tempo": {
+    "text": "Easy and steady",
+    "bpm": 88
+   },
+   "tips": [
+    {
+     "label": "Did you know?",
+     "text": "This tune came from a French opera written in 1752. American families sang it for generations, and it is a favorite first song for fiddlers."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 2,
+       "finger": 3,
+       "pos": "1 on C",
+       "lyric": "Go"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "tell"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 2,
+       "lyric": "Aunt"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2,
+       "finger": 2,
+       "pos": "5 on G"
+      },
+      {
+       "p": "G2",
+       "d": 2,
+       "finger": 5
+      }
+     ],
+     "ch": "C",
+     "text": "Easy and steady"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 2,
+       "finger": 1,
+       "lyric": "Rho-"
+      },
+      {
+       "p": "C4",
+       "d": 2,
+       "lyric": "dy,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 2,
+       "finger": 2,
+       "lyric": "go"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "tell"
+      },
+      {
+       "p": "F4",
+       "d": 1,
+       "finger": 4,
+       "lyric": "Aunt"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2,
+       "finger": 1
+      }
+     ],
+     "ch": "G7"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 2,
+       "finger": 3,
+       "lyric": "Rho-"
+      },
+      {
+       "p": "D4",
+       "d": 2,
+       "lyric": "dy,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "C",
+      "G7"
+     ]
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "finger": 5,
+       "lyric": "go"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "tell"
+      },
+      {
+       "p": "F4",
+       "d": 1,
+       "finger": 4,
+       "lyric": "Aunt"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 2,
+       "finger": 3,
+       "lyric": "Rho-"
+      },
+      {
+       "p": "E4",
+       "d": 2,
+       "lyric": "dy,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 2,
+       "lyric": "old"
+      },
+      {
+       "p": "C4",
+       "d": 1,
+       "finger": 1,
+       "lyric": "gray"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "lyric": "goose"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 3,
+       "lyric": "is"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G7"
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 4,
+       "finger": 1,
+       "lyric": "dead."
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C",
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-folk-camptown",
+   "title": "Camptown Races",
+   "composer": "Stephen Foster (1850)",
+   "source": "Stephen Foster (1850)",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 0,
+   "tempo": {
+    "text": "Lively",
+    "bpm": 100
+   },
+   "tips": [
+    {
+     "label": "Hand position:",
+     "text": "Thumb on C, then 2 on D, 3 on E, 4 on G and 5 on A. The fourth finger skips over F."
+    },
+    {
+     "label": "Did you know?",
+     "text": "Stephen Foster wrote this in 1850. Fiddle and banjo players have kept it going ever since."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 4,
+       "pos": "1 on C, 5 on A",
+       "lyric": "Camp-"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "town"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 3,
+       "lyric": "la-"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 4,
+       "lyric": "dies"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2,
+       "finger": 2
+      },
+      {
+       "p": "G2",
+       "d": 2,
+       "finger": 5
+      }
+     ],
+     "ch": "C",
+     "text": "Lively"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 5,
+       "lyric": "sing"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "this"
+      },
+      {
+       "p": "E4",
+       "d": 2,
+       "finger": 3,
+       "lyric": "song,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 2,
+       "lyric": "Doo-"
+      },
+      {
+       "p": "D4",
+       "d": 2,
+       "finger": 2,
+       "lyric": "dah!"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "C",
+      "G7"
+     ]
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 2,
+       "lyric": "Doo-"
+      },
+      {
+       "p": "D4",
+       "d": 2,
+       "lyric": "dah!"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "C",
+      "G7"
+     ]
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 4,
+       "lyric": "Camp-"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "town"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "race-"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "track"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 5,
+       "lyric": "five"
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "miles"
+      },
+      {
+       "p": "E4",
+       "d": 2,
+       "lyric": "long,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 2,
+       "finger": 2,
+       "lyric": "Oh, de"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 3,
+       "lyric": "doo-"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 2,
+       "lyric": "dah"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G7"
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 4,
+       "finger": 1,
+       "lyric": "day!"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C",
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-folk-saints",
+   "title": "When the Saints Go Marching In",
+   "composer": "African American spiritual, traditional",
+   "source": "African American spiritual, traditional",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 0,
+   "tempo": {
+    "text": "Marching",
+    "bpm": 104
+   },
+   "tips": [
+    {
+     "label": "Rest first:",
+     "text": "Most lines start with a quarter rest. Count “1” silently, then play on 2."
+    },
+    {
+     "label": "Did you know?",
+     "text": "This spiritual is a favorite at bluegrass jams, gospel sings and New Orleans parades."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "r": 1
+      },
+      {
+       "p": "C4",
+       "d": 1,
+       "finger": 1,
+       "pos": "1 on C",
+       "lyric": "Oh"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 3,
+       "lyric": "when"
+      },
+      {
+       "p": "F4",
+       "d": 1,
+       "finger": 4,
+       "lyric": "the"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2,
+       "finger": 2,
+       "pos": "5 on G"
+      },
+      {
+       "p": "G2",
+       "d": 2,
+       "finger": 5
+      }
+     ],
+     "ch": "C",
+     "text": "Marching"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 4,
+       "finger": 5,
+       "lyric": "saints"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "r": 1
+      },
+      {
+       "p": "C4",
+       "d": 1,
+       "lyric": "go"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "march-"
+      },
+      {
+       "p": "F4",
+       "d": 1,
+       "lyric": "ing"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 4,
+       "lyric": "in,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "r": 1
+      },
+      {
+       "p": "C4",
+       "d": 1,
+       "lyric": "Oh"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "when"
+      },
+      {
+       "p": "F4",
+       "d": 1,
+       "lyric": "the"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "lyric": "saints"
+      },
+      {
+       "p": "E4",
+       "d": 2,
+       "lyric": "go"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 2,
+       "lyric": "march-"
+      },
+      {
+       "p": "E4",
+       "d": 2,
+       "lyric": "ing"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 4,
+       "finger": 2,
+       "lyric": "in,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G7"
+    },
+    {
+     "number": 9,
+     "treble": [
+      {
+       "r": 1
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 3,
+       "lyric": "Oh"
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "lyric": "Lord,"
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 2,
+       "lyric": "I"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 10,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 3,
+       "finger": 1,
+       "lyric": "want"
+      },
+      {
+       "p": "C4",
+       "d": 1,
+       "lyric": "to"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 11,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 2,
+       "finger": 3,
+       "lyric": "be"
+      },
+      {
+       "p": "G4",
+       "d": 2,
+       "finger": 5,
+       "lyric": "in"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 12,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "lyric": "that"
+      },
+      {
+       "p": "F4",
+       "d": 3,
+       "finger": 4,
+       "lyric": "num-ber,"
+      }
+     ],
+     "bass": [
+      {
+       "p": "F2",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "F"
+    },
+    {
+     "number": 13,
+     "treble": [
+      {
+       "r": 2
+      },
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 3,
+       "lyric": "when"
+      },
+      {
+       "p": "F4",
+       "d": 1,
+       "finger": 4,
+       "lyric": "the"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 14,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 2,
+       "finger": 5,
+       "lyric": "saints"
+      },
+      {
+       "p": "E4",
+       "d": 2,
+       "finger": 3,
+       "lyric": "go"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": "C"
+    },
+    {
+     "number": 15,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 2,
+       "finger": 1,
+       "lyric": "march-"
+      },
+      {
+       "p": "D4",
+       "d": 2,
+       "finger": 2,
+       "lyric": "ing"
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G7"
+    },
+    {
+     "number": 16,
+     "treble": [
+      {
+       "p": "C4",
+       "d": 4,
+       "lyric": "in!"
+      }
+     ],
+     "bass": [
+      {
+       "p": "C3",
+       "d": 4
+      }
+     ],
+     "ch": "C",
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-blue-cripple-creek",
+   "title": "Cripple Creek",
+   "composer": "Traditional fiddle and banjo tune (Appalachian)",
+   "source": "Traditional; A part after Bill Hensley's 1940 playing, moved to G",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 1,
+   "tempo": {
+    "text": "Driving",
+    "bpm": 112
+   },
+   "tips": [
+    {
+     "label": "Hand position:",
+     "text": "Thumb on D, 2 on E, 3 on G, 4 on A, 5 on B. No F in this tune, so finger 3 skips it."
+    },
+    {
+     "label": "Did you know?",
+     "text": "“Goin’ up Cripple Creek” is often the very first tune banjo players learn."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "r": 3,
+       "hide": true
+      },
+      {
+       "p": "G4",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "A4",
+       "d": 0.5,
+       "finger": 4
+      }
+     ],
+     "bass": [
+      {
+       "r": 4,
+       "hide": true
+      }
+     ],
+     "text": "Driving"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 1,
+       "finger": 5,
+       "pos": "1 on D"
+      },
+      {
+       "p": "G4",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "finger": 5
+      },
+      {
+       "p": "A4",
+       "d": 0.5,
+       "finger": 4
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "E4",
+       "d": 0.5,
+       "finger": 2
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2,
+       "finger": 5
+      },
+      {
+       "p": "D3",
+       "d": 2,
+       "finger": 1
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "E4",
+       "d": 0.5
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 1
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "G",
+      "D"
+     ]
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "B4",
+       "d": 1,
+       "finger": 5
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "E4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 1
+      },
+      {
+       "p": "E4",
+       "d": 0.5,
+       "finger": 2
+      },
+      {
+       "p": "D4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 2,
+       "finger": 3
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      },
+      {
+       "p": "G2",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "D",
+      "G"
+     ],
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-blue-old-joe-clark",
+   "title": "Old Joe Clark",
+   "composer": "Traditional fiddle tune (Appalachian)",
+   "source": "Traditional; A part, moved from A to G",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 0,
+   "tempo": {
+    "text": "Lively",
+    "bpm": 112
+   },
+   "tips": [
+    {
+     "label": "The mountain sound:",
+     "text": "This tune is in G but uses F, not F♯. That lowered note gives old fiddle tunes their lonesome, mountain sound."
+    },
+    {
+     "label": "Did you know?",
+     "text": "Fiddlers in the Kentucky and North Carolina mountains have played Old Joe Clark for well over a hundred years."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 1,
+       "finger": 2,
+       "pos": "1 on C"
+      },
+      {
+       "p": "D5",
+       "d": 0.5
+      },
+      {
+       "p": "E5",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "F5",
+       "d": 1,
+       "finger": 4
+      },
+      {
+       "p": "F5",
+       "d": 0.5
+      },
+      {
+       "p": "E5",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2,
+       "finger": 5
+      },
+      {
+       "p": "D3",
+       "d": 2,
+       "finger": 1
+      }
+     ],
+     "ch": "G",
+     "text": "Lively"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "E5",
+       "d": 0.5,
+       "finger": 4
+      },
+      {
+       "p": "D5",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "C5",
+       "d": 0.5,
+       "finger": 2
+      },
+      {
+       "p": "B4",
+       "d": 1,
+       "finger": 1
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 1,
+       "finger": 2
+      },
+      {
+       "p": "D5",
+       "d": 0.5
+      },
+      {
+       "p": "E5",
+       "d": 0.5
+      },
+      {
+       "p": "F5",
+       "d": 1,
+       "finger": 4
+      },
+      {
+       "p": "D5",
+       "d": 0.5,
+       "finger": 2
+      },
+      {
+       "p": "F5",
+       "d": 0.5,
+       "finger": 4
+      }
+     ],
+     "bass": [
+      {
+       "p": "F2",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "F"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "G5",
+       "d": 1,
+       "finger": 5
+      },
+      {
+       "p": "G5",
+       "d": 1
+      },
+      {
+       "p": "G5",
+       "d": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 1,
+       "finger": 2
+      },
+      {
+       "p": "D5",
+       "d": 0.5
+      },
+      {
+       "p": "E5",
+       "d": 0.5
+      },
+      {
+       "p": "F5",
+       "d": 1,
+       "finger": 4
+      },
+      {
+       "p": "G5",
+       "d": 1,
+       "finger": 5
+      }
+     ],
+     "bass": [
+      {
+       "p": "F2",
+       "d": 2
+      },
+      {
+       "p": "C3",
+       "d": 2
+      }
+     ],
+     "ch": "F"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "E5",
+       "d": 0.5,
+       "finger": 4
+      },
+      {
+       "p": "D5",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "C5",
+       "d": 0.5,
+       "finger": 2
+      },
+      {
+       "p": "B4",
+       "d": 1,
+       "finger": 1
+      },
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": "G"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 1,
+       "finger": 2
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "finger": 4
+      },
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 3
+      },
+      {
+       "p": "F4",
+       "d": 1,
+       "finger": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 2
+      },
+      {
+       "p": "D3",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "G",
+      "D"
+     ]
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "G4",
+       "d": 4,
+       "finger": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "G2",
+       "d": 4
+      }
+     ],
+     "ch": "G",
+     "final": true
+    }
+   ]
+  },
+  {
+   "id": "pd-blue-soldiers-joy",
+   "title": "Soldier’s Joy",
+   "composer": "Traditional fiddle tune (Scottish, 1700s; American favorite)",
+   "source": "Traditional; A part after Fiddlin' John Carson",
+   "timeSignature": [
+    4,
+    4
+   ],
+   "key": 2,
+   "tempo": {
+    "text": "Bright",
+    "bpm": 108
+   },
+   "tips": [
+    {
+     "label": "Key of D:",
+     "text": "Two sharps: every F is F♯ and every C is C♯. Fiddlers love D because it rings on the open strings."
+    },
+    {
+     "label": "Did you know?",
+     "text": "Soldier’s Joy is one of the oldest tunes still played at American jams. It came over from Scotland in the 1700s."
+    }
+   ],
+   "measures": [
+    {
+     "number": 1,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 5,
+       "pos": "1 on D"
+      },
+      {
+       "p": "F#4",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "F#4",
+       "d": 0.5
+      },
+      {
+       "p": "D4",
+       "d": 1,
+       "finger": 1
+      },
+      {
+       "p": "F#4",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "F#4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2,
+       "finger": 1
+      },
+      {
+       "p": "A2",
+       "d": 2,
+       "finger": 5
+      }
+     ],
+     "ch": "D",
+     "text": "Bright"
+    },
+    {
+     "number": 2,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 2,
+       "pos": "hand moves up: 2 on A"
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "D5",
+       "d": 1,
+       "finger": 5
+      },
+      {
+       "p": "D5",
+       "d": 0.5
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "finger": 3
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      },
+      {
+       "p": "A2",
+       "d": 2
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 3,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 0.5,
+       "finger": 4
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "finger": 5
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "G4",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "F#4",
+       "d": 0.5,
+       "finger": 2
+      },
+      {
+       "p": "G4",
+       "d": 0.5
+      },
+      {
+       "p": "F#4",
+       "d": 0.5
+      },
+      {
+       "p": "D4",
+       "d": 0.5,
+       "finger": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      },
+      {
+       "p": "A2",
+       "d": 2
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 4,
+     "treble": [
+      {
+       "p": "E4",
+       "d": 1,
+       "finger": 2
+      },
+      {
+       "p": "E4",
+       "d": 2
+      },
+      {
+       "r": 1
+      }
+     ],
+     "bass": [
+      {
+       "p": "A2",
+       "d": 2
+      },
+      {
+       "p": "E3",
+       "d": 2
+      }
+     ],
+     "ch": "A"
+    },
+    {
+     "number": 5,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 5
+      },
+      {
+       "p": "F#4",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "E4",
+       "d": 0.5,
+       "finger": 2
+      },
+      {
+       "p": "D4",
+       "d": 0.5,
+       "finger": 1
+      },
+      {
+       "p": "E4",
+       "d": 0.5
+      },
+      {
+       "p": "F#4",
+       "d": 0.5
+      },
+      {
+       "p": "D4",
+       "d": 0.5
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      },
+      {
+       "p": "A2",
+       "d": 2
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 6,
+     "treble": [
+      {
+       "p": "A4",
+       "d": 1,
+       "finger": 2,
+       "pos": "2 on A"
+      },
+      {
+       "p": "B4",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "A4",
+       "d": 0.5
+      },
+      {
+       "p": "D5",
+       "d": 1.5,
+       "finger": 4
+      },
+      {
+       "p": "E5",
+       "d": 0.5,
+       "finger": 5
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      },
+      {
+       "p": "A2",
+       "d": 2
+      }
+     ],
+     "ch": "D"
+    },
+    {
+     "number": 7,
+     "treble": [
+      {
+       "p": "F#5",
+       "d": 1,
+       "finger": 5
+      },
+      {
+       "p": "F#5",
+       "d": 0.5
+      },
+      {
+       "p": "F#5",
+       "d": 0.5
+      },
+      {
+       "p": "E5",
+       "d": 0.5,
+       "finger": 4
+      },
+      {
+       "p": "F#5",
+       "d": 0.5,
+       "finger": 5
+      },
+      {
+       "p": "D5",
+       "d": 0.5,
+       "finger": 3
+      },
+      {
+       "p": "C#5",
+       "d": 0.5,
+       "finger": 2
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 2
+      },
+      {
+       "p": "A2",
+       "d": 2
+      }
+     ],
+     "ch": [
+      "D",
+      "A"
+     ]
+    },
+    {
+     "number": 8,
+     "treble": [
+      {
+       "p": "D5",
+       "d": 1,
+       "finger": 3
+      },
+      {
+       "p": "D5",
+       "d": 3
+      }
+     ],
+     "bass": [
+      {
+       "p": "D3",
+       "d": 4
+      }
+     ],
+     "ch": "D",
+     "final": true
+    }
+   ]
   }
  ],
  "courses": [
@@ -2949,7 +4920,7 @@
       },
       {
        "h": "Count out loud",
-       "p": "This piece has 2 beats in every bar (the 2/4 at the start). Count \u201c1, 2\u201d in every bar while you play.",
+       "p": "This piece has 2 beats in every bar (the 2/4 at the start). Count “1, 2” in every bar while you play.",
        "demo": [
         60,
         60,
@@ -2983,7 +4954,7 @@
       },
       {
        "h": "Read the direction",
-       "p": "Before you play, look at the shape: is the tune going up, down, or repeating? In bars 9\u201316 it walks down by steps."
+       "p": "Before you play, look at the shape: is the tune going up, down, or repeating? In bars 9–16 it walks down by steps."
       }
      ]
     },
@@ -3050,12 +5021,12 @@
      "bpm": 80,
      "cards": [
       {
-       "h": "Mozart\u2019s theme",
+       "h": "Mozart’s theme",
        "p": "You now know every part of this theme. Play it from start to finish with both hands."
       },
       {
        "h": "Try the band",
-       "p": "In \u201cPlay with the beat\u201d, switch on Band for a bass and chords to play along with you."
+       "p": "In “Play with the beat”, switch on Band for a bass and chords to play along with you."
       }
      ]
     }
@@ -3065,11 +5036,11 @@
    "id": "c-bach-mozart-1",
    "title": "Bach & Mozart 1",
    "color": "#8a5cc2",
-   "blurb": "Key signatures, eighth notes and phrasing through Bach\u2019s Minuet in G and Mozart\u2019s Night Music.",
+   "blurb": "Key signatures, eighth notes and phrasing through Bach’s Minuet in G and Mozart’s Night Music.",
    "lessons": [
     {
      "title": "A new key: G major",
-     "concept": "Key signatures & F\u266f",
+     "concept": "Key signatures & F♯",
      "song": "pd-bach-minuet-g",
      "bars": [
       1,
@@ -3080,7 +5051,7 @@
      "cards": [
       {
        "h": "Key signature",
-       "p": "The sharp at the start of every line is the key signature. It means every F in the piece is F\u266f, the black key just left of G.",
+       "p": "The sharp at the start of every line is the key signature. It means every F in the piece is F♯, the black key just left of G.",
        "demo": [
         67,
         69,
@@ -3118,7 +5089,7 @@
      "cards": [
       {
        "h": "Twice as fast",
-       "p": "Eighth notes have a flag or a beam. Two of them fit in one beat. Count \u201c1 and 2 and 3 and\u201d."
+       "p": "Eighth notes have a flag or a beam. Two of them fit in one beat. Count “1 and 2 and 3 and”."
       },
       {
        "h": "Smooth line",
@@ -3127,7 +5098,7 @@
      ]
     },
     {
-     "title": "The left hand\u2019s part",
+     "title": "The left hand’s part",
      "concept": "Bass line",
      "song": "pd-bach-minuet-g",
      "bars": [
@@ -3139,7 +5110,7 @@
      "cards": [
       {
        "h": "A walking bass",
-       "p": "The left hand plays mostly long dotted half notes (3 beats). In bars 7\u20138 it gets busier. Read carefully."
+       "p": "The left hand plays mostly long dotted half notes (3 beats). In bars 7–8 it gets busier. Read carefully."
       }
      ]
     },
@@ -3173,7 +5144,7 @@
      "cards": [
       {
        "h": "A cadence",
-       "p": "The last two bars bring the music home to G. That \u201ccoming home\u201d is called a cadence. Let the final G ring."
+       "p": "The last two bars bring the music home to G. That “coming home” is called a cadence. Let the final G ring."
       }
      ]
     },
@@ -3194,7 +5165,7 @@
       },
       {
        "h": "Rests are music too",
-       "p": "The little rests between notes make Mozart\u2019s opening crisp. Lift your hands exactly on time."
+       "p": "The little rests between notes make Mozart’s opening crisp. Lift your hands exactly on time."
       }
      ]
     }
@@ -3223,7 +5194,7 @@
       },
       {
        "h": "Pickup",
-       "p": "Amazing Grace starts on beat 3: count \u201c1, 2,\u201d then play \u201cA-\u201d on 3."
+       "p": "Amazing Grace starts on beat 3: count “1, 2,” then play “A-” on 3."
       }
      ]
     },
@@ -3308,7 +5279,7 @@
      "cards": [
       {
        "h": "Hold it",
-       "p": "The dotted half on \u201cme\u201d lasts three beats. Count it out so you don\u2019t rush."
+       "p": "The dotted half on “me” lasts three beats. Count it out so you don’t rush."
       }
      ]
     }
@@ -3316,9 +5287,9 @@
   },
   {
    "id": "c-folk-1",
-   "title": "Folk & Bluegrass 1",
+   "title": "Folk Songs 1",
    "color": "#c98a0c",
-   "blurb": "Dotted rhythms and toe-tapping tunes. Starting with Stephen Foster; more bluegrass coming.",
+   "blurb": "Dotted rhythms and toe-tapping tunes with Stephen Foster’s Oh! Susanna. Then on to Old-Time & Traditional 1.",
    "lessons": [
     {
      "title": "Long-short rhythm",
@@ -3333,7 +5304,7 @@
      "cards": [
       {
        "h": "Dotted rhythm",
-       "p": "A dot adds half the note\u2019s value. A dotted quarter lasts 1\u00bd beats, then a quick eighth finishes the beat: \u201clong-short\u201d."
+       "p": "A dot adds half the note’s value. A dotted quarter lasts 1½ beats, then a quick eighth finishes the beat: “long-short”."
       }
      ]
     },
@@ -3350,7 +5321,372 @@
      "cards": [
       {
        "h": "Banjo feel",
-       "p": "The left hand plays steady half notes like a bass. Switch on Band in Play mode for the full pickin\u2019 sound."
+       "p": "The left hand plays steady half notes like a bass. Switch on Band in Play mode for the full pickin’ sound."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c-oldtime-1",
+   "title": "Old-Time & Traditional 1",
+   "color": "#a0522d",
+   "photo": 14,
+   "blurb": "Front-porch songs with a bluegrass bass: Go Tell Aunt Rhody, Camptown Races and When the Saints.",
+   "lessons": [
+    {
+     "title": "An old-time tune",
+     "concept": "C position & repeated notes",
+     "song": "pd-folk-aunt-rhody",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "rh",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "Old-time music",
+       "p": "Long before bluegrass had a name, families in the mountains played simple tunes like this on fiddle and banjo. Bluegrass grew out of these songs."
+      },
+      {
+       "h": "Your hand",
+       "p": "R.H. thumb on Middle C, one finger per key up to G. Every note in this song is under your hand, so keep your eyes on the music.",
+       "demo": [
+        64,
+        64,
+        62,
+        60,
+        60
+       ],
+       "demoLo": 55,
+       "demoHi": 72,
+       "bpm": 88
+      }
+     ]
+    },
+    {
+     "title": "The bluegrass bass",
+     "concept": "Root and fifth",
+     "song": "pd-folk-aunt-rhody",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "lh",
+     "bpm": 66,
+     "cards": [
+      {
+       "h": "Boom, boom",
+       "p": "A bluegrass bass player bounces between two notes: the chord’s name note (the root), then the note five steps lower (the fifth). For a C chord that’s C, then G.",
+       "demo": [
+        48,
+        43,
+        48,
+        43
+       ],
+       "mark": [
+        48,
+        43
+       ],
+       "demoLo": 36,
+       "demoHi": 60,
+       "bpm": 80
+      },
+      {
+       "h": "When the chord changes",
+       "p": "For G7 the left hand plays G, then D. L.H. 5 on the low G, thumb on D, and finger 2 on C."
+      }
+     ]
+    },
+    {
+     "title": "Aunt Rhody, hands together",
+     "concept": "Melody over a moving bass",
+     "song": "pd-folk-aunt-rhody",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "both",
+     "bpm": 60,
+     "cards": [
+      {
+       "h": "Two half notes",
+       "p": "The left hand plays a half note on beat 1 and another on beat 3. Count “1, 2, 3, 4” and land both hands together on 1 and 3."
+      }
+     ]
+    },
+    {
+     "title": "Camptown Races: Doo-dah!",
+     "concept": "Skips & a wider hand",
+     "song": "pd-folk-camptown",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "rh",
+     "bpm": 80,
+     "cards": [
+      {
+       "h": "Stretch to A",
+       "p": "This tune uses C D E G A. Put fingers 1-2-3 on C D E, then 4 on G and 5 on A. Finger 4 skips over F."
+      },
+      {
+       "h": "Skips",
+       "p": "E up to G skips a white key. On the staff that’s a line to the next line (or space to space).",
+       "demo": [
+        67,
+        67,
+        64,
+        67,
+        69,
+        67,
+        64
+       ],
+       "mark": [
+        64,
+        67
+       ],
+       "demoLo": 55,
+       "demoHi": 72,
+       "bpm": 100
+      }
+     ]
+    },
+    {
+     "title": "Camptown Races with the band",
+     "concept": "Playing on the beat",
+     "song": "pd-folk-camptown",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "both",
+     "bpm": 72,
+     "cards": [
+      {
+       "h": "Keep it moving",
+       "p": "Bluegrass never stops for mistakes. In “Play with the beat”, keep going even if a note slips. Turn on Band for the full sound."
+      }
+     ]
+    },
+    {
+     "title": "When the Saints: rests & long notes",
+     "concept": "Quarter rests & whole notes",
+     "song": "pd-folk-saints",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "rh",
+     "bpm": 84,
+     "cards": [
+      {
+       "h": "Start on 2",
+       "p": "A quarter rest fills beat 1. Count “1” silently, then play “Oh when the” on beats 2, 3 and 4."
+      },
+      {
+       "h": "Whole notes",
+       "p": "A hollow note with no stem is a whole note: hold it for all four beats while the left hand keeps bouncing."
+      }
+     ]
+    },
+    {
+     "title": "When the Saints, the whole song",
+     "concept": "A full jam tune",
+     "song": "pd-folk-saints",
+     "bars": [
+      1,
+      16
+     ],
+     "hands": "both",
+     "bpm": 84,
+     "cards": [
+      {
+       "h": "A new chord",
+       "p": "In bar 12 the left hand moves down to F, then C. Find the low F before you start."
+      },
+      {
+       "h": "Jam time",
+       "p": "Play it with Band on. When it feels easy, raise the speed a little each day."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c-bluegrass-1",
+   "title": "Bluegrass 1",
+   "color": "#2c6e8f",
+   "photo": 14,
+   "blurb": "Real fiddle tunes from jam sessions: Cripple Creek, Old Joe Clark and Soldier’s Joy. Eighth-note runs and the mountain sound.",
+   "lessons": [
+    {
+     "title": "Cripple Creek: eighth-note runs",
+     "concept": "Eighth notes & a pickup",
+     "song": "pd-blue-cripple-creek",
+     "bars": [
+      1,
+      5
+     ],
+     "hands": "rh",
+     "bpm": 60,
+     "cards": [
+      {
+       "h": "Fiddle tunes",
+       "p": "Bluegrass players learn tunes like this by ear at jams. The melody runs in quick eighth notes, two to a beat."
+      },
+      {
+       "h": "Pickup",
+       "p": "The first bar is only two eighth notes on the “and” of beat 4. Count “1, 2, 3, 4 and” and come in on the last half of 4.",
+       "demo": [
+        67,
+        69,
+        71,
+        67,
+        71,
+        69,
+        67,
+        64,
+        67
+       ],
+       "demoLo": 55,
+       "demoHi": 74,
+       "bpm": 112
+      }
+     ]
+    },
+    {
+     "title": "Cripple Creek with the bass",
+     "concept": "Both hands at a jam",
+     "song": "pd-blue-cripple-creek",
+     "bars": [
+      1,
+      5
+     ],
+     "hands": "both",
+     "bpm": 56,
+     "cards": [
+      {
+       "h": "Same bass, new key",
+       "p": "This tune is in G, so the left hand bounces G, then D (L.H. 5 on G, thumb on D). In bars 3 and 5 the chord changes halfway."
+      }
+     ]
+    },
+    {
+     "title": "Old Joe Clark: the mountain sound",
+     "concept": "Mixolydian (F instead of F♯)",
+     "song": "pd-blue-old-joe-clark",
+     "bars": [
+      1,
+      4
+     ],
+     "hands": "rh",
+     "bpm": 60,
+     "cards": [
+      {
+       "h": "A lowered note",
+       "p": "Old Joe Clark is in G but uses plain F. That one note makes it sound old and lonesome. Musicians call this sound Mixolydian.",
+       "demo": [
+        67,
+        69,
+        71,
+        72,
+        74,
+        76,
+        77,
+        79
+       ],
+       "mark": [
+        77
+       ],
+       "demoLo": 60,
+       "demoHi": 84,
+       "bpm": 120
+      },
+      {
+       "h": "Hand position",
+       "p": "R.H. thumb on the C above Middle C. In bar 2 the hand hops down for B and the low G, then comes back."
+      }
+     ]
+    },
+    {
+     "title": "Old Joe Clark, the whole A part",
+     "concept": "Hand moves",
+     "song": "pd-blue-old-joe-clark",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "both",
+     "bpm": 60,
+     "cards": [
+      {
+       "h": "Left hand",
+       "p": "G chord: G then D. F chord: F then C. The F chord matches the plain F in the tune."
+      },
+      {
+       "h": "Look ahead",
+       "p": "Before each hop, glance at the next bar so your hand is already on its way."
+      }
+     ]
+    },
+    {
+     "title": "Soldier’s Joy: key of D",
+     "concept": "Two sharps",
+     "song": "pd-blue-soldiers-joy",
+     "bars": [
+      1,
+      4
+     ],
+     "hands": "rh",
+     "bpm": 60,
+     "cards": [
+      {
+       "h": "Two sharps",
+       "p": "The key signature has F♯ and C♯. Every F and C in the piece is played on the black key just to the right.",
+       "demo": [
+        62,
+        64,
+        66,
+        67,
+        69,
+        71,
+        73,
+        74
+       ],
+       "mark": [
+        66,
+        73
+       ],
+       "demoLo": 60,
+       "demoHi": 76,
+       "bpm": 120
+      },
+      {
+       "h": "Start position",
+       "p": "Thumb on D, 3 on F♯, 5 on A. In bar 2 the hand moves up so 2 is on A and 5 reaches high D."
+      }
+     ]
+    },
+    {
+     "title": "Soldier’s Joy at jam speed",
+     "concept": "Keep the groove",
+     "song": "pd-blue-soldiers-joy",
+     "bars": [
+      1,
+      8
+     ],
+     "hands": "both",
+     "bpm": 66,
+     "cards": [
+      {
+       "h": "Left hand",
+       "p": "D chord: D then the A below it. A chord: A then E. Keep it steady even when the right hand gets busy."
+      },
+      {
+       "h": "Speed it up",
+       "p": "Turn on Band in “Play with the beat”. Add 5 to the speed each day until it feels like a real jam."
       }
      ]
     }
