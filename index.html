@@ -138,6 +138,12 @@
   .person .sub { font-size: 14px; color: var(--quiet); font-variant-numeric: tabular-nums; }
   .avatar { width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-family: var(--display); font-weight: 600; font-size: 38px; flex: none; }
   .avatar.sm { width: 52px; height: 52px; font-size: 24px; }
+  .avatar.emo, .emo { font-family: 'Noto Color Emoji', 'Segoe UI Emoji', 'Apple Color Emoji', sans-serif; font-size: 1.25em; }
+  .avatar.emo { font-size: 46px; } .avatar.sm.emo { font-size: 28px; }
+  .emojis { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 6px; max-height: 190px; overflow-y: auto; }
+  .emojis button { font-size: 26px; height: 46px; border-radius: 12px; border: 2px solid transparent; background: var(--bg, #f3f4f2); cursor: pointer; font-family: 'Noto Color Emoji', 'Segoe UI Emoji', 'Apple Color Emoji', sans-serif; }
+  .emojis button[aria-checked="true"] { border-color: var(--accent); background: var(--panel); }
+  .emojis button.none { font-size: 14px; font-family: var(--body); }
   .add { border-style: dashed; color: var(--quiet); }
   .add .avatar { background: transparent; border: 2px dashed var(--line); color: var(--quiet); }
 
@@ -728,6 +734,7 @@
     <h2 id="pmTitle">Add a person</h2>
     <div class="field"><label class="label" for="pmName">Name</label><input type="text" id="pmName" maxlength="24" autocomplete="off" required></div>
     <div class="field"><span class="label">Color</span><div class="swatches" id="pmColors" role="radiogroup" aria-label="Color"></div></div>
+    <div class="field"><span class="label">Picture</span><div class="emojis" id="pmEmojis" role="radiogroup" aria-label="Picture"></div></div>
     <div class="field"><span class="label">Plays as</span>
       <div class="seg" role="radiogroup" id="pmKind"><button type="button" role="radio" aria-checked="true" data-kind="child">Kid</button><button type="button" role="radio" aria-checked="false" data-kind="adult">Grown-up</button></div>
     </div>
@@ -1008,7 +1015,7 @@ function show(v) {
   document.querySelectorAll('[data-view]').forEach(s => { s.hidden = s.dataset.view !== v; });
   const withNav = !!me() && ['me', 'songs', 'courses', 'course', 'lesson', 'games', 'challenge', 'progress', 'assign', 'settings', 'sight'].includes(v);
   document.body.classList.toggle('withnav', withNav); $('sidenav').hidden = !withNav;
-  if (withNav) { const sec = { course: 'courses', lesson: 'courses', challenge: 'games', assign: 'me', sight: 'me' }[v] || v; document.querySelectorAll('#sidenav [data-nav]').forEach(b => { if (b.dataset.nav === sec) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); const p0 = me(); $('navMe').textContent = p0.name.charAt(0).toUpperCase(); $('navMe').style.background = p0.color; }
+  if (withNav) { const sec = { course: 'courses', lesson: 'courses', challenge: 'games', assign: 'me', sight: 'me' }[v] || v; document.querySelectorAll('#sidenav [data-nav]').forEach(b => { if (b.dataset.nav === sec) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); const p0 = me(); $('navMe').textContent = avText(p0); $('navMe').classList.toggle('emo', !!p0.emoji); $('navMe').style.background = p0.color; }
   $('backBtn').hidden = v === 'home';
   $('homeBtn').hidden = v === 'home' || withNav;
   $('setBtn').hidden = v === 'settings' || withNav;
@@ -1048,10 +1055,15 @@ function songPhoto(s) {
   if (/^pd-blue/.test(id)) return 18;
   if (OLDTIME_SONGS.includes(id) || /oldtime/.test(id)) return 17;
   if (/folk/.test(id)) return 20;
-  return 3;
+  return BOOK_PH;
 }
-const COURSE_PH = { 'c-foundations-1': 8, 'c-bach-mozart-1': 2, 'c-bach-mozart-2': 6, 'c-hymns-1': 5, 'c-folk-1': 20, 'c-oldtime-1': 17, 'c-bluegrass-1': 18, 'c-bluegrass-2': 25, 'c-orthodox-1': [27, 29] };
+const COURSE_PH = { 'c-foundations-1': 8, 'c-bach-mozart-1': 2, 'c-bach-mozart-2': 6, 'c-hymns-1': 5, 'c-folk-1': 20, 'c-oldtime-1': 17, 'c-bluegrass-1': 18, 'c-bluegrass-2': 25, 'c-orthodox-1': [27, 29], 'c-orthodox-2': [30, 28] };
 const coursePhoto = c => pick(COURSE_PH[c.id] || c.photo || 8);
+// lesson cards cycle through photos that suit the course
+const PIANO_POOL = [8, 10, 1, 9, 11, 13, 7, 15, 3];
+const coursePool = c => /orthodox/.test(c.id) ? [27, 28, 29, 30] : /bluegrass/.test(c.id) ? [18, 17, 25] : /oldtime/.test(c.id) ? [17, 20, 18, 25] : /hymn/.test(c.id) ? [5, 11, 10, 15] : PIANO_POOL;
+const lessonPhoto = (c, i) => { const pool = coursePool(c), first = coursePhoto(c), k = Math.max(0, pool.indexOf(first)); return i === 0 ? first : pool[(k + i) % pool.length]; };
+const BOOK_PH = 12;   // Piano Adventures book songs: the boy at the piano
 const GAME_PH = { invaders: 16, echo: 4, hop: 9, rhythm: 12, reader: 10, challenge: 14, sightread: 21 };
 const HOME_ROTATION = [19, 22, 23, 24, 26];
 function photo(n, cls) { const d = h('div', { class: 'photo ' + (cls || '') }); d.style.backgroundImage = `url(${IMG(n)})`; if (PH_POS[n]) d.style.backgroundPosition = PH_POS[n]; return d; }
@@ -1071,7 +1083,8 @@ fillPhotos();
 /* =========================================================
    HOME + PEOPLE
    ========================================================= */
-function avatar(p, cls) { const a = h('div', { class: 'avatar ' + (cls || '') }, (p.name || '?').trim().charAt(0).toUpperCase()); a.style.background = p.color; return a; }
+const avText = p => p.emoji || (p.name || '?').trim().charAt(0).toUpperCase();
+function avatar(p, cls) { const a = h('div', { class: 'avatar ' + (cls || '') + (p.emoji ? ' emo' : '') }, avText(p)); a.style.background = p.color; return a; }
 let homeRot = null;
 function startHomeRotation() {
   const b = $('homeBanner'); b.style.backgroundImage = 'none';
@@ -1098,6 +1111,7 @@ function renderHome() {
 }
 
 let pmEdit = null, pmColor = COLORS[0], pmKind = 'child';
+const EMOJIS = ['🐶','🐱','🦊','🐻','🐼','🐨','🐯','🦁','🐸','🐵','🐰','🐹','🦄','🐲','🐢','🐬','🐳','🦉','🐧','🐝','🦋','🐞','🦖','🐴','🐮','🐷','🐔','🦔','🌻','🌈','⭐','🌙','🚀','🎈','🍓','🍎','🍉','🧁','⚽','🏀','🏈','🎣','🚜','🚒','🎹','🎸','🎻','🥁','🎺','🎵','👑','🛡️','⚔️','🏰','🧸','🪁']; let pmEmoji = '';
 function openPerson(p) {
   pmEdit = p || null;
   $('pmTitle').textContent = p ? 'Edit ' + p.name : 'Add a person';
@@ -1107,6 +1121,9 @@ function openPerson(p) {
   const sw = $('pmColors'); sw.textContent = '';
   COLORS.forEach(c => { const b = h('button', { type: 'button', class: 'swatch', role: 'radio', 'aria-checked': c === pmColor, 'aria-label': 'Color' }); b.style.background = c; b.addEventListener('click', () => { pmColor = c; sw.querySelectorAll('.swatch').forEach(x => x.setAttribute('aria-checked', x === b)); }); sw.append(b); });
   $('pmKind').querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', b.dataset.kind === pmKind));
+  pmEmoji = p ? (p.emoji || '') : '';
+  const eg = $('pmEmojis'); eg.textContent = '';
+  ['', ...EMOJIS].forEach(e => { const b = h('button', { type: 'button', role: 'radio', class: e ? '' : 'none', 'aria-checked': e === pmEmoji, 'aria-label': e || 'First letter' }, e || 'A'); b.addEventListener('click', () => { pmEmoji = e; eg.querySelectorAll('button').forEach(x => x.setAttribute('aria-checked', x === b)); }); eg.append(b); });
   $('personModal').hidden = false;
   setTimeout(() => $('pmName').focus(), 50);
 }
@@ -1115,8 +1132,8 @@ $('pmCancel').addEventListener('click', () => { $('personModal').hidden = true; 
 $('personForm').addEventListener('submit', ev => {
   ev.preventDefault();
   const name = $('pmName').value.trim(); if (!name) return;
-  if (pmEdit) Object.assign(pmEdit, { name, color: pmColor, kind: pmKind });
-  else App.profiles.push({ id: uid(), name, color: pmColor, kind: pmKind, created: new Date().toISOString() });
+  if (pmEdit) Object.assign(pmEdit, { name, color: pmColor, kind: pmKind, emoji: pmEmoji || undefined });
+  else App.profiles.push({ id: uid(), name, color: pmColor, kind: pmKind, emoji: pmEmoji || undefined, created: new Date().toISOString() });
   save('profiles'); $('personModal').hidden = true;
   show(view);
 });
@@ -1159,7 +1176,7 @@ function renderMe() {
     cs.lessons.slice(from, from + 4).forEach((L, k) => {
       const i = from + k, st = lessonState(L);
       strip.append(h('button', { class: 'lcardp' + (i === nx ? ' next' : ''), onclick: () => { CS.course = cs.id; CS.lesson = i; go('lesson'); } },
-        photo(coursePhoto(cs)), h('div', { class: 'tx' }, h('span', { class: 'k' }, `Lesson ${i + 1}${i === nx ? ' · up next' : st.done ? ' · done ✓' : ''}`), h('span', { class: 'n' }, L.title))));
+        photo(lessonPhoto(cs, i)), h('div', { class: 'tx' }, h('span', { class: 'k' }, `Lesson ${i + 1}${i === nx ? ' · up next' : st.done ? ' · done ✓' : ''}`), h('span', { class: 'n' }, L.title))));
     });
   }
   // recently played
@@ -1901,7 +1918,7 @@ $('rHint').addEventListener('click', () => { if (R.playing) { R.hinted = true; d
    ========================================================= */
 function renderProgress() {
   const p = me();
-  const a = $('pAvatar'); a.textContent = p.name.charAt(0).toUpperCase(); a.style.background = p.color;
+  const a = $('pAvatar'); a.textContent = avText(p); a.classList.toggle('emo', !!p.emoji); a.style.background = p.color;
   $('pTitle').textContent = `${p.name}'s progress`;
   const ss = mySessions(p.id);
   const wk = minutesBetween(p.id, startOfDay(Date.now() - 6 * 864e5), new Date(Date.now() + 864e5));
